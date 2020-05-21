@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>My New Post</title>
+    <url>/2020/05/21/My-New-Post/</url>
+    <content><![CDATA[<p>I just trying to start my blog for coding note.<br>just for recording my learning path! XD</p>
+<p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
+<p>try upload same time</p>
+]]></content>
+  </entry>
+  <entry>
     <title>&#39;Pandas筆記&#39;</title>
     <url>/2020/05/21/Pandas/</url>
     <content><![CDATA[<h3 id="5-21-馬拉松第2天"><a href="#5-21-馬拉松第2天" class="headerlink" title="5/21 馬拉松第2天"></a>5/21 馬拉松第2天</h3><p>pandas document<br><a href="https://pandas.pydata.org/docs/pandas.pdf" target="_blank" rel="noopener">https://pandas.pydata.org/docs/pandas.pdf</a><br>資料科學家的 pandas 實戰手冊：掌握 40 個實用數據技巧<br><a href="https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html" target="_blank" rel="noopener">https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html</a></p>
@@ -47,12 +55,17 @@
 ]]></content>
   </entry>
   <entry>
-    <title>My New Post</title>
-    <url>/2020/05/21/My-New-Post/</url>
-    <content><![CDATA[<p>I just trying to start my blog for coding note.<br>just for recording my learning path! XD</p>
-<p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
-<p>try upload same time</p>
+    <title>「探索式資料分析」(Exploratory Data Analysis) </title>
+    <url>/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis/</url>
+    <content><![CDATA[<p>在看到一筆資料時，第一件事就是去了解它。</p>
+<p>仔細研究kaggle的資料描述<br>看看有多少資料來源？資料的格式？資料間的關係？<br>資料欄位的意義？每列的意義？<br>有多少筆資料？多少個欄位？<br>有沒有遺失值等等？</p>
 ]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+      </tags>
   </entry>
   <entry>
     <title>&#39;為何建立需要dataframe&#39;</title>
@@ -66,19 +79,6 @@
 <li>圖像格式可以使⽤用 PIL(image), skimage 或是 cv2<br>CV2 的速度較快，但須注意讀入的格式為 BGR</li>
 <li>其他形式如 npy / pickle 可以儲存經過處理理後的資料</li>
 </ul>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>「探索式資料分析」(Exploratory Data Analysis) </title>
-    <url>/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis/</url>
-    <content><![CDATA[<p>在看到一筆資料時，第一件事就是去了解它。</p>
-<p>仔細研究kaggle的資料描述<br>看看有多少資料來源？資料的格式？資料間的關係？<br>資料欄位的意義？每列的意義？<br>有多少筆資料？多少個欄位？<br>有沒有遺失值等等？</p>
 ]]></content>
       <categories>
         <category>程式筆記</category>
