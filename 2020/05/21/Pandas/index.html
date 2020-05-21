@@ -5,17 +5,17 @@
   
 
   
-  <title>My New Post | Hexo</title>
+  <title>&#39;Pandas&#39; | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="I just trying to start my blog for coding note.just for recording my learning path! XD markdown教程連結https:&#x2F;&#x2F;markdown.tw&#x2F;#precode">
+  <meta name="description" content="5&#x2F;21 馬拉松第2天安裝pandas 1pip install pandas  讀取CSV檔案(excel) 123import pandas as pdapp_train &#x3D; pd.read_csv(&#39;application_train.csv&#39;)print(app_train)  如何知道資料的 row 數以及 column 數 123# 如何知道資料的 row 數">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My New Post">
-<meta property="og:url" content="https://username.github.io/2020/05/21/My-New-Post/index.html">
+<meta property="og:title" content="&#39;Pandas&#39;">
+<meta property="og:url" content="https://username.github.io/2020/05/21/Pandas/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="I just trying to start my blog for coding note.just for recording my learning path! XD markdown教程連結https:&#x2F;&#x2F;markdown.tw&#x2F;#precode">
+<meta property="og:description" content="5&#x2F;21 馬拉松第2天安裝pandas 1pip install pandas  讀取CSV檔案(excel) 123import pandas as pdapp_train &#x3D; pd.read_csv(&#39;application_train.csv&#39;)print(app_train)  如何知道資料的 row 數以及 column 數 123# 如何知道資料的 row 數">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2020-05-21T12:11:28.000Z">
-<meta property="article:modified_time" content="2020-05-21T12:37:10.917Z">
+<meta property="article:published_time" content="2020-05-21T12:22:04.000Z">
+<meta property="article:modified_time" content="2020-05-21T12:33:26.099Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -66,10 +66,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-My-New-Post" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Pandas" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/05/21/My-New-Post/" class="article-date">
-  <time datetime="2020-05-21T12:11:28.000Z" itemprop="datePublished">2020-05-21</time>
+    <a href="/2020/05/21/Pandas/" class="article-date">
+  <time datetime="2020-05-21T12:22:04.000Z" itemprop="datePublished">2020-05-21</time>
 </a>
     
   </div>
@@ -80,7 +80,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      My New Post
+      &#39;Pandas&#39;
     </h1>
   
 
@@ -88,13 +88,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>I just trying to start my blog for coding note.<br>just for recording my learning path! XD</p>
-<p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
+        <h3 id="5-21-馬拉松第2天"><a href="#5-21-馬拉松第2天" class="headerlink" title="5/21 馬拉松第2天"></a>5/21 馬拉松第2天</h3><p>安裝pandas</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pandas</span><br></pre></td></tr></table></figure>
 
+<p>讀取CSV檔案(excel)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">app_train &#x3D; pd.read_csv(&#39;application_train.csv&#39;)</span><br><span class="line">print(app_train)</span><br></pre></td></tr></table></figure>
+
+<p>如何知道資料的 row 數以及 column 數</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 如何知道資料的 row 數以及 column 數</span><br><span class="line"># (row-count, column-count)</span><br><span class="line">app_train.shape</span><br></pre></td></tr></table></figure>
+
+<p>有什麼欄位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 有什麼欄位, show出欄位名稱</span><br><span class="line">(r, c) &#x3D; app_train.axes</span><br><span class="line">print(c)</span><br><span class="line"># or</span><br><span class="line">print(app_train.columns)</span><br></pre></td></tr></table></figure>
+
+<p>.ix[::, ::] 可以（利用索引值或欄位）選擇 data frame 區段（axis=0)横向，(axis=1)列向<br>ps. 現已不推薦使用<br>.loc[label] 這是嚴格基於標籤的索引<br>.iloc[inte] 這是嚴格基於整數位置的索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app_train.loc[10:20,&#39;SK_ID_CURR&#39;:&#39;NAME_CONTRACT_TYPE&#39;]</span><br><span class="line"># or</span><br><span class="line">app_train.iloc[10:20,0:3]</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://username.github.io/2020/05/21/My-New-Post/" data-id="ckags6ju00001q8vahotqc1dg" class="article-share-link">Share</a>
+      <a data-url="https://username.github.io/2020/05/21/Pandas/" data-id="ckags6jtu0000q8vagsmt73ls" class="article-share-link">Share</a>
       
       
     </footer>
@@ -103,19 +114,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          「探索式資料分析」(Exploratory Data Analysis) 
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/21/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">「探索式資料分析」(Exploratory Data Analysis) </div>
     </a>
   
 </nav>
