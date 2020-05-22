@@ -9,7 +9,7 @@
 ]]></content>
   </entry>
   <entry>
-    <title>&#39;Pandas筆記&#39;</title>
+    <title>Pandas筆記</title>
     <url>/2020/05/21/Pandas/</url>
     <content><![CDATA[<h3 id="5-21-馬拉松第2天"><a href="#5-21-馬拉松第2天" class="headerlink" title="5/21 馬拉松第2天"></a>5/21 馬拉松第2天</h3><p>pandas document<br><a href="https://pandas.pydata.org/docs/pandas.pdf" target="_blank" rel="noopener">https://pandas.pydata.org/docs/pandas.pdf</a><br>資料科學家的 pandas 實戰手冊：掌握 40 個實用數據技巧<br><a href="https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html" target="_blank" rel="noopener">https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html</a></p>
 <p>安裝pandas</p>
@@ -68,7 +68,7 @@
       </tags>
   </entry>
   <entry>
-    <title>&#39;為何建立需要dataframe&#39;</title>
+    <title>為何建立需要dataframe</title>
     <url>/2020/05/21/%E7%82%BA%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%9C%80%E8%A6%81dataframe/</url>
     <content><![CDATA[<h1 id="為甚麼需要新建dataframe"><a href="#為甚麼需要新建dataframe" class="headerlink" title="為甚麼需要新建dataframe"></a>為甚麼需要新建dataframe</h1><ol>
 <li>需要將分析過程中產生的數據或結果儲存為結構性資料</li>
