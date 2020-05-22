@@ -11,24 +11,78 @@
   <entry>
     <title>Pandas筆記</title>
     <url>/2020/05/21/Pandas/</url>
-    <content><![CDATA[<h3 id="5-21-馬拉松第2天"><a href="#5-21-馬拉松第2天" class="headerlink" title="5/21 馬拉松第2天"></a>5/21 馬拉松第2天</h3><p>pandas document<br><a href="https://pandas.pydata.org/docs/pandas.pdf" target="_blank" rel="noopener">https://pandas.pydata.org/docs/pandas.pdf</a><br>資料科學家的 pandas 實戰手冊：掌握 40 個實用數據技巧<br><a href="https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html" target="_blank" rel="noopener">https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html</a></p>
-<p>安裝pandas</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install pandas</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h1><p>pandas document<br><a href="https://pandas.pydata.org/docs/pandas.pdf" target="_blank" rel="noopener">https://pandas.pydata.org/docs/pandas.pdf</a><br><a href="https://pandas.pydata.org/pandas-docs/stable/reference/index.html" target="_blank" rel="noopener">https://pandas.pydata.org/pandas-docs/stable/reference/index.html</a><br>資料科學家的 pandas 實戰手冊：掌握 40 個實用數據技巧<br><a href="https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html" target="_blank" rel="noopener">https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html</a></p>
+<h2 id="安裝pandas"><a href="#安裝pandas" class="headerlink" title="安裝pandas"></a>安裝pandas</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pip install pandas</span><br></pre></td></tr></table></figure>
 
-<p>新建DataFrame</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">dic &#x3D; &#123;&#39;weekday&#39;: [&#39;Sun&#39;, &#39;Sun&#39;, &#39;Mon&#39;, &#39;Mon&#39;],</span><br><span class="line">        &#39;city&#39;: [&#39;Austin&#39;, &#39;Dallas&#39;, &#39;Austin&#39;, &#39;Dallas&#39;],</span><br><span class="line">        &#39;visitor&#39;: [139, 237, 326, 456]&#125;</span><br><span class="line">visitor1 &#x3D; pd.DataFrame(dic)</span><br><span class="line">print(visitor1)</span><br></pre></td></tr></table></figure>
+<h2 id="新建DataFrame-document"><a href="#新建DataFrame-document" class="headerlink" title="新建DataFrame(document)"></a>新建DataFrame(<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">dic &#x3D; &#123;&#39;weekday&#39;: [&#39;Sun&#39;, &#39;Sun&#39;, &#39;Mon&#39;, &#39;Mon&#39;],</span><br><span class="line">        &#39;city&#39;: [&#39;Austin&#39;, &#39;Dallas&#39;, &#39;Austin&#39;, &#39;Dallas&#39;],</span><br><span class="line">        &#39;visitor&#39;: [139, 237, 326, 456]&#125;</span><br><span class="line">visitor1 &#x3D; pd.DataFrame(dic)</span><br><span class="line">print(visitor1)</span><br></pre></td></tr></table></figure>
 
-<p>讀取CSV檔案(excel)</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">app_train &#x3D; pd.read_csv(&#39;application_train.csv&#39;)</span><br><span class="line">print(app_train)</span><br></pre></td></tr></table></figure>
+<h2 id="讀取CSV-excel-檔案"><a href="#讀取CSV-excel-檔案" class="headerlink" title="讀取CSV(excel)檔案"></a>讀取CSV(excel)檔案</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">app_train &#x3D; pd.read_csv(&#39;application_train.csv&#39;)</span><br><span class="line">print(app_train)</span><br></pre></td></tr></table></figure>
+<p>其他類型讀取可看<br><a href="https://pandas.pydata.org/pandas-docs/stable/reference/io.html" target="_blank" rel="noopener">https://pandas.pydata.org/pandas-docs/stable/reference/io.html</a></p>
+<h2 id="如何知道資料的-row-數以及-column-數"><a href="#如何知道資料的-row-數以及-column-數" class="headerlink" title="如何知道資料的 row 數以及 column 數"></a>如何知道資料的 row 數以及 column 數</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 如何知道資料的 row 數以及 column 數</span><br><span class="line"># (row-count, column-count)</span><br><span class="line">app_train.shape</span><br></pre></td></tr></table></figure>
 
-<p>如何知道資料的 row 數以及 column 數</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 如何知道資料的 row 數以及 column 數</span><br><span class="line"># (row-count, column-count)</span><br><span class="line">app_train.shape</span><br></pre></td></tr></table></figure>
+<h2 id="有什麼欄位"><a href="#有什麼欄位" class="headerlink" title="有什麼欄位"></a>有什麼欄位</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 有什麼欄位, show出欄位名稱</span><br><span class="line">(r, c) &#x3D; app_train.axes</span><br><span class="line">print(c)</span><br><span class="line"># or</span><br><span class="line">print(app_train.columns)</span><br></pre></td></tr></table></figure>
 
-<p>有什麼欄位</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 有什麼欄位, show出欄位名稱</span><br><span class="line">(r, c) &#x3D; app_train.axes</span><br><span class="line">print(c)</span><br><span class="line"># or</span><br><span class="line">print(app_train.columns)</span><br></pre></td></tr></table></figure>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>.ix[::, ::] 可以（利用索引值或欄位）選擇 data frame 區段（axis=0)横向，(axis=1)列向<br>ps. 現已不推薦使用<br>.loc[label] 這是嚴格基於標籤的索引<br>.iloc[inte] 這是嚴格基於整數位置的索引</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app_train.loc[10:20,&#39;SK_ID_CURR&#39;:&#39;NAME_CONTRACT_TYPE&#39;]</span><br><span class="line"># or</span><br><span class="line">app_train.iloc[10:20,0:3]</span><br></pre></td></tr></table></figure>
 
-<p>.ix[::, ::] 可以（利用索引值或欄位）選擇 data frame 區段（axis=0)横向，(axis=1)列向<br>ps. 現已不推薦使用<br>.loc[label] 這是嚴格基於標籤的索引<br>.iloc[inte] 這是嚴格基於整數位置的索引</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app_train.loc[10:20,&#39;SK_ID_CURR&#39;:&#39;NAME_CONTRACT_TYPE&#39;]</span><br><span class="line"># or</span><br><span class="line">app_train.iloc[10:20,0:3]</span><br></pre></td></tr></table></figure>]]></content>
+<h2 id="One-Hot-Encoder-document"><a href="#One-Hot-Encoder-document" class="headerlink" title="One Hot Encoder : (document)"></a>One Hot Encoder : (<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html" target="_blank" rel="noopener">document</a>)</h2><p>轉換字串/類別類型的資料到數值的資料類型</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pd.get_dummies(df)</span><br></pre></td></tr></table></figure>
+<p>可針對想要執行的column做指定</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">pd.get_dummies(df.ColumnName)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「探索式資料分析」(Exploratory Data Analysis) 01</title>
+    <url>/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-01/</url>
+    <content><![CDATA[<h1 id="在看到一筆資料時，第一件事就是去了解它。"><a href="#在看到一筆資料時，第一件事就是去了解它。" class="headerlink" title="在看到一筆資料時，第一件事就是去了解它。"></a>在看到一筆資料時，第一件事就是去了解它。</h1><p>仔細研究kaggle的資料描述<br>看看有多少資料來源？資料的格式？資料間的關係？<br>資料欄位的意義？每列的意義？<br>有多少筆資料？多少個欄位？<br>有沒有遺失值等等？</p>
+<p></br></br></p>
+<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「探索式資料分析」(Exploratory Data Analysis) 02</title>
+    <url>/2020/05/22/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-02/</url>
+    <content><![CDATA[<h1 id="在初步-EDA-的過程，我們無可避免會想問的問題："><a href="#在初步-EDA-的過程，我們無可避免會想問的問題：" class="headerlink" title="在初步 EDA 的過程，我們無可避免會想問的問題："></a>在初步 EDA 的過程，我們無可避免會想問的問題：</h1><p>不同資料類型各有多少個欄位？</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app_train &#x3D; pd.read_csv(path)</span><br><span class="line">app_train.dtypes.value_counts()</span><br></pre></td></tr></table></figure>
+<p>類別型欄位 (pandas 中的 object) 的類別數量?</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app_train.select_dtypes(include&#x3D;[&quot;object&quot;]).apply(pd.Series.nunique, axis &#x3D; 0)</span><br></pre></td></tr></table></figure>
+<p>模型怎麼處理類別型的資料？有什麼表示方法？</p>
+<h2 id="欄位變數可分為"><a href="#欄位變數可分為" class="headerlink" title="欄位變數可分為:"></a>欄位變數可分為:</h2><ol>
+<li>離散變數：只能用整數單位計算的變數<br>如：性別(僅有男、女、雙性的選擇)</li>
+<li>連續變數：在一定區間可任意取值的變數<br>如：身高(可能在0~230，任意數)</li>
+</ol>
+<h2 id="DataFrame中常見資料類型分為："><a href="#DataFrame中常見資料類型分為：" class="headerlink" title="DataFrame中常見資料類型分為："></a>DataFrame中常見資料類型分為：</h2><ol>
+<li>int64 ： 離散、連續變數</li>
+<li>float64 ： 離散、連續變數</li>
+<li>object ： 類別型變數</li>
+</ol>
+<h2 id="字串-類別類型的資料，若需要轉換為數值的資料類型。"><a href="#字串-類別類型的資料，若需要轉換為數值的資料類型。" class="headerlink" title="字串/類別類型的資料，若需要轉換為數值的資料類型。"></a>字串/類別類型的資料，若需要轉換為數值的資料類型。</h2><p>常見轉換有兩種:</p>
+<ol>
+<li>Label encoding：使⽤用時機通常是該資料的不同類別是有序的<br>把每個類別 mapping 到某個整數，不會增加新欄位<br>如：年紀(老、中、小)有序，則設老1、中2、小3之類的</li>
+<li>One Hot encoding：使⽤用時機通常是該資料的不同類別是無序<br>為每個類別新增一個欄位，用 0/1 表示是否<br>如：國家，則設美國[1 0 0]’，日本[0 1 0]’，台灣[0 0 1]’之類 </li>
+</ol>
+<p>這兩種轉換法被包括在SciKit Learn library中<br>ps. Label encoding被ColumnTransformer給替代了 </p>
+<h3 id="Label-encoder"><a href="#Label-encoder" class="headerlink" title="Label encoder"></a>Label encoder</h3><p>把每個類別 mapping 到某個整數，不會增加新欄位</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.preprocessing import LabelEncoder</span><br><span class="line">labelencoder &#x3D; LabelEncoder()</span><br><span class="line">x[:, 0] &#x3D; labelencoder.fit_transform(x[:, 0])</span><br></pre></td></tr></table></figure>
+<p>存在的問題：被轉換的column並不具有關聯性，然而我們的model卻可能誤認為其中具有排序關係</p>
+<h3 id="One-Hot-Encoder"><a href="#One-Hot-Encoder" class="headerlink" title="One Hot Encoder"></a>One Hot Encoder</h3><p>若類別中無排序關係，則應使用OneHotEncoder<br>先將類別做Label Encoding，然後為各類別新增一個欄位，並以0s或1s表示</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line">onehotencoder &#x3D; OneHotEncoder(categorical_features &#x3D; [0])</span><br><span class="line">x &#x3D; onehotencoder.fit_transform(x).toarray()</span><br></pre></td></tr></table></figure>
+
+<h4 id="補充資料："><a href="#補充資料：" class="headerlink" title="補充資料："></a>補充資料：</h4><p>Label encoder Document<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html</a><br>One Hot Encoder<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html</a><br>Label encoding v.s. One Hot encoding<br><a href="https://medium.com/@contactsunny/label-encoder-vs-one-hot-encoder-in-machine-learning-3fc273365621" target="_blank" rel="noopener">https://medium.com/@contactsunny/label-encoder-vs-one-hot-encoder-in-machine-learning-3fc273365621</a></p>
+<p></br></br></p>
+<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a></p>
+]]></content>
       <categories>
         <category>程式筆記</category>
       </categories>
@@ -53,19 +107,6 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>「探索式資料分析」(Exploratory Data Analysis) </title>
-    <url>/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis/</url>
-    <content><![CDATA[<p>在看到一筆資料時，第一件事就是去了解它。</p>
-<p>仔細研究kaggle的資料描述<br>看看有多少資料來源？資料的格式？資料間的關係？<br>資料欄位的意義？每列的意義？<br>有多少筆資料？多少個欄位？<br>有沒有遺失值等等？</p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-      </tags>
   </entry>
   <entry>
     <title>為何建立需要dataframe</title>

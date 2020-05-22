@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="5&#x2F;21 馬拉松第2天pandas documenthttps:&#x2F;&#x2F;pandas.pydata.org&#x2F;docs&#x2F;pandas.pdf資料科學家的 pandas 實戰手冊：掌握 40 個實用數據技巧https:&#x2F;&#x2F;leemeng.tw&#x2F;practical-pandas-tutorial-for-aspiring-data-scientists.html 安裝pandas 1pip install">
+<meta name="description" content="Pandaspandas documenthttps:&#x2F;&#x2F;pandas.pydata.org&#x2F;docs&#x2F;pandas.pdfhttps:&#x2F;&#x2F;pandas.pydata.org&#x2F;pandas-docs&#x2F;stable&#x2F;reference&#x2F;index.html資料科學家的 pandas 實戰手冊：掌握 40 個實用數據技巧https:&#x2F;&#x2F;leemeng.tw&#x2F;practical-pandas-tutor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pandas筆記">
 <meta property="og:url" content="https://shoghilin.github.io/2020/05/21/Pandas/index.html">
-<meta property="og:site_name" content="MyBlog">
-<meta property="og:description" content="5&#x2F;21 馬拉松第2天pandas documenthttps:&#x2F;&#x2F;pandas.pydata.org&#x2F;docs&#x2F;pandas.pdf資料科學家的 pandas 實戰手冊：掌握 40 個實用數據技巧https:&#x2F;&#x2F;leemeng.tw&#x2F;practical-pandas-tutorial-for-aspiring-data-scientists.html 安裝pandas 1pip install">
+<meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="Pandaspandas documenthttps:&#x2F;&#x2F;pandas.pydata.org&#x2F;docs&#x2F;pandas.pdfhttps:&#x2F;&#x2F;pandas.pydata.org&#x2F;pandas-docs&#x2F;stable&#x2F;reference&#x2F;index.html資料科學家的 pandas 實戰手冊：掌握 40 個實用數據技巧https:&#x2F;&#x2F;leemeng.tw&#x2F;practical-pandas-tutor">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-05-21T12:22:04.000Z">
-<meta property="article:modified_time" content="2020-05-22T02:18:05.557Z">
+<meta property="article:modified_time" content="2020-05-22T15:39:50.664Z">
 <meta property="article:author" content="Shoghi">
 <meta property="article:tag" content="機器學習馬拉松筆記">
 <meta name="twitter:card" content="summary">
@@ -126,7 +126,7 @@
 
 
 
-  <title>Pandas筆記 | MyBlog</title>
+  <title>Pandas筆記 | Shoghi的隨手筆記</title>
   
 
 
@@ -156,7 +156,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">MyBlog</span>
+        <span class="site-title">Shoghi的隨手筆記</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -276,7 +276,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="MyBlog">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
     </span>
 
     
@@ -356,24 +356,24 @@
       
 
       
-        <h3 id="5-21-馬拉松第2天"><a href="#5-21-馬拉松第2天" class="headerlink" title="5/21 馬拉松第2天"></a>5/21 馬拉松第2天</h3><p>pandas document<br><a href="https://pandas.pydata.org/docs/pandas.pdf" target="_blank" rel="noopener">https://pandas.pydata.org/docs/pandas.pdf</a><br>資料科學家的 pandas 實戰手冊：掌握 40 個實用數據技巧<br><a href="https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html" target="_blank" rel="noopener">https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html</a></p>
-<p>安裝pandas</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pandas</span><br></pre></td></tr></table></figure>
+        <h1 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h1><p>pandas document<br><a href="https://pandas.pydata.org/docs/pandas.pdf" target="_blank" rel="noopener">https://pandas.pydata.org/docs/pandas.pdf</a><br><a href="https://pandas.pydata.org/pandas-docs/stable/reference/index.html" target="_blank" rel="noopener">https://pandas.pydata.org/pandas-docs/stable/reference/index.html</a><br>資料科學家的 pandas 實戰手冊：掌握 40 個實用數據技巧<br><a href="https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html" target="_blank" rel="noopener">https://leemeng.tw/practical-pandas-tutorial-for-aspiring-data-scientists.html</a></p>
+<h2 id="安裝pandas"><a href="#安裝pandas" class="headerlink" title="安裝pandas"></a>安裝pandas</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pandas</span><br></pre></td></tr></table></figure>
 
-<p>新建DataFrame</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">dic &#x3D; &#123;&#39;weekday&#39;: [&#39;Sun&#39;, &#39;Sun&#39;, &#39;Mon&#39;, &#39;Mon&#39;],</span><br><span class="line">        &#39;city&#39;: [&#39;Austin&#39;, &#39;Dallas&#39;, &#39;Austin&#39;, &#39;Dallas&#39;],</span><br><span class="line">        &#39;visitor&#39;: [139, 237, 326, 456]&#125;</span><br><span class="line">visitor1 &#x3D; pd.DataFrame(dic)</span><br><span class="line">print(visitor1)</span><br></pre></td></tr></table></figure>
+<h2 id="新建DataFrame-document"><a href="#新建DataFrame-document" class="headerlink" title="新建DataFrame(document)"></a>新建DataFrame(<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">dic &#x3D; &#123;&#39;weekday&#39;: [&#39;Sun&#39;, &#39;Sun&#39;, &#39;Mon&#39;, &#39;Mon&#39;],</span><br><span class="line">        &#39;city&#39;: [&#39;Austin&#39;, &#39;Dallas&#39;, &#39;Austin&#39;, &#39;Dallas&#39;],</span><br><span class="line">        &#39;visitor&#39;: [139, 237, 326, 456]&#125;</span><br><span class="line">visitor1 &#x3D; pd.DataFrame(dic)</span><br><span class="line">print(visitor1)</span><br></pre></td></tr></table></figure>
 
-<p>讀取CSV檔案(excel)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">app_train &#x3D; pd.read_csv(&#39;application_train.csv&#39;)</span><br><span class="line">print(app_train)</span><br></pre></td></tr></table></figure>
+<h2 id="讀取CSV-excel-檔案"><a href="#讀取CSV-excel-檔案" class="headerlink" title="讀取CSV(excel)檔案"></a>讀取CSV(excel)檔案</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">app_train &#x3D; pd.read_csv(&#39;application_train.csv&#39;)</span><br><span class="line">print(app_train)</span><br></pre></td></tr></table></figure>
+<p>其他類型讀取可看<br><a href="https://pandas.pydata.org/pandas-docs/stable/reference/io.html" target="_blank" rel="noopener">https://pandas.pydata.org/pandas-docs/stable/reference/io.html</a></p>
+<h2 id="如何知道資料的-row-數以及-column-數"><a href="#如何知道資料的-row-數以及-column-數" class="headerlink" title="如何知道資料的 row 數以及 column 數"></a>如何知道資料的 row 數以及 column 數</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 如何知道資料的 row 數以及 column 數</span><br><span class="line"># (row-count, column-count)</span><br><span class="line">app_train.shape</span><br></pre></td></tr></table></figure>
 
-<p>如何知道資料的 row 數以及 column 數</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 如何知道資料的 row 數以及 column 數</span><br><span class="line"># (row-count, column-count)</span><br><span class="line">app_train.shape</span><br></pre></td></tr></table></figure>
+<h2 id="有什麼欄位"><a href="#有什麼欄位" class="headerlink" title="有什麼欄位"></a>有什麼欄位</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 有什麼欄位, show出欄位名稱</span><br><span class="line">(r, c) &#x3D; app_train.axes</span><br><span class="line">print(c)</span><br><span class="line"># or</span><br><span class="line">print(app_train.columns)</span><br></pre></td></tr></table></figure>
 
-<p>有什麼欄位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 有什麼欄位, show出欄位名稱</span><br><span class="line">(r, c) &#x3D; app_train.axes</span><br><span class="line">print(c)</span><br><span class="line"># or</span><br><span class="line">print(app_train.columns)</span><br></pre></td></tr></table></figure>
-
-<p>.ix[::, ::] 可以（利用索引值或欄位）選擇 data frame 區段（axis=0)横向，(axis=1)列向<br>ps. 現已不推薦使用<br>.loc[label] 這是嚴格基於標籤的索引<br>.iloc[inte] 這是嚴格基於整數位置的索引</p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>.ix[::, ::] 可以（利用索引值或欄位）選擇 data frame 區段（axis=0)横向，(axis=1)列向<br>ps. 現已不推薦使用<br>.loc[label] 這是嚴格基於標籤的索引<br>.iloc[inte] 這是嚴格基於整數位置的索引</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app_train.loc[10:20,&#39;SK_ID_CURR&#39;:&#39;NAME_CONTRACT_TYPE&#39;]</span><br><span class="line"># or</span><br><span class="line">app_train.iloc[10:20,0:3]</span><br></pre></td></tr></table></figure>
+
+<h2 id="One-Hot-Encoder-document"><a href="#One-Hot-Encoder-document" class="headerlink" title="One Hot Encoder : (document)"></a>One Hot Encoder : (<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html" target="_blank" rel="noopener">document</a>)</h2><p>轉換字串/類別類型的資料到數值的資料類型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.get_dummies(df)</span><br></pre></td></tr></table></figure>
+<p>可針對想要執行的column做指定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.get_dummies(df.ColumnName)</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -403,8 +403,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis/" rel="next" title="「探索式資料分析」(Exploratory Data Analysis) ">
-                <i class="fa fa-chevron-left"></i> 「探索式資料分析」(Exploratory Data Analysis) 
+              <a href="/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-01/" rel="next" title="「探索式資料分析」(Exploratory Data Analysis) 01">
+                <i class="fa fa-chevron-left"></i> 「探索式資料分析」(Exploratory Data Analysis) 01
               </a>
             
           </div>
@@ -492,7 +492,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -575,7 +575,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-21-馬拉松第2天"><span class="nav-number">1.</span> <span class="nav-text">5&#x2F;21 馬拉松第2天</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pandas"><span class="nav-number">1.</span> <span class="nav-text">Pandas</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安裝pandas"><span class="nav-number">1.1.</span> <span class="nav-text">安裝pandas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新建DataFrame-document"><span class="nav-number">1.2.</span> <span class="nav-text">新建DataFrame(document)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讀取CSV-excel-檔案"><span class="nav-number">1.3.</span> <span class="nav-text">讀取CSV(excel)檔案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何知道資料的-row-數以及-column-數"><span class="nav-number">1.4.</span> <span class="nav-text">如何知道資料的 row 數以及 column 數</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有什麼欄位"><span class="nav-number">1.5.</span> <span class="nav-text">有什麼欄位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引"><span class="nav-number">1.6.</span> <span class="nav-text">索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#One-Hot-Encoder-document"><span class="nav-number">1.7.</span> <span class="nav-text">One Hot Encoder : (document)</span></a></li></ol></li></ol></div>
             
 
           </div>
