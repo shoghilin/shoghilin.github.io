@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="在初步 EDA 的過程，我們無可避免會想問的問題：不同資料類型各有多少個欄位？ 12app_train &#x3D; pd.read_csv(path)app_train.dtypes.value_counts() 類別型欄位 (pandas 中的 object) 的類別數量? 1app_train.select_dtypes(include&#x3D;[&quot;object&quot;]).">
+<meta name="description" content="統計量化的方式以單變量分析來來說，量化的分析方式可包含 計算集中趨勢 平均值 Mean 中位數 Median一組資料的中位數是指將資料從小到大排序後，最中間的數 眾數 Mode眾數指一組數據中出現次數最多的變數值  計算資料分散程度 最小值 Min  最大值 Max 範圍 Range  四分位差 Quartiles  變異數 Variance  標準差 $\sigma$ Standard devi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="「探索式資料分析」(Exploratory Data Analysis) 02">
-<meta property="og:url" content="https://shoghilin.github.io/2020/05/22/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-02/index.html">
+<meta property="og:title" content="「探索式資料分析」(Exploratory Data Analysis) 03">
+<meta property="og:url" content="https://shoghilin.github.io/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03/index.html">
 <meta property="og:site_name" content="Shoghi的隨手筆記">
-<meta property="og:description" content="在初步 EDA 的過程，我們無可避免會想問的問題：不同資料類型各有多少個欄位？ 12app_train &#x3D; pd.read_csv(path)app_train.dtypes.value_counts() 類別型欄位 (pandas 中的 object) 的類別數量? 1app_train.select_dtypes(include&#x3D;[&quot;object&quot;]).">
+<meta property="og:description" content="統計量化的方式以單變量分析來來說，量化的分析方式可包含 計算集中趨勢 平均值 Mean 中位數 Median一組資料的中位數是指將資料從小到大排序後，最中間的數 眾數 Mode眾數指一組數據中出現次數最多的變數值  計算資料分散程度 最小值 Min  最大值 Max 範圍 Range  四分位差 Quartiles  變異數 Variance  標準差 $\sigma$ Standard devi">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2020-05-22T15:45:56.000Z">
-<meta property="article:modified_time" content="2020-05-24T09:32:14.351Z">
+<meta property="article:published_time" content="2020-05-24T03:31:18.000Z">
+<meta property="article:modified_time" content="2020-05-24T09:32:05.001Z">
 <meta property="article:author" content="Shoghi">
 <meta property="article:tag" content="機器學習馬拉松筆記">
 <meta property="article:tag" content="EDA">
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://shoghilin.github.io/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02/"/>
+  <link rel="canonical" href="https://shoghilin.github.io/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03/"/>
 
 
 
 
 
-  <title>「探索式資料分析」(Exploratory Data Analysis) 02 | Shoghi的隨手筆記</title>
+  <title>「探索式資料分析」(Exploratory Data Analysis) 03 | Shoghi的隨手筆記</title>
   
 
 
@@ -268,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/05/22/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-02/">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Shoghi">
@@ -285,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">「探索式資料分析」(Exploratory Data Analysis) 02</h1>
+          <h1 class="post-title" itemprop="name headline">「探索式資料分析」(Exploratory Data Analysis) 03</h1>
         
 
         <div class="post-meta">
@@ -297,8 +297,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-22T23:45:56+08:00">
-                2020-05-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-24T11:31:18+08:00">
+                2020-05-24
               </time>
             
 
@@ -357,33 +357,26 @@
       
 
       
-        <h1 id="在初步-EDA-的過程，我們無可避免會想問的問題："><a href="#在初步-EDA-的過程，我們無可避免會想問的問題：" class="headerlink" title="在初步 EDA 的過程，我們無可避免會想問的問題："></a>在初步 EDA 的過程，我們無可避免會想問的問題：</h1><p>不同資料類型各有多少個欄位？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">app_train &#x3D; pd.read_csv(path)</span><br><span class="line">app_train.dtypes.value_counts()</span><br></pre></td></tr></table></figure>
-<p>類別型欄位 (pandas 中的 object) 的類別數量?</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app_train.select_dtypes(include&#x3D;[&quot;object&quot;]).apply(pd.Series.nunique, axis &#x3D; 0)</span><br></pre></td></tr></table></figure>
-<p>模型怎麼處理類別型的資料？有什麼表示方法？</p>
-<h2 id="欄位變數可分為"><a href="#欄位變數可分為" class="headerlink" title="欄位變數可分為:"></a>欄位變數可分為:</h2><ol>
-<li>離散變數：只能用整數單位計算的變數<br>如：性別(僅有男、女、雙性的選擇)</li>
-<li>連續變數：在一定區間可任意取值的變數<br>如：身高(可能在0~230，任意數)</li>
-</ol>
-<h2 id="DataFrame中常見資料類型分為："><a href="#DataFrame中常見資料類型分為：" class="headerlink" title="DataFrame中常見資料類型分為："></a>DataFrame中常見資料類型分為：</h2><ol>
-<li>int64 ： 離散、連續變數</li>
-<li>float64 ： 離散、連續變數</li>
-<li>object ： 類別型變數</li>
-</ol>
-<h2 id="字串-類別類型的資料，若需要轉換為數值的資料類型。"><a href="#字串-類別類型的資料，若需要轉換為數值的資料類型。" class="headerlink" title="字串/類別類型的資料，若需要轉換為數值的資料類型。"></a>字串/類別類型的資料，若需要轉換為數值的資料類型。</h2><p>常見轉換有兩種:</p>
-<ol>
-<li>Label encoding：使用時機通常是該資料的不同類別是有序的<br>把每個類別 mapping 到某個整數，不會增加新欄位<br>如：年紀(老、中、小)有序，則設老1、中2、小3之類的</li>
-<li>One Hot encoding：使用時機通常是該資料的不同類別是無序<br>為每個類別新增一個欄位，用 0/1 表示是否<br>如：國家，則設美國[1 0 0]’，日本[0 1 0]’，台灣[0 0 1]’之類 </li>
-</ol>
-<p>這兩種轉換法被包括在SciKit Learn library中<br>ps. Label encoding被ColumnTransformer給替代了 </p>
-<h3 id="Label-encoder"><a href="#Label-encoder" class="headerlink" title="Label encoder"></a>Label encoder</h3><p>把每個類別 mapping 到某個整數，不會增加新欄位</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import LabelEncoder</span><br><span class="line">labelencoder &#x3D; LabelEncoder()</span><br><span class="line">x[:, 0] &#x3D; labelencoder.fit_transform(x[:, 0])</span><br></pre></td></tr></table></figure>
-<p>存在的問題：被轉換的column並不具有關聯性，然而我們的model卻可能誤認為其中具有排序關係</p>
-<h3 id="One-Hot-Encoder"><a href="#One-Hot-Encoder" class="headerlink" title="One Hot Encoder"></a>One Hot Encoder</h3><p>若類別中無排序關係，則應使用OneHotEncoder<br>先將類別做Label Encoding，然後為各類別新增一個欄位，並以0s或1s表示</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line">onehotencoder &#x3D; OneHotEncoder(categorical_features &#x3D; [0])</span><br><span class="line">x &#x3D; onehotencoder.fit_transform(x).toarray()</span><br></pre></td></tr></table></figure>
-
-<h4 id="補充資料："><a href="#補充資料：" class="headerlink" title="補充資料："></a>補充資料：</h4><p>Label encoder Document<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html</a><br>One Hot Encoder<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html</a><br>Label encoding v.s. One Hot encoding<br><a href="https://medium.com/@contactsunny/label-encoder-vs-one-hot-encoder-in-machine-learning-3fc273365621" target="_blank" rel="noopener">https://medium.com/@contactsunny/label-encoder-vs-one-hot-encoder-in-machine-learning-3fc273365621</a></p>
+        <h1 id="統計量化的方式"><a href="#統計量化的方式" class="headerlink" title="統計量化的方式"></a>統計量化的方式</h1><p>以單變量分析來來說，量化的分析方式可包含</p>
+<h2 id="計算集中趨勢"><a href="#計算集中趨勢" class="headerlink" title="計算集中趨勢"></a>計算集中趨勢</h2><ul>
+<li><strong>平均值 Mean</strong></li>
+<li><strong>中位數 Median</strong><br>一組資料的中位數是指將資料從小到大排序後，最中間的數</li>
+<li><strong>眾數 Mode</strong><br>眾數指一組數據中出現次數最多的變數值</li>
+</ul>
+<h2 id="計算資料分散程度"><a href="#計算資料分散程度" class="headerlink" title="計算資料分散程度"></a>計算資料分散程度</h2><ul>
+<li><strong>最小值 Min</strong> </li>
+<li><strong>最大值 Max</strong></li>
+<li><strong>範圍 Range</strong> </li>
+<li><strong>四分位差 Quartiles</strong> </li>
+<li><strong>變異數 Variance</strong> </li>
+<li><strong>標準差 $\sigma$ Standard deviation</strong></li>
+</ul>
+<h3 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h3><p>Descriptive Statistics For pandas Dataframe<br><a href="https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/" target="_blank" rel="noopener">https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/</a></p>
+<h1 id="EDA視覺化"><a href="#EDA視覺化" class="headerlink" title="EDA視覺化"></a>EDA視覺化</h1><p>除了數字，視覺化也是一種很好觀察資料分佈的方式</p>
+<h2 id="常用的視覺化套件-內有許多範例，沒靈感可用-有"><a href="#常用的視覺化套件-內有許多範例，沒靈感可用-有" class="headerlink" title="常用的視覺化套件(內有許多範例，沒靈感可用)有"></a>常用的視覺化套件(內有許多範例，沒靈感可用)有</h2><ul>
+<li><a href="https://matplotlib.org/gallery/index.html" target="_blank" rel="noopener">matplotlib</a></li>
+<li><a href="https://seaborn.pydata.org/examples/index.html" target="_blank" rel="noopener">seaborn</a></li>
+</ul>
 <p></br></br></p>
 <h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
 <h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
@@ -419,8 +412,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/21/%E7%82%BA%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%9C%80%E8%A6%81dataframe/" rel="next" title="為何建立需要dataframe">
-                <i class="fa fa-chevron-left"></i> 為何建立需要dataframe
+              <a href="/2020/05/24/%E8%B3%87%E6%96%99%E5%B9%B3%E6%BB%91%E8%99%95%E7%90%86/" rel="next" title="資料平滑處理">
+                <i class="fa fa-chevron-left"></i> 資料平滑處理
               </a>
             
           </div>
@@ -429,8 +422,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/" rel="prev" title="資料中常見的特徵類型">
-                資料中常見的特徵類型 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/05/24/%E9%AB%98%E6%96%AF%E5%88%86%E4%BD%88/" rel="prev" title="高斯分佈">
+                高斯分佈 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -591,7 +584,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在初步-EDA-的過程，我們無可避免會想問的問題："><span class="nav-number">1.</span> <span class="nav-text">在初步 EDA 的過程，我們無可避免會想問的問題：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#欄位變數可分為"><span class="nav-number">1.1.</span> <span class="nav-text">欄位變數可分為:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataFrame中常見資料類型分為："><span class="nav-number">1.2.</span> <span class="nav-text">DataFrame中常見資料類型分為：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字串-類別類型的資料，若需要轉換為數值的資料類型。"><span class="nav-number">1.3.</span> <span class="nav-text">字串&#x2F;類別類型的資料，若需要轉換為數值的資料類型。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Label-encoder"><span class="nav-number">1.3.1.</span> <span class="nav-text">Label encoder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#One-Hot-Encoder"><span class="nav-number">1.3.2.</span> <span class="nav-text">One Hot Encoder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#補充資料："><span class="nav-number">1.3.2.1.</span> <span class="nav-text">補充資料：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#「探索式資料分析」-EDA-相關："><span class="nav-number">2.</span> <span class="nav-text">「探索式資料分析」(EDA)相關：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#library介紹"><span class="nav-number">3.</span> <span class="nav-text">library介紹</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#統計量化的方式"><span class="nav-number">1.</span> <span class="nav-text">統計量化的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#計算集中趨勢"><span class="nav-number">1.1.</span> <span class="nav-text">計算集中趨勢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#計算資料分散程度"><span class="nav-number">1.2.</span> <span class="nav-text">計算資料分散程度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#補充"><span class="nav-number">1.2.1.</span> <span class="nav-text">補充</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EDA視覺化"><span class="nav-number">2.</span> <span class="nav-text">EDA視覺化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的視覺化套件-內有許多範例，沒靈感可用-有"><span class="nav-number">2.1.</span> <span class="nav-text">常用的視覺化套件(內有許多範例，沒靈感可用)有</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#「探索式資料分析」-EDA-相關："><span class="nav-number">3.</span> <span class="nav-text">「探索式資料分析」(EDA)相關：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#library介紹"><span class="nav-number">4.</span> <span class="nav-text">library介紹</span></a></li></ol></div>
             
 
           </div>
@@ -1108,6 +1101,25 @@
   
 
   
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
   
 
   
