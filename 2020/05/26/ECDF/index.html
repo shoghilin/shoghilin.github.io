@@ -79,13 +79,20 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Shoghi的隨手筆記">
-<meta property="og:url" content="https://shoghilin.github.io/tags/EDA/index.html">
+<meta name="description" content="ECDF (experience empirical distribution function)ECDF 最主要的目的是希望看到資料的累積分布，y 軸是介於 0-1 的數字 (代表累積比例)，x 軸則是資料的實際數值分布。透過 ECDF，我們可以很快看出我們有興趣的資料數值約占多少比例，並觀察圖形差異而CDF跟ECDF的差別就是，CDF 是從理論函數來的，ECDF 則是由觀察值所得到的，因此CD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ECDF">
+<meta property="og:url" content="https://shoghilin.github.io/2020/05/26/ECDF/index.html">
 <meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="ECDF (experience empirical distribution function)ECDF 最主要的目的是希望看到資料的累積分布，y 軸是介於 0-1 的數字 (代表累積比例)，x 軸則是資料的實際數值分布。透過 ECDF，我們可以很快看出我們有興趣的資料數值約占多少比例，並觀察圖形差異而CDF跟ECDF的差別就是，CDF 是從理論函數來的，ECDF 則是由觀察值所得到的，因此CD">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/1/17/Empirical_CDF.png">
+<meta property="og:image" content="http://kwassistfile.cupoy.com/0000016A66C4BF1500000C7D6375706F795F72656C65617365414E53/1545817738326/large">
+<meta property="article:published_time" content="2020-05-26T11:47:59.000Z">
+<meta property="article:modified_time" content="2020-05-26T12:15:52.760Z">
 <meta property="article:author" content="Shoghi">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/1/17/Empirical_CDF.png">
 
 
 
@@ -115,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://shoghilin.github.io/tags/EDA/"/>
+  <link rel="canonical" href="https://shoghilin.github.io/2020/05/26/ECDF/"/>
 
 
 
 
 
-  <title>Tag: EDA | Shoghi的隨手筆記</title>
+  <title>ECDF | Shoghi的隨手筆記</title>
   
 
 
@@ -140,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -248,138 +255,155 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>EDA<small>Tag</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/05/26/ECDF/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/" itemprop="url">
-              
-                <span itemprop="name">「探索式資料分析」-Exploratory-Data-Analysis-04(outliers)</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">ECDF</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-26T17:24:13+08:00"
-              content="2020-05-26" >
-          05-26
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-26T19:47:59+08:00">
+                2020-05-26
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03/" itemprop="url">
-              
-                <span itemprop="name">「探索式資料分析」(Exploratory Data Analysis) 03</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-24T11:31:18+08:00"
-              content="2020-05-24" >
-          05-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/22/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-02/" itemprop="url">
-              
-                <span itemprop="name">「探索式資料分析」(Exploratory Data Analysis) 02</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-22T23:45:56+08:00"
-              content="2020-05-22" >
-          05-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-01/" itemprop="url">
-              
-                <span itemprop="name">「探索式資料分析」(Exploratory Data Analysis) 01</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2020-05-21T20:18:57+08:00"
-              content="2020-05-21" >
-          05-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <h1 id="ECDF-experience-empirical-distribution-function"><a href="#ECDF-experience-empirical-distribution-function" class="headerlink" title="ECDF (experience empirical distribution function)"></a>ECDF (experience empirical distribution function)</h1><p>ECDF 最主要的目的是希望看到資料的累積分布，y 軸是介於 0-1 的數字 (代表累積比例)，x 軸則是資料的實際數值分布。<br>透過 ECDF，我們可以很快看出我們有興趣的資料數值約占多少比例，並觀察圖形差異<br>而CDF跟ECDF的差別就是，CDF 是從理論函數來的，ECDF 則是由觀察值所得到的，因此CDF看起來較為平滑，ECDF則較多曲折。<br><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Empirical_CDF.png" alt="ECDF"><br>以馬拉松Day9為例子，找出 AMT_INCOME_TOTAL 的ECDF</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cdf &#x3D; app_train[&#39;AMT_INCOME_TOTAL&#39;].value_counts().sort_index().cumsum()</span><br></pre></td></tr></table></figure>
+<p>通過數出各項數總量，重新排列後，累加起來</p>
+<p>把圖畫出來</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(list(cdf.index), cdf&#x2F;cdf.max())</span><br><span class="line">plt.xlabel(&#39;Value&#39;)</span><br><span class="line">plt.ylabel(&#39;ECDF&#39;)</span><br><span class="line">plt.xlim([cdf.index.min(), cdf.index.max() * 1.05]) # 限制顯示圖片的範圍</span><br><span class="line">plt.ylim([-0.05,1.05]) # 限制顯示圖片的範圍</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="http://kwassistfile.cupoy.com/0000016A66C4BF1500000C7D6375706F795F72656C65617365414E53/1545817738326/large" alt="ECDF"><br>很明顯的圖跟我們期望的不一樣，因此數據中可能是含有異常的(可用log來調整)</p>
+<p>ps.<br>發現以下兩種情境可使用log調整：</p>
+<ol>
+<li>資料範圍太大，可以縮小一點</li>
+<li>資料偏態嚴重，可以集中一點</li>
+</ol>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/" rel="next" title="「探索式資料分析」-Exploratory-Data-Analysis-04(outliers)">
+                <i class="fa fa-chevron-left"></i> 「探索式資料分析」-Exploratory-Data-Analysis-04(outliers)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/27/sklearn/" rel="prev" title="sklearn">
+                sklearn <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -387,6 +411,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -407,8 +435,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -496,6 +533,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ECDF-experience-empirical-distribution-function"><span class="nav-number">1.</span> <span class="nav-text">ECDF (experience empirical distribution function)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -629,6 +682,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
