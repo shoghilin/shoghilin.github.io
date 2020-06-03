@@ -28,60 +28,40 @@
       </tags>
   </entry>
   <entry>
+    <title>EDA:correlation/相關係數</title>
+    <url>/2020/05/30/EDA-correlation-%E7%9B%B8%E9%97%9C%E4%BF%82%E6%95%B8/</url>
+    <content><![CDATA[<h1 id="相關係數"><a href="#相關係數" class="headerlink" title="相關係數"></a>相關係數</h1><h2 id="何謂相關係數"><a href="#何謂相關係數" class="headerlink" title="何謂相關係數"></a>何謂相關係數</h2><p>相關係數是其中一個常用來了解各個欄位與我們想要預測的目標之間的關係的指標。<br>公式為</p>
+<center>$ r = \frac {1}{n-1}\sum_{i=1}^n {(\frac{x_i - x'}{s_x})}{(\frac{y_i - y'}{s_y})}$</center>
+</br>
+如果我們想要了解兩個變數之間的線性關係時，相關係數就會是一個還不錯的簡單方法
+他會產生介於 -1～1 之間的值，負值代表負相關，正值代表正相關，而數值的大小代表相關性的強度，通常會搭配散佈圖scatter
+如：
+* 00-.19: 非常弱相關
+* .20-.39: 弱相關
+* .40-.59: 中度相關
+* .60-.79: 強相關
+* .80-1.0: 非常強相關
+
+<h3 id="python中使用"><a href="#python中使用" class="headerlink" title="python中使用"></a>python中使用</h3><pre><code>np.corrcoef(x, y)
+&gt;&gt;
+[x跟x的相關係數, x跟y的相關係數]
+[y跟x的相關係數, y跟y的相關係數]</code></pre><p><a href="http://guessthecorrelation.com/" target="_blank" rel="noopener">相關係數小遊戲</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>My New Post</title>
     <url>/2020/05/21/My-New-Post/</url>
     <content><![CDATA[<p>I just trying to start my blog for coding note.<br>just for recording my learning path! XD</p>
 <p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
 <p>try upload same time</p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/05/21/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>numpy</title>
-    <url>/2020/05/23/numpy/</url>
-    <content><![CDATA[<h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><p>numpy document<br><a href="https://numpy.org/doc/1.18/reference/index.html" target="_blank" rel="noopener">https://numpy.org/doc/1.18/reference/index.html</a></p>
-<p>##下載Numpy</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose</span><br></pre></td></tr></table></figure>
-
-<h2 id="資料平滑處理-—-log1p-和exmp1"><a href="#資料平滑處理-—-log1p-和exmp1" class="headerlink" title="資料平滑處理 —- log1p()和exmp1()"></a>資料平滑處理 —- log1p()和exmp1()</h2><p><a href="https://numpy.org/doc/1.18/reference/generated/numpy.log1p.html" target="_blank" rel="noopener">log1p() document</a><br><a href="https://numpy.org/doc/1.18/reference/generated/numpy.expm1.html#numpy.expm1" target="_blank" rel="noopener">exmp1() document</a></p>
-<p>log1p( ) 的使用就像是一個數據壓縮到了一個區間，與資料的標準類似。其逆運算就是expm1的函式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">log1p :&#x3D; log(x+1)      即ln(x+1)</span><br><span class="line">expm1 :&#x3D; exp(x)-1</span><br></pre></td></tr></table></figure>
-<p>Example(log1p):</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">np.log1p(1e-99)</span><br><span class="line">1e-99</span><br><span class="line">np.log(1 + 1e-99)</span><br><span class="line">0.0</span><br></pre></td></tr></table></figure>
-<p>Example(exmp1):</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">np.expm1(1e-10)</span><br><span class="line">1.00000000005e-10</span><br><span class="line">np.exp(1e-10) - 1</span><br><span class="line">1.000000082740371e-10</span><br></pre></td></tr></table></figure>
-<h3 id="補充："><a href="#補充：" class="headerlink" title="補充："></a>補充：</h3><p><a href="/2020/05/24/資料平滑處理">資料平滑處理</a></p>
-<h2 id="限制array的值於特定範圍-clip-document"><a href="#限制array的值於特定範圍-clip-document" class="headerlink" title="限制array的值於特定範圍 clip (document)"></a>限制array的值於特定範圍 clip (<a href="https://numpy.org/doc/1.18/reference/generated/numpy.clip.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.clip(a, a_min, a_max, out&#x3D;None, **kwargs)</span><br></pre></td></tr></table></figure>
-<p>Example:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a &#x3D; np.arange(10)</span><br><span class="line">a</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</span><br><span class="line"></span><br><span class="line">np.clip(a, 1, 8)</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([1, 1, 2, 3, 4, 5, 6, 7, 8, 8])</span><br></pre></td></tr></table></figure>
-
-<h2 id="計算一個多維數組的任意百分比分位數-percentile-document"><a href="#計算一個多維數組的任意百分比分位數-percentile-document" class="headerlink" title="計算一個多維數組的任意百分比分位數 percentile(document)"></a>計算一個多維數組的任意百分比分位數 percentile(<a href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.percentile(a, q, axis&#x3D;None, out&#x3D;None, overwrite_input&#x3D;False, interpolation&#x3D;&#39;linear&#39;, keepdims&#x3D;False)</span><br></pre></td></tr></table></figure>
-<p>Example:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a &#x3D; np.array([[10, 7, 4], [3, 2, 1]])</span><br><span class="line">a</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([[10,  7,  4],</span><br><span class="line">       [ 3,  2,  1]])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">np.percentile(a, 50)   # (4+3)&#x2F;2&#x3D;3.5</span><br><span class="line">&gt;&gt;</span><br><span class="line">3.5</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>library</tag>
-      </tags>
   </entry>
   <entry>
     <title>Pandas筆記</title>
@@ -189,6 +169,93 @@
       </tags>
   </entry>
   <entry>
+    <title>Kernel-Density-Estimation</title>
+    <url>/2020/05/31/Kernel-Density-Estimation/</url>
+    <content><![CDATA[<h1 id="Kernel-Density-Estimation-KDE"><a href="#Kernel-Density-Estimation-KDE" class="headerlink" title="Kernel Density Estimation (KDE)"></a>Kernel Density Estimation (KDE)</h1><h2 id="什麼是KDE"><a href="#什麼是KDE" class="headerlink" title="什麼是KDE"></a>什麼是KDE</h2><p>KDE是採⽤<a href="https://zh.wikipedia.org/wiki/%E7%84%A1%E6%AF%8D%E6%95%B8%E7%B5%B1%E8%A8%88" target="_blank" rel="noopener">無⺟數⽅法</a>畫出⼀個觀察變數的機率密度函數，其中kernel在“非參數估計”的語境下，“kernel”是一個函數，用來提供權重。例如高斯函數 (Gaussian) 就是一個常用的<a href="https://ithelp.ithome.com.tw/articles/10195497" target="_blank" rel="noopener">kernel function</a>。</p>
+<h3 id="Density-plot-的特性"><a href="#Density-plot-的特性" class="headerlink" title="Density plot 的特性"></a>Density plot 的特性</h3><ul>
+<li>歸⼀：線下 ⾯積和為 1</li>
+<li>對稱：K(-u) = K(u)</li>
+</ul>
+<h3 id="常⽤的-Kernel-function"><a href="#常⽤的-Kernel-function" class="headerlink" title="常⽤的 Kernel function"></a>常⽤的 Kernel function</h3><ul>
+<li>Gaussian (Normal dist)</li>
+<li>Cosine</li>
+</ul>
+<h3 id="優缺點"><a href="#優缺點" class="headerlink" title="優缺點"></a>優缺點</h3><h4 id="優點："><a href="#優點：" class="headerlink" title="優點："></a>優點：</h4><ul>
+<li>無母數方法，分布沒有假設</li>
+</ul>
+<h4 id="缺點："><a href="#缺點：" class="headerlink" title="缺點："></a>缺點：</h4><ul>
+<li>計算量大</li>
+</ul>
+<h3 id="寫法"><a href="#寫法" class="headerlink" title="寫法"></a>寫法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># KDE, 比較不同的 kernel function</span><br><span class="line">s</span><br><span class="line"># kernel &#x3D; &#39;gau&#39; : gaussian estimate</span><br><span class="line">sns.kdeplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 0, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;Gaussian esti.&#39;, kernel&#x3D;&#39;gau&#39;)</span><br><span class="line"></span><br><span class="line"># kernel &#x3D; &#39;cos&#39; : cosine estimate</span><br><span class="line">sns.kdeplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 0, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;Cosine esti.&#39;, kernel&#x3D;&#39;cos&#39;)</span><br><span class="line"></span><br><span class="line"># kernel &#x3D; &#39;tri&#39; : triangular estimate</span><br><span class="line">sns.kdeplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 0, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;Triangular esti.&#39;, kernel&#x3D;&#39;tri&#39;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h4 id="p-s"><a href="#p-s" class="headerlink" title="p.s."></a>p.s.</h4><p>distplot可以將barplot和kdeplot同時呈現</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 完整分布圖 (distplot) : 將 bar 與 Kde 同時呈現</span><br><span class="line">sns.distplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 1, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;target &#x3D;&#x3D; 1&#39;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>核密度估计（kernel density estimation）<br><a href="https://lotabout.me/2018/kernel-density-estimation/" target="_blank" rel="noopener">https://lotabout.me/2018/kernel-density-estimation/</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/05/21/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>numpy</title>
+    <url>/2020/05/23/numpy/</url>
+    <content><![CDATA[<h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><p>numpy document<br><a href="https://numpy.org/doc/1.18/reference/index.html" target="_blank" rel="noopener">https://numpy.org/doc/1.18/reference/index.html</a></p>
+<p>##下載Numpy</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose</span><br></pre></td></tr></table></figure>
+
+<h2 id="資料平滑處理-—-log1p-和exmp1"><a href="#資料平滑處理-—-log1p-和exmp1" class="headerlink" title="資料平滑處理 —- log1p()和exmp1()"></a>資料平滑處理 —- log1p()和exmp1()</h2><p><a href="https://numpy.org/doc/1.18/reference/generated/numpy.log1p.html" target="_blank" rel="noopener">log1p() document</a><br><a href="https://numpy.org/doc/1.18/reference/generated/numpy.expm1.html#numpy.expm1" target="_blank" rel="noopener">exmp1() document</a></p>
+<p>log1p( ) 的使用就像是一個數據壓縮到了一個區間，與資料的標準類似。其逆運算就是expm1的函式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">log1p :&#x3D; log(x+1)      即ln(x+1)</span><br><span class="line">expm1 :&#x3D; exp(x)-1</span><br></pre></td></tr></table></figure>
+<p>Example(log1p):</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">np.log1p(1e-99)</span><br><span class="line">1e-99</span><br><span class="line">np.log(1 + 1e-99)</span><br><span class="line">0.0</span><br></pre></td></tr></table></figure>
+<p>Example(exmp1):</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">np.expm1(1e-10)</span><br><span class="line">1.00000000005e-10</span><br><span class="line">np.exp(1e-10) - 1</span><br><span class="line">1.000000082740371e-10</span><br></pre></td></tr></table></figure>
+<h3 id="補充："><a href="#補充：" class="headerlink" title="補充："></a>補充：</h3><p><a href="/2020/05/24/資料平滑處理">資料平滑處理</a></p>
+<h2 id="限制array的值於特定範圍-clip-document"><a href="#限制array的值於特定範圍-clip-document" class="headerlink" title="限制array的值於特定範圍 clip (document)"></a>限制array的值於特定範圍 clip (<a href="https://numpy.org/doc/1.18/reference/generated/numpy.clip.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.clip(a, a_min, a_max, out&#x3D;None, **kwargs)</span><br></pre></td></tr></table></figure>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a &#x3D; np.arange(10)</span><br><span class="line">a</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</span><br><span class="line"></span><br><span class="line">np.clip(a, 1, 8)</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([1, 1, 2, 3, 4, 5, 6, 7, 8, 8])</span><br></pre></td></tr></table></figure>
+
+<h2 id="計算一個多維數組的任意百分比分位數-percentile-document"><a href="#計算一個多維數組的任意百分比分位數-percentile-document" class="headerlink" title="計算一個多維數組的任意百分比分位數 percentile(document)"></a>計算一個多維數組的任意百分比分位數 percentile(<a href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.percentile(a, q, axis&#x3D;None, out&#x3D;None, overwrite_input&#x3D;False, interpolation&#x3D;&#39;linear&#39;, keepdims&#x3D;False)</span><br></pre></td></tr></table></figure>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a &#x3D; np.array([[10, 7, 4], [3, 2, 1]])</span><br><span class="line">a</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([[10,  7,  4],</span><br><span class="line">       [ 3,  2,  1]])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">np.percentile(a, 50)   # (4+3)&#x2F;2&#x3D;3.5</span><br><span class="line">&gt;&gt;</span><br><span class="line">3.5</span><br></pre></td></tr></table></figure>
+
+<h2 id="相關矩陣函數-corrcoef"><a href="#相關矩陣函數-corrcoef" class="headerlink" title="相關矩陣函數 (corrcoef)"></a>相關矩陣函數 (corrcoef)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.corrcoef(x, y&#x3D;None, rowvar&#x3D;True, bias&#x3D;&lt;no value&gt;, ddof&#x3D;&lt;no value&gt;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="取區間-linspace-document"><a href="#取區間-linspace-document" class="headerlink" title="取區間 linspace(document)"></a>取區間 linspace(<a href="https://numpy.org/doc/stable/reference/generated/numpy.linspace.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.linspace(start, stop, num&#x3D;50, endpoint&#x3D;True, retstep&#x3D;False, dtype&#x3D;None, axis&#x3D;0)</span><br></pre></td></tr></table></figure>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">np.linspace(10,20,11)</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([20., 25., 30., 35., 40., 45., 50., 55., 60., 65., 70.])</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>library</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>sklearn</title>
     <url>/2020/05/27/sklearn/</url>
     <content><![CDATA[<h2 id="LinearRegression"><a href="#LinearRegression" class="headerlink" title="LinearRegression()"></a>LinearRegression()</h2><p>document<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html</a><br>machine learning 下的 Linear Regression 實作(使用python)<br><a href="https://medium.com/@jacky308082/machine-learning-%E4%B8%8B%E7%9A%84-linear-regression-%E5%AF%A6%E4%BD%9C-%E4%BD%BF%E7%94%A8python-7e1dd03a4d46" target="_blank" rel="noopener">https://medium.com/@jacky308082/machine-learning-%E4%B8%8B%E7%9A%84-linear-regression-%E5%AF%A6%E4%BD%9C-%E4%BD%BF%E7%94%A8python-7e1dd03a4d46</a></p>
@@ -262,6 +329,41 @@
       </tags>
   </entry>
   <entry>
+    <title>「探索式資料分析」(Exploratory Data Analysis) 03</title>
+    <url>/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03/</url>
+    <content><![CDATA[<h1 id="統計量化的方式"><a href="#統計量化的方式" class="headerlink" title="統計量化的方式"></a>統計量化的方式</h1><p>以單變量分析來來說，量化的分析方式可包含</p>
+<h2 id="計算集中趨勢"><a href="#計算集中趨勢" class="headerlink" title="計算集中趨勢"></a>計算集中趨勢</h2><ul>
+<li><strong>平均值 Mean</strong></li>
+<li><strong>中位數 Median</strong><br>一組資料的中位數是指將資料從小到大排序後，最中間的數</li>
+<li><strong>眾數 Mode</strong><br>眾數指一組數據中出現次數最多的變數值</li>
+</ul>
+<h2 id="計算資料分散程度"><a href="#計算資料分散程度" class="headerlink" title="計算資料分散程度"></a>計算資料分散程度</h2><ul>
+<li><strong>最小值 Min</strong> </li>
+<li><strong>最大值 Max</strong></li>
+<li><strong>範圍 Range</strong> </li>
+<li><strong>四分位差 Quartiles</strong> </li>
+<li><strong>變異數 Variance</strong> </li>
+<li><strong>標準差 $\sigma$ Standard deviation</strong></li>
+</ul>
+<h3 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h3><p>Descriptive Statistics For pandas Dataframe<br><a href="https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/" target="_blank" rel="noopener">https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/</a></p>
+<h1 id="EDA視覺化"><a href="#EDA視覺化" class="headerlink" title="EDA視覺化"></a>EDA視覺化</h1><p>除了數字，視覺化也是一種很好觀察資料分佈的方式</p>
+<h2 id="常用的視覺化套件-內有許多範例，沒靈感可用-有"><a href="#常用的視覺化套件-內有許多範例，沒靈感可用-有" class="headerlink" title="常用的視覺化套件(內有許多範例，沒靈感可用)有"></a>常用的視覺化套件(內有許多範例，沒靈感可用)有</h2><ul>
+<li><a href="https://matplotlib.org/gallery/index.html" target="_blank" rel="noopener">matplotlib</a></li>
+<li><a href="https://seaborn.pydata.org/examples/index.html" target="_blank" rel="noopener">seaborn</a></li>
+</ul>
+<p></br></br></p>
+<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
+<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>「探索式資料分析」-Exploratory-Data-Analysis-04(outliers)</title>
     <url>/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/</url>
     <content><![CDATA[<h1 id="離群值-Outlier-及其處理理"><a href="#離群值-Outlier-及其處理理" class="headerlink" title="離群值(Outlier)及其處理理"></a>離群值(Outlier)及其處理理</h1><h2 id="何謂離群值-Outlier"><a href="#何謂離群值-Outlier" class="headerlink" title="何謂離群值(Outlier)"></a>何謂離群值(Outlier)</h2><p>離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 / 最小最大化)就會出現很大的問題</p>
@@ -295,38 +397,23 @@
       </tags>
   </entry>
   <entry>
-    <title>「探索式資料分析」(Exploratory Data Analysis) 03</title>
-    <url>/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03/</url>
-    <content><![CDATA[<h1 id="統計量化的方式"><a href="#統計量化的方式" class="headerlink" title="統計量化的方式"></a>統計量化的方式</h1><p>以單變量分析來來說，量化的分析方式可包含</p>
-<h2 id="計算集中趨勢"><a href="#計算集中趨勢" class="headerlink" title="計算集中趨勢"></a>計算集中趨勢</h2><ul>
-<li><strong>平均值 Mean</strong></li>
-<li><strong>中位數 Median</strong><br>一組資料的中位數是指將資料從小到大排序後，最中間的數</li>
-<li><strong>眾數 Mode</strong><br>眾數指一組數據中出現次數最多的變數值</li>
+    <title>為何建立需要dataframe</title>
+    <url>/2020/05/21/%E7%82%BA%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%9C%80%E8%A6%81dataframe/</url>
+    <content><![CDATA[<h1 id="為甚麼需要新建dataframe"><a href="#為甚麼需要新建dataframe" class="headerlink" title="為甚麼需要新建dataframe"></a>為甚麼需要新建dataframe</h1><ol>
+<li>需要將分析過程中產生的數據或結果儲存為結構性資料</li>
+<li>當資料過於複雜時，可簡化資料做程式測試</li>
+</ol>
+<h2 id="不同的資料有不同讀取⽅方式"><a href="#不同的資料有不同讀取⽅方式" class="headerlink" title="不同的資料有不同讀取⽅方式"></a>不同的資料有不同讀取⽅方式</h2><ul>
+<li>文字格式通常可以⽤ with open()</li>
+<li>圖像格式可以使⽤用 PIL(image), skimage 或是 cv2<br>CV2 的速度較快，但須注意讀入的格式為 BGR</li>
+<li>其他形式如 npy / pickle 可以儲存經過處理理後的資料</li>
 </ul>
-<h2 id="計算資料分散程度"><a href="#計算資料分散程度" class="headerlink" title="計算資料分散程度"></a>計算資料分散程度</h2><ul>
-<li><strong>最小值 Min</strong> </li>
-<li><strong>最大值 Max</strong></li>
-<li><strong>範圍 Range</strong> </li>
-<li><strong>四分位差 Quartiles</strong> </li>
-<li><strong>變異數 Variance</strong> </li>
-<li><strong>標準差 $\sigma$ Standard deviation</strong></li>
-</ul>
-<h3 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h3><p>Descriptive Statistics For pandas Dataframe<br><a href="https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/" target="_blank" rel="noopener">https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/</a></p>
-<h1 id="EDA視覺化"><a href="#EDA視覺化" class="headerlink" title="EDA視覺化"></a>EDA視覺化</h1><p>除了數字，視覺化也是一種很好觀察資料分佈的方式</p>
-<h2 id="常用的視覺化套件-內有許多範例，沒靈感可用-有"><a href="#常用的視覺化套件-內有許多範例，沒靈感可用-有" class="headerlink" title="常用的視覺化套件(內有許多範例，沒靈感可用)有"></a>常用的視覺化套件(內有許多範例，沒靈感可用)有</h2><ul>
-<li><a href="https://matplotlib.org/gallery/index.html" target="_blank" rel="noopener">matplotlib</a></li>
-<li><a href="https://seaborn.pydata.org/examples/index.html" target="_blank" rel="noopener">seaborn</a></li>
-</ul>
-<p></br></br></p>
-<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
-<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
 ]]></content>
       <categories>
         <category>程式筆記</category>
       </categories>
       <tags>
         <tag>機器學習馬拉松筆記</tag>
-        <tag>EDA</tag>
       </tags>
   </entry>
   <entry>
@@ -395,26 +482,6 @@ MinMaxScaler()</code></pre></li>
       </tags>
   </entry>
   <entry>
-    <title>為何建立需要dataframe</title>
-    <url>/2020/05/21/%E7%82%BA%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%9C%80%E8%A6%81dataframe/</url>
-    <content><![CDATA[<h1 id="為甚麼需要新建dataframe"><a href="#為甚麼需要新建dataframe" class="headerlink" title="為甚麼需要新建dataframe"></a>為甚麼需要新建dataframe</h1><ol>
-<li>需要將分析過程中產生的數據或結果儲存為結構性資料</li>
-<li>當資料過於複雜時，可簡化資料做程式測試</li>
-</ol>
-<h2 id="不同的資料有不同讀取⽅方式"><a href="#不同的資料有不同讀取⽅方式" class="headerlink" title="不同的資料有不同讀取⽅方式"></a>不同的資料有不同讀取⽅方式</h2><ul>
-<li>文字格式通常可以⽤ with open()</li>
-<li>圖像格式可以使⽤用 PIL(image), skimage 或是 cv2<br>CV2 的速度較快，但須注意讀入的格式為 BGR</li>
-<li>其他形式如 npy / pickle 可以儲存經過處理理後的資料</li>
-</ul>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>資料中常見的特徵類型</title>
     <url>/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/</url>
     <content><![CDATA[<h2 id="常見兩大類型-數值型-numerical-data、類別型-categorical-data"><a href="#常見兩大類型-數值型-numerical-data、類別型-categorical-data" class="headerlink" title="常見兩大類型(數值型 numerical data、類別型 categorical data )"></a>常見兩大類型(數值型 numerical data、類別型 categorical data )</h2><h3 id="數值型特徵-有不同轉換方式，函數-條件式都可以"><a href="#數值型特徵-有不同轉換方式，函數-條件式都可以" class="headerlink" title="數值型特徵 : 有不同轉換方式，函數 / 條件式都可以"></a>數值型特徵 : 有不同轉換方式，函數 / 條件式都可以</h3><p>最容易轉成特徵，但需要注意很多細節</p>
@@ -455,6 +522,34 @@ MinMaxScaler()</code></pre></li>
       </categories>
       <tags>
         <tag>機器學習馬拉松筆記</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>離散化連續數值</title>
+    <url>/2020/06/01/%E9%9B%A2%E6%95%A3%E5%8C%96%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC/</url>
+    <content><![CDATA[<h1 id="離散化連續數值的意義以及方法"><a href="#離散化連續數值的意義以及方法" class="headerlink" title="離散化連續數值的意義以及方法"></a>離散化連續數值的意義以及方法</h1><h2 id="離散化的目的"><a href="#離散化的目的" class="headerlink" title="離散化的目的"></a>離散化的目的</h2><ul>
+<li>簡化model(減少可能性)<br>原年齡有0～100歲的可能，若以十歲間距離散，就剩下10種可能</li>
+<li>變數較穩定<br>若有異常值(如年齡=300)可直接設超過60為1，其他為0，降低他的影響力</li>
+</ul>
+<h3 id="關鍵點"><a href="#關鍵點" class="headerlink" title="關鍵點"></a>關鍵點</h3><ul>
+<li>組的數量<br>以年齡為例，並設10歲為間距，即可分成10組</li>
+<li>組的寬度<br>一組的寬度是 10 歲</li>
+</ul>
+<h2 id="離散化的方法"><a href="#離散化的方法" class="headerlink" title="離散化的方法"></a>離散化的方法</h2><p>主要的方法</p>
+<ul>
+<li>等寬劃分(pd.cut())：按照相同寬度將資料分成幾等份。缺點是受到異異常值的影響比較⼤大。</li>
+<li>等頻劃分(pd.qcut())：將資料分成幾等份，每等份資料裡面的個數是一樣的。</li>
+<li>聚類劃分：使⽤用<a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/400018/" target="_blank" rel="noopener">聚類演算法</a>將資料聚成幾類，每一個類為一個劃分。</li>
+</ul>
+<p><a href="https://medium.com/@morris_tai/pandas%E7%9A%84cut-qcut%E5%87%BD%E6%95%B8-93c244e34cfc" target="_blank" rel="noopener">cut &amp; qcut</a></p>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>在什么情况下将连续的特征离散化之后可以获得更好的效果？<br><a href="https://www.zhihu.com/question/31989952" target="_blank" rel="noopener">https://www.zhihu.com/question/31989952</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
       </tags>
   </entry>
   <entry>
