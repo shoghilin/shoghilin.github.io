@@ -17,6 +17,39 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Kernel-Density-Estimation</title>
+    <url>/2020/05/31/Kernel-Density-Estimation/</url>
+    <content><![CDATA[<h1 id="Kernel-Density-Estimation-KDE"><a href="#Kernel-Density-Estimation-KDE" class="headerlink" title="Kernel Density Estimation (KDE)"></a>Kernel Density Estimation (KDE)</h1><h2 id="什麼是KDE"><a href="#什麼是KDE" class="headerlink" title="什麼是KDE"></a>什麼是KDE</h2><p>KDE是採⽤<a href="https://zh.wikipedia.org/wiki/%E7%84%A1%E6%AF%8D%E6%95%B8%E7%B5%B1%E8%A8%88" target="_blank" rel="noopener">無⺟數⽅法</a>畫出⼀個觀察變數的機率密度函數，其中kernel在“非參數估計”的語境下，“kernel”是一個函數，用來提供權重。例如高斯函數 (Gaussian) 就是一個常用的<a href="https://ithelp.ithome.com.tw/articles/10195497" target="_blank" rel="noopener">kernel function</a>。</p>
+<h3 id="Density-plot-的特性"><a href="#Density-plot-的特性" class="headerlink" title="Density plot 的特性"></a>Density plot 的特性</h3><ul>
+<li>歸⼀：線下 ⾯積和為 1</li>
+<li>對稱：K(-u) = K(u)</li>
+</ul>
+<h3 id="常⽤的-Kernel-function"><a href="#常⽤的-Kernel-function" class="headerlink" title="常⽤的 Kernel function"></a>常⽤的 Kernel function</h3><ul>
+<li>Gaussian (Normal dist)</li>
+<li>Cosine</li>
+</ul>
+<h3 id="優缺點"><a href="#優缺點" class="headerlink" title="優缺點"></a>優缺點</h3><h4 id="優點："><a href="#優點：" class="headerlink" title="優點："></a>優點：</h4><ul>
+<li>無母數方法，分布沒有假設</li>
+</ul>
+<h4 id="缺點："><a href="#缺點：" class="headerlink" title="缺點："></a>缺點：</h4><ul>
+<li>計算量大</li>
+</ul>
+<h3 id="寫法"><a href="#寫法" class="headerlink" title="寫法"></a>寫法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># KDE, 比較不同的 kernel function</span><br><span class="line">s</span><br><span class="line"># kernel &#x3D; &#39;gau&#39; : gaussian estimate</span><br><span class="line">sns.kdeplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 0, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;Gaussian esti.&#39;, kernel&#x3D;&#39;gau&#39;)</span><br><span class="line"></span><br><span class="line"># kernel &#x3D; &#39;cos&#39; : cosine estimate</span><br><span class="line">sns.kdeplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 0, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;Cosine esti.&#39;, kernel&#x3D;&#39;cos&#39;)</span><br><span class="line"></span><br><span class="line"># kernel &#x3D; &#39;tri&#39; : triangular estimate</span><br><span class="line">sns.kdeplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 0, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;Triangular esti.&#39;, kernel&#x3D;&#39;tri&#39;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h4 id="p-s"><a href="#p-s" class="headerlink" title="p.s."></a>p.s.</h4><p>distplot可以將barplot和kdeplot同時呈現</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 完整分布圖 (distplot) : 將 bar 與 Kde 同時呈現</span><br><span class="line">sns.distplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 1, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;target &#x3D;&#x3D; 1&#39;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>核密度估计（kernel density estimation）<br><a href="https://lotabout.me/2018/kernel-density-estimation/" target="_blank" rel="noopener">https://lotabout.me/2018/kernel-density-estimation/</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Markdown相關文件</title>
     <url>/2020/05/23/Markdown%E7%9B%B8%E9%97%9C%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
@@ -159,6 +192,18 @@
 
 
 
+<h4 id="套用函式apply-document"><a href="#套用函式apply-document" class="headerlink" title="套用函式apply(document)"></a>套用函式apply(<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html" target="_blank" rel="noopener">document</a>)</h4><pre><code>DataFrame.apply(self, func, axis=0, raw=False, result_type=None, args=(), **kwds)</code></pre><p>Examples</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">df &#x3D; pd.DataFrame([[4, 9]] * 3, columns&#x3D;[&#39;A&#39;, &#39;B&#39;])</span><br><span class="line">df</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   A  B</span><br><span class="line">0  4  9</span><br><span class="line">1  4  9</span><br><span class="line">2  4  9</span><br><span class="line"></span><br><span class="line"># Using a numpy universal function (in this case the same as np.sqrt(df)):</span><br><span class="line"></span><br><span class="line">df.apply(np.sqrt)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">     A    B</span><br><span class="line">0  2.0  3.0</span><br><span class="line">1  2.0  3.0</span><br><span class="line">2  2.0  3.0</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="取得unique的數量-nunique-document"><a href="#取得unique的數量-nunique-document" class="headerlink" title="取得unique的數量 nunique(document)"></a>取得unique的數量 nunique(<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.nunique.html" target="_blank" rel="noopener">document</a>)</h4><pre><code>Series.nunique(self, dropna=True)</code></pre><p>Examples</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">s &#x3D; pd.Series([1, 3, 5, 7, 7])</span><br><span class="line">s</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">0    1</span><br><span class="line">1    3</span><br><span class="line">2    5</span><br><span class="line">3    7</span><br><span class="line">4    7</span><br><span class="line">dtype: int64</span><br><span class="line"></span><br><span class="line">s.nunique()</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="select-dtypes-document"><a href="#select-dtypes-document" class="headerlink" title="select_dtypes(document)"></a>select_dtypes(<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.select_dtypes.html" target="_blank" rel="noopener">document</a>)</h4><pre><code>DataFrame.select_dtypes(self, include=None, exclude=None) </code></pre><p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">df &#x3D; pd.DataFrame(&#123;&#39;a&#39;: [1, 2] * 3,</span><br><span class="line">                   &#39;b&#39;: [True, False] * 3,</span><br><span class="line">                   &#39;c&#39;: [1.0, 2.0] * 3&#125;)</span><br><span class="line">df</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">        a      b  c</span><br><span class="line">0       1   True  1.0</span><br><span class="line">1       2  False  2.0</span><br><span class="line">2       1   True  1.0</span><br><span class="line">3       2  False  2.0</span><br><span class="line">4       1   True  1.0</span><br><span class="line">5       2  False  2.0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">df.select_dtypes(include&#x3D;&#39;bool&#39;)</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">   b</span><br><span class="line">0  True</span><br><span class="line">1  False</span><br><span class="line">2  True</span><br><span class="line">3  False</span><br><span class="line">4  True</span><br><span class="line">5  False</span><br></pre></td></tr></table></figure>
+
+
 <!--#### ([document]())-->]]></content>
       <categories>
         <category>程式筆記</category>
@@ -167,57 +212,6 @@
         <tag>機器學習馬拉松筆記</tag>
         <tag>library</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Kernel-Density-Estimation</title>
-    <url>/2020/05/31/Kernel-Density-Estimation/</url>
-    <content><![CDATA[<h1 id="Kernel-Density-Estimation-KDE"><a href="#Kernel-Density-Estimation-KDE" class="headerlink" title="Kernel Density Estimation (KDE)"></a>Kernel Density Estimation (KDE)</h1><h2 id="什麼是KDE"><a href="#什麼是KDE" class="headerlink" title="什麼是KDE"></a>什麼是KDE</h2><p>KDE是採⽤<a href="https://zh.wikipedia.org/wiki/%E7%84%A1%E6%AF%8D%E6%95%B8%E7%B5%B1%E8%A8%88" target="_blank" rel="noopener">無⺟數⽅法</a>畫出⼀個觀察變數的機率密度函數，其中kernel在“非參數估計”的語境下，“kernel”是一個函數，用來提供權重。例如高斯函數 (Gaussian) 就是一個常用的<a href="https://ithelp.ithome.com.tw/articles/10195497" target="_blank" rel="noopener">kernel function</a>。</p>
-<h3 id="Density-plot-的特性"><a href="#Density-plot-的特性" class="headerlink" title="Density plot 的特性"></a>Density plot 的特性</h3><ul>
-<li>歸⼀：線下 ⾯積和為 1</li>
-<li>對稱：K(-u) = K(u)</li>
-</ul>
-<h3 id="常⽤的-Kernel-function"><a href="#常⽤的-Kernel-function" class="headerlink" title="常⽤的 Kernel function"></a>常⽤的 Kernel function</h3><ul>
-<li>Gaussian (Normal dist)</li>
-<li>Cosine</li>
-</ul>
-<h3 id="優缺點"><a href="#優缺點" class="headerlink" title="優缺點"></a>優缺點</h3><h4 id="優點："><a href="#優點：" class="headerlink" title="優點："></a>優點：</h4><ul>
-<li>無母數方法，分布沒有假設</li>
-</ul>
-<h4 id="缺點："><a href="#缺點：" class="headerlink" title="缺點："></a>缺點：</h4><ul>
-<li>計算量大</li>
-</ul>
-<h3 id="寫法"><a href="#寫法" class="headerlink" title="寫法"></a>寫法</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># KDE, 比較不同的 kernel function</span><br><span class="line">s</span><br><span class="line"># kernel &#x3D; &#39;gau&#39; : gaussian estimate</span><br><span class="line">sns.kdeplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 0, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;Gaussian esti.&#39;, kernel&#x3D;&#39;gau&#39;)</span><br><span class="line"></span><br><span class="line"># kernel &#x3D; &#39;cos&#39; : cosine estimate</span><br><span class="line">sns.kdeplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 0, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;Cosine esti.&#39;, kernel&#x3D;&#39;cos&#39;)</span><br><span class="line"></span><br><span class="line"># kernel &#x3D; &#39;tri&#39; : triangular estimate</span><br><span class="line">sns.kdeplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 0, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;Triangular esti.&#39;, kernel&#x3D;&#39;tri&#39;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-<h4 id="p-s"><a href="#p-s" class="headerlink" title="p.s."></a>p.s.</h4><p>distplot可以將barplot和kdeplot同時呈現</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 完整分布圖 (distplot) : 將 bar 與 Kde 同時呈現</span><br><span class="line">sns.distplot(app_train.loc[app_train[&#39;TARGET&#39;] &#x3D;&#x3D; 1, &#39;DAYS_BIRTH&#39;] &#x2F; 365, label &#x3D; &#39;target &#x3D;&#x3D; 1&#39;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>核密度估计（kernel density estimation）<br><a href="https://lotabout.me/2018/kernel-density-estimation/" target="_blank" rel="noopener">https://lotabout.me/2018/kernel-density-estimation/</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>EDA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/05/21/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>numpy</title>
@@ -256,6 +250,24 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2020/05/21/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>sklearn</title>
     <url>/2020/05/27/sklearn/</url>
     <content><![CDATA[<h2 id="LinearRegression"><a href="#LinearRegression" class="headerlink" title="LinearRegression()"></a>LinearRegression()</h2><p>document<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html</a><br>machine learning 下的 Linear Regression 實作(使用python)<br><a href="https://medium.com/@jacky308082/machine-learning-%E4%B8%8B%E7%9A%84-linear-regression-%E5%AF%A6%E4%BD%9C-%E4%BD%BF%E7%94%A8python-7e1dd03a4d46" target="_blank" rel="noopener">https://medium.com/@jacky308082/machine-learning-%E4%B8%8B%E7%9A%84-linear-regression-%E5%AF%A6%E4%BD%9C-%E4%BD%BF%E7%94%A8python-7e1dd03a4d46</a></p>
@@ -274,83 +286,6 @@
     <title>「探索式資料分析」(Exploratory Data Analysis) 01</title>
     <url>/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-01/</url>
     <content><![CDATA[<h1 id="在看到一筆資料時，第一件事就是去了解它。"><a href="#在看到一筆資料時，第一件事就是去了解它。" class="headerlink" title="在看到一筆資料時，第一件事就是去了解它。"></a>在看到一筆資料時，第一件事就是去了解它。</h1><p>仔細研究kaggle的資料描述<br>看看有多少資料來源？資料的格式？資料間的關係？<br>資料欄位的意義？每列的意義？<br>有多少筆資料？多少個欄位？<br>有沒有遺失值等等？</p>
-<p></br></br></p>
-<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
-<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>EDA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>「探索式資料分析」(Exploratory Data Analysis) 02</title>
-    <url>/2020/05/22/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-02/</url>
-    <content><![CDATA[<h1 id="在初步-EDA-的過程，我們無可避免會想問的問題："><a href="#在初步-EDA-的過程，我們無可避免會想問的問題：" class="headerlink" title="在初步 EDA 的過程，我們無可避免會想問的問題："></a>在初步 EDA 的過程，我們無可避免會想問的問題：</h1><p>不同資料類型各有多少個欄位？</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app_train &#x3D; pd.read_csv(path)</span><br><span class="line">app_train.dtypes.value_counts()</span><br></pre></td></tr></table></figure>
-<p>類別型欄位 (pandas 中的 object) 的類別數量?</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app_train.select_dtypes(include&#x3D;[&quot;object&quot;]).apply(pd.Series.nunique, axis &#x3D; 0)</span><br></pre></td></tr></table></figure>
-<p>模型怎麼處理類別型的資料？有什麼表示方法？</p>
-<h2 id="欄位變數可分為"><a href="#欄位變數可分為" class="headerlink" title="欄位變數可分為:"></a>欄位變數可分為:</h2><ol>
-<li>離散變數：只能用整數單位計算的變數<br>如：性別(僅有男、女、雙性的選擇)</li>
-<li>連續變數：在一定區間可任意取值的變數<br>如：身高(可能在0~230，任意數)</li>
-</ol>
-<h2 id="DataFrame中常見資料類型分為："><a href="#DataFrame中常見資料類型分為：" class="headerlink" title="DataFrame中常見資料類型分為："></a>DataFrame中常見資料類型分為：</h2><ol>
-<li>int64 ： 離散、連續變數</li>
-<li>float64 ： 離散、連續變數</li>
-<li>object ： 類別型變數</li>
-</ol>
-<h2 id="字串-類別類型的資料，若需要轉換為數值的資料類型。"><a href="#字串-類別類型的資料，若需要轉換為數值的資料類型。" class="headerlink" title="字串/類別類型的資料，若需要轉換為數值的資料類型。"></a>字串/類別類型的資料，若需要轉換為數值的資料類型。</h2><p>常見轉換有兩種:</p>
-<ol>
-<li>Label encoding：使用時機通常是該資料的不同類別是有序的<br>把每個類別 mapping 到某個整數，不會增加新欄位<br>如：年紀(老、中、小)有序，則設老1、中2、小3之類的</li>
-<li>One Hot encoding：使用時機通常是該資料的不同類別是無序<br>為每個類別新增一個欄位，用 0/1 表示是否<br>如：國家，則設美國[1 0 0]’，日本[0 1 0]’，台灣[0 0 1]’之類 </li>
-</ol>
-<p>這兩種轉換法被包括在SciKit Learn library中<br>ps. Label encoding被ColumnTransformer給替代了 </p>
-<h3 id="Label-encoder"><a href="#Label-encoder" class="headerlink" title="Label encoder"></a>Label encoder</h3><p>把每個類別 mapping 到某個整數，不會增加新欄位</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.preprocessing import LabelEncoder</span><br><span class="line">labelencoder &#x3D; LabelEncoder()</span><br><span class="line">x[:, 0] &#x3D; labelencoder.fit_transform(x[:, 0])</span><br></pre></td></tr></table></figure>
-<p>存在的問題：被轉換的column並不具有關聯性，然而我們的model卻可能誤認為其中具有排序關係</p>
-<h3 id="One-Hot-Encoder"><a href="#One-Hot-Encoder" class="headerlink" title="One Hot Encoder"></a>One Hot Encoder</h3><p>若類別中無排序關係，則應使用OneHotEncoder<br>先將類別做Label Encoding，然後為各類別新增一個欄位，並以0s或1s表示</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line">onehotencoder &#x3D; OneHotEncoder(categorical_features &#x3D; [0])</span><br><span class="line">x &#x3D; onehotencoder.fit_transform(x).toarray()</span><br></pre></td></tr></table></figure>
-
-<h4 id="補充資料："><a href="#補充資料：" class="headerlink" title="補充資料："></a>補充資料：</h4><p>Label encoder Document<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html</a><br>One Hot Encoder<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html</a><br>Label encoding v.s. One Hot encoding<br><a href="https://medium.com/@contactsunny/label-encoder-vs-one-hot-encoder-in-machine-learning-3fc273365621" target="_blank" rel="noopener">https://medium.com/@contactsunny/label-encoder-vs-one-hot-encoder-in-machine-learning-3fc273365621</a></p>
-<p></br></br></p>
-<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
-<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>EDA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>「探索式資料分析」(Exploratory Data Analysis) 03</title>
-    <url>/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03/</url>
-    <content><![CDATA[<h1 id="統計量化的方式"><a href="#統計量化的方式" class="headerlink" title="統計量化的方式"></a>統計量化的方式</h1><p>以單變量分析來來說，量化的分析方式可包含</p>
-<h2 id="計算集中趨勢"><a href="#計算集中趨勢" class="headerlink" title="計算集中趨勢"></a>計算集中趨勢</h2><ul>
-<li><strong>平均值 Mean</strong></li>
-<li><strong>中位數 Median</strong><br>一組資料的中位數是指將資料從小到大排序後，最中間的數</li>
-<li><strong>眾數 Mode</strong><br>眾數指一組數據中出現次數最多的變數值</li>
-</ul>
-<h2 id="計算資料分散程度"><a href="#計算資料分散程度" class="headerlink" title="計算資料分散程度"></a>計算資料分散程度</h2><ul>
-<li><strong>最小值 Min</strong> </li>
-<li><strong>最大值 Max</strong></li>
-<li><strong>範圍 Range</strong> </li>
-<li><strong>四分位差 Quartiles</strong> </li>
-<li><strong>變異數 Variance</strong> </li>
-<li><strong>標準差 $\sigma$ Standard deviation</strong></li>
-</ul>
-<h3 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h3><p>Descriptive Statistics For pandas Dataframe<br><a href="https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/" target="_blank" rel="noopener">https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/</a></p>
-<h1 id="EDA視覺化"><a href="#EDA視覺化" class="headerlink" title="EDA視覺化"></a>EDA視覺化</h1><p>除了數字，視覺化也是一種很好觀察資料分佈的方式</p>
-<h2 id="常用的視覺化套件-內有許多範例，沒靈感可用-有"><a href="#常用的視覺化套件-內有許多範例，沒靈感可用-有" class="headerlink" title="常用的視覺化套件(內有許多範例，沒靈感可用)有"></a>常用的視覺化套件(內有許多範例，沒靈感可用)有</h2><ul>
-<li><a href="https://matplotlib.org/gallery/index.html" target="_blank" rel="noopener">matplotlib</a></li>
-<li><a href="https://seaborn.pydata.org/examples/index.html" target="_blank" rel="noopener">seaborn</a></li>
-</ul>
 <p></br></br></p>
 <h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
 <h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
@@ -397,23 +332,108 @@
       </tags>
   </entry>
   <entry>
-    <title>為何建立需要dataframe</title>
-    <url>/2020/05/21/%E7%82%BA%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%9C%80%E8%A6%81dataframe/</url>
-    <content><![CDATA[<h1 id="為甚麼需要新建dataframe"><a href="#為甚麼需要新建dataframe" class="headerlink" title="為甚麼需要新建dataframe"></a>為甚麼需要新建dataframe</h1><ol>
-<li>需要將分析過程中產生的數據或結果儲存為結構性資料</li>
-<li>當資料過於複雜時，可簡化資料做程式測試</li>
-</ol>
-<h2 id="不同的資料有不同讀取⽅方式"><a href="#不同的資料有不同讀取⽅方式" class="headerlink" title="不同的資料有不同讀取⽅方式"></a>不同的資料有不同讀取⽅方式</h2><ul>
-<li>文字格式通常可以⽤ with open()</li>
-<li>圖像格式可以使⽤用 PIL(image), skimage 或是 cv2<br>CV2 的速度較快，但須注意讀入的格式為 BGR</li>
-<li>其他形式如 npy / pickle 可以儲存經過處理理後的資料</li>
+    <title>「探索式資料分析」(Exploratory Data Analysis) 03</title>
+    <url>/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03/</url>
+    <content><![CDATA[<h1 id="統計量化的方式"><a href="#統計量化的方式" class="headerlink" title="統計量化的方式"></a>統計量化的方式</h1><p>以單變量分析來來說，量化的分析方式可包含</p>
+<h2 id="計算集中趨勢"><a href="#計算集中趨勢" class="headerlink" title="計算集中趨勢"></a>計算集中趨勢</h2><ul>
+<li><strong>平均值 Mean</strong></li>
+<li><strong>中位數 Median</strong><br>一組資料的中位數是指將資料從小到大排序後，最中間的數</li>
+<li><strong>眾數 Mode</strong><br>眾數指一組數據中出現次數最多的變數值</li>
 </ul>
+<h2 id="計算資料分散程度"><a href="#計算資料分散程度" class="headerlink" title="計算資料分散程度"></a>計算資料分散程度</h2><ul>
+<li><strong>最小值 Min</strong> </li>
+<li><strong>最大值 Max</strong></li>
+<li><strong>範圍 Range</strong> </li>
+<li><strong>四分位差 Quartiles</strong> </li>
+<li><strong>變異數 Variance</strong> </li>
+<li><strong>標準差 $\sigma$ Standard deviation</strong></li>
+</ul>
+<h3 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h3><p>Descriptive Statistics For pandas Dataframe<br><a href="https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/" target="_blank" rel="noopener">https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/</a></p>
+<h1 id="EDA視覺化"><a href="#EDA視覺化" class="headerlink" title="EDA視覺化"></a>EDA視覺化</h1><p>除了數字，視覺化也是一種很好觀察資料分佈的方式</p>
+<h2 id="常用的視覺化套件-內有許多範例，沒靈感可用-有"><a href="#常用的視覺化套件-內有許多範例，沒靈感可用-有" class="headerlink" title="常用的視覺化套件(內有許多範例，沒靈感可用)有"></a>常用的視覺化套件(內有許多範例，沒靈感可用)有</h2><ul>
+<li><a href="https://matplotlib.org/gallery/index.html" target="_blank" rel="noopener">matplotlib</a></li>
+<li><a href="https://seaborn.pydata.org/examples/index.html" target="_blank" rel="noopener">seaborn</a></li>
+</ul>
+<p></br></br></p>
+<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
+<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
 ]]></content>
       <categories>
         <category>程式筆記</category>
       </categories>
       <tags>
         <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>去除偏態</title>
+    <url>/2020/06/07/%E5%8E%BB%E9%99%A4%E5%81%8F%E6%85%8B/</url>
+    <content><![CDATA[<h1 id="特徵工程-數值型特徵-去除偏態"><a href="#特徵工程-數值型特徵-去除偏態" class="headerlink" title="特徵工程 數值型特徵 - 去除偏態"></a>特徵工程 數值型特徵 - 去除偏態</h1><p>去除偏態的目標在於讓數值更接近常態分布(左右對稱，集中點在中央)，讓平均值更具有代表性。<br>當離群資料比例太高，或者平均值沒有代表性時，皆可以考慮去除偏態。</p>
+<h2 id="去偏方式"><a href="#去偏方式" class="headerlink" title="去偏方式"></a>去偏方式</h2><ul>
+<li><p><strong>對數去偏 log1p</strong><br>對數去偏就是使用自然對數(log)去除偏態，常見用於非負值且可能為0的值<br>為了使對數0為0，需要在後面加上1(plus 1 -&gt; 1p)後，再取對數<br>還原時用expm1(exp + minus 1)</p>
+</li>
+<li><p><strong>方根去偏(sqrt)</strong><br>方根去偏就是將數值減去最⼩值後開根號，最大值有限的時候適用 (例 : 成績轉換)</p>
+</li>
+<li><p><strong>分布去偏(boxcox)</strong><br>分布去偏是採用boxcox轉換函數(詳情如下表)，函數的 lambda(λ) 參參數為 0 時<br>等於 log 函數，lambda(λ) 為 0.5 時等於開根號 (即sqrt)，因此可藉由參數的調整更靈<br>活地轉換數值，但要特別注意Y的輸入數值必須要為正 (不可為0)<br><img src="https://i1.kknews.cc/SIG=2pc2rsg/5nn00039sp58s81ss8o.jpg" alt="boxcox"></p>
+</li>
+</ul>
+<p>相關延伸：<br>偏度与峰度及其python实现<br><a href="https://blog.csdn.net/u013555719/article/details/78530879" target="_blank" rel="noopener">https://blog.csdn.net/u013555719/article/details/78530879</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>特徵工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>均值編碼和平滑化</title>
+    <url>/2020/06/09/%E5%9D%87%E5%80%BC%E7%B7%A8%E7%A2%BC%E5%92%8C%E5%B9%B3%E6%BB%91%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="均值編碼和平滑化"><a href="#均值編碼和平滑化" class="headerlink" title="均值編碼和平滑化"></a>均值編碼和平滑化</h1><h2 id="均值編碼-Mean-Encoding"><a href="#均值編碼-Mean-Encoding" class="headerlink" title="均值編碼 (Mean Encoding)"></a>均值編碼 (Mean Encoding)</h2><h3 id="什麼是均值編碼？"><a href="#什麼是均值編碼？" class="headerlink" title="什麼是均值編碼？"></a>什麼是均值編碼？</h3><p>使用目標值的平均值，取代原本的類別型特徵</p>
+<h3 id="甚麼時候使用"><a href="#甚麼時候使用" class="headerlink" title="甚麼時候使用"></a>甚麼時候使用</h3><p>如果類別特徵看起來與目標值有顯著相關，那麼均值編碼便是一個不錯的選擇</p>
+<h3 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h3><p>然而均值編碼的缺點是如果交易樣本非常少, 且剛好抽到極端值, 平均結果可能會有誤差很大。<br>如：<br>各籃球隊中鋒身高有{180,175,220,200,210}，然而若是抽到175，並以此作均值編碼，便會產生極大誤差</p>
+<h4 id="怎麼解決呢"><a href="#怎麼解決呢" class="headerlink" title="怎麼解決呢"></a>怎麼解決呢</h4><p>若要解決這個缺點均值編碼還需要考慮紀錄筆數, 以當作可靠度的參考，也就是<strong>平滑化 (Smoothing)</strong></p>
+<p>其中一種方式如下：<br>$$新類別均值 = \frac{原類別平均 * 類別樣本數 + 全部的總平均 * 調整因子}{類別樣本數 + 調整因⼦子}$$<br>調整因子用來調整平滑化的程度，依總樣本數調整</p>
+<p>當平均值的可靠度低時, 我們會傾向相信全部的總平均<br>當平均值的可靠度⾼時, 我們會傾向相信類別的平均<br>依照紀錄筆數, 在這兩者間取折衷</p>
+<h3 id="需要注意"><a href="#需要注意" class="headerlink" title="需要注意"></a>需要注意</h3><p>當使用均值編碼時，非常容易造成overfitting，即便使用平滑化能夠修正，但實際效果有限。<br>因此仍須 <strong>經過檢驗</strong> 後再決定是否該使用均值編碼</p>
+<p>延伸：<br>平均数编码：针对高基数定性特征（类别特征）的数据预处理/特征工程<br><a href="https://zhuanlan.zhihu.com/p/26308272" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/26308272</a></p>
+<h1 id="計數編碼-雜湊編碼"><a href="#計數編碼-雜湊編碼" class="headerlink" title="計數編碼/雜湊編碼"></a>計數編碼/雜湊編碼</h1><h2 id="計數編碼-Counting"><a href="#計數編碼-Counting" class="headerlink" title="計數編碼 (Counting)"></a>計數編碼 (Counting)</h2><h3 id="什麼是記數編碼"><a href="#什麼是記數編碼" class="headerlink" title="什麼是記數編碼"></a>什麼是記數編碼</h3><p>如果類別的 <strong>目標平均值</strong> 與 <strong>類別筆數</strong> 呈正相關(或負相關)，也可以將筆數本⾝身當成特徵<br>例如 : 購物網站的消費金額預測</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">   		平均 	記錄筆數				記數編碼 </span><br><span class="line">美金		300		x3000				3000</span><br><span class="line">台幣		100		x500		&#x3D;&gt;		500</span><br><span class="line">日圓		50		x10					10</span><br></pre></td></tr></table></figure>
+<p>p.s. 自然語言處理時，字詞的計數編碼又稱詞頻，本身就是一個很重要的特徵</p>
+<h3 id="實作例子"><a href="#實作例子" class="headerlink" title="實作例子"></a>實作例子</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">count_df &#x3D; df.groupby([&#39;Cabin&#39;])[&#39;Name&#39;].agg(&#123;&#39;Cabin_Count&#39;:&#39;size&#39;&#125;).reset_index()</span><br><span class="line">df &#x3D; pd.merge(df, count_df, on&#x3D;[&#39;Cabin&#39;], how&#x3D;&#39;left&#39;)</span><br><span class="line">--------------------------</span><br><span class="line">df_temp[&#39;Cabin_Count&#39;] &#x3D; df[&#39;Cabin_Count&#39;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="特徵雜湊-Feature-Hash-wiki"><a href="#特徵雜湊-Feature-Hash-wiki" class="headerlink" title="特徵雜湊 ( Feature Hash ) wiki"></a>特徵雜湊 ( Feature Hash ) <a href="https://en.wikipedia.org/wiki/Feature_hashing" target="_blank" rel="noopener">wiki</a></h2><p>當類別型特徵最麻煩的問題 : 相異異類別的數量非常龐大, 該如何編碼?<br>然而這個問題並沒有通用的解決方法，只能通過折衷的方式達成<br>也就是 <strong>特徵雜湊</strong></p>
+<h3 id="什麼是特徵雜湊"><a href="#什麼是特徵雜湊" class="headerlink" title="什麼是特徵雜湊"></a>什麼是特徵雜湊</h3><p>特徵雜湊是一種折衷方案，將類別由雜湊函數定應到一組數字，調整雜湊函數對應值的數量，<br>在計算空間/時間與鑑別度間取折衷，也提高了訊息密度, 減少無用的標籤</p>
+<h3 id="什麼時候使用"><a href="#什麼時候使用" class="headerlink" title="什麼時候使用"></a>什麼時候使用</h3><p>當相異類別數量相當大且其他編碼方式效果更差時，可以考慮雜湊編碼以節省時間</p>
+<h3 id="實作方式"><a href="#實作方式" class="headerlink" title="實作方式"></a>實作方式</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">df_temp[&#39;Cabin_Hash&#39;] &#x3D; df[&#39;Cabin&#39;].map(lambda x: hash(x) % 10)</span><br></pre></td></tr></table></figure>
+
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>Feature hashing(特征哈希)<br><a href="https://blog.csdn.net/laolu1573/article/details/79410187" target="_blank" rel="noopener">https://blog.csdn.net/laolu1573/article/details/79410187</a><br>基于sklearn的文本特征抽取<br><a href="https://www.jianshu.com/p/063840752151" target="_blank" rel="noopener">https://www.jianshu.com/p/063840752151</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
+        <tag>類別型特徵處理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>特徵工程</title>
+    <url>/2020/06/06/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="特徵工程"><a href="#特徵工程" class="headerlink" title="特徵工程"></a>特徵工程</h1><h2 id="特徵工程是事實對應到後續評估分數的轉換"><a href="#特徵工程是事實對應到後續評估分數的轉換" class="headerlink" title="特徵工程是事實對應到後續評估分數的轉換"></a>特徵工程是事實對應到後續評估分數的轉換</h2><p>特徵工程的 <strong>目的</strong> 就是最大限度地從原始數據中提取特徵以供算法和模型使用。<br>以鐵達尼號中的生存為例，若從性別提取特徵，為男性評估點數為-2，女性評估為1<br>假設有一資料組性別為男則給予他-2的點數，當然此點數本身未必會直接對應到機率，但會是後續評估的依據</p>
+<p>通常來說特徵工程會在資料彙整後，擬和模型前。</p>
+<p>由於資料包含類別型(文字型)特徵以及數值型特徵，<br>所以通常特徵工程⾄少要包含一種類別編碼(LabelEncoder/OneHotEncoder)，以及一種特徵縮放方法(標準化或歸一化)</p>
+<h2 id="延伸："><a href="#延伸：" class="headerlink" title="延伸："></a>延伸：</h2><p>特征工程到底是什么？<br><a href="https://www.zhihu.com/question/29316149" target="_blank" rel="noopener">https://www.zhihu.com/question/29316149</a><br>為什麼特徵工程很重要<br><a href="https://ithelp.ithome.com.tw/articles/10200041?sc=iThelpR" target="_blank" rel="noopener">https://ithelp.ithome.com.tw/articles/10200041?sc=iThelpR</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>特徵工程</tag>
       </tags>
   </entry>
   <entry>
@@ -482,6 +502,26 @@ MinMaxScaler()</code></pre></li>
       </tags>
   </entry>
   <entry>
+    <title>為何建立需要dataframe</title>
+    <url>/2020/05/21/%E7%82%BA%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%9C%80%E8%A6%81dataframe/</url>
+    <content><![CDATA[<h1 id="為甚麼需要新建dataframe"><a href="#為甚麼需要新建dataframe" class="headerlink" title="為甚麼需要新建dataframe"></a>為甚麼需要新建dataframe</h1><ol>
+<li>需要將分析過程中產生的數據或結果儲存為結構性資料</li>
+<li>當資料過於複雜時，可簡化資料做程式測試</li>
+</ol>
+<h2 id="不同的資料有不同讀取⽅方式"><a href="#不同的資料有不同讀取⽅方式" class="headerlink" title="不同的資料有不同讀取⽅方式"></a>不同的資料有不同讀取⽅方式</h2><ul>
+<li>文字格式通常可以⽤ with open()</li>
+<li>圖像格式可以使⽤用 PIL(image), skimage 或是 cv2<br>CV2 的速度較快，但須注意讀入的格式為 BGR</li>
+<li>其他形式如 npy / pickle 可以儲存經過處理理後的資料</li>
+</ul>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>資料中常見的特徵類型</title>
     <url>/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/</url>
     <content><![CDATA[<h2 id="常見兩大類型-數值型-numerical-data、類別型-categorical-data"><a href="#常見兩大類型-數值型-numerical-data、類別型-categorical-data" class="headerlink" title="常見兩大類型(數值型 numerical data、類別型 categorical data )"></a>常見兩大類型(數值型 numerical data、類別型 categorical data )</h2><h3 id="數值型特徵-有不同轉換方式，函數-條件式都可以"><a href="#數值型特徵-有不同轉換方式，函數-條件式都可以" class="headerlink" title="數值型特徵 : 有不同轉換方式，函數 / 條件式都可以"></a>數值型特徵 : 有不同轉換方式，函數 / 條件式都可以</h3><p>最容易轉成特徵，但需要注意很多細節</p>
@@ -522,6 +562,49 @@ MinMaxScaler()</code></pre></li>
       </categories>
       <tags>
         <tag>機器學習馬拉松筆記</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>資料類型及類別轉數值方式</title>
+    <url>/2020/05/22/%E8%B3%87%E6%96%99%E9%A1%9E%E5%9E%8B%E5%8F%8A%E9%A1%9E%E5%88%A5%E8%BD%89%E6%95%B8%E5%80%BC%E6%96%B9%E5%BC%8F/</url>
+    <content><![CDATA[<h1 id="在初步-EDA-的過程，我們無可避免會想問的問題："><a href="#在初步-EDA-的過程，我們無可避免會想問的問題：" class="headerlink" title="在初步 EDA 的過程，我們無可避免會想問的問題："></a>在初步 EDA 的過程，我們無可避免會想問的問題：</h1><p>不同資料類型各有多少個欄位？</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app_train &#x3D; pd.read_csv(path)</span><br><span class="line">app_train.dtypes.value_counts()</span><br></pre></td></tr></table></figure>
+<p>類別型欄位 (pandas 中的 object) 的類別數量?</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app_train.select_dtypes(include&#x3D;[&quot;object&quot;]).apply(pd.Series.nunique, axis &#x3D; 0)</span><br></pre></td></tr></table></figure>
+<p>模型怎麼處理類別型的資料？有什麼表示方法？</p>
+<h2 id="欄位變數可分為"><a href="#欄位變數可分為" class="headerlink" title="欄位變數可分為:"></a>欄位變數可分為:</h2><ol>
+<li>離散變數：只能用整數單位計算的變數<br>如：性別(僅有男、女、雙性的選擇)</li>
+<li>連續變數：在一定區間可任意取值的變數<br>如：身高(可能在0~230，任意數)</li>
+</ol>
+<h2 id="DataFrame中常見資料類型分為："><a href="#DataFrame中常見資料類型分為：" class="headerlink" title="DataFrame中常見資料類型分為："></a>DataFrame中常見資料類型分為：</h2><ol>
+<li>int64 ： 離散、連續變數</li>
+<li>float64 ： 離散、連續變數</li>
+<li>object ： 類別型變數</li>
+</ol>
+<h2 id="字串-類別類型的資料，若需要轉換為數值的資料類型。"><a href="#字串-類別類型的資料，若需要轉換為數值的資料類型。" class="headerlink" title="字串/類別類型的資料，若需要轉換為數值的資料類型。"></a>字串/類別類型的資料，若需要轉換為數值的資料類型。</h2><p>常見轉換有兩種:</p>
+<h3 id="Label-encoding："><a href="#Label-encoding：" class="headerlink" title="Label encoding："></a>Label encoding：</h3><p>使用時機通常是該資料的不同類別是有序的<br>把每個類別 mapping 到某個整數，不會增加新欄位<br>如：年紀(老、中、小)有序，則設老1、中2、小3之類的<br><strong>空間及計算時間較小，適合非深度學習模型</strong></p>
+<h3 id="One-Hot-encoding："><a href="#One-Hot-encoding：" class="headerlink" title="One Hot encoding："></a>One Hot encoding：</h3><p>使用時機通常是該資料的不同類別是無序的<br>為每個類別新增一個欄位，用 0/1 表示是否<br>如：國家，則設美國[1 0 0]’，日本[0 1 0]’，台灣[0 0 1]’之類<br><strong>空間及計算時間較大，適合深度學習模型</strong><br>因此當特徵重要性高，且可能值較少時，才應該考慮獨熱編碼</p>
+<h4 id="綜合"><a href="#綜合" class="headerlink" title="綜合"></a>綜合</h4><p>非深度學習時，類別型特徵建議預設採Label encoding;<br>深度學習時，預設採One Hot encoding.</p>
+<p>因非深度學習時主要是樹狀模型 (隨機森林 / 梯度提升樹等基於決策樹的模型），用兩次門檻就能分隔關鍵類別;<br>但深度學習主要依賴倒傳遞，Label encoding會不易收斂</p>
+<h3 id="實作方式"><a href="#實作方式" class="headerlink" title="實作方式"></a>實作方式</h3><p>這兩種轉換法被包括在SciKit Learn library中<br>ps. Label encoding被ColumnTransformer給替代了 </p>
+<h4 id="Label-encoder"><a href="#Label-encoder" class="headerlink" title="Label encoder"></a>Label encoder</h4><p>把每個類別 mapping 到某個整數，不會增加新欄位</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.preprocessing import LabelEncoder</span><br><span class="line">labelencoder &#x3D; LabelEncoder()</span><br><span class="line">x[:, 0] &#x3D; labelencoder.fit_transform(x[:, 0])</span><br></pre></td></tr></table></figure>
+<p>存在的問題：被轉換的column並不具有關聯性，然而我們的model卻可能誤認為其中具有排序關係</p>
+<h4 id="One-Hot-Encoder"><a href="#One-Hot-Encoder" class="headerlink" title="One Hot Encoder"></a>One Hot Encoder</h4><p>若類別中無排序關係，則應使用OneHotEncoder<br>先將類別做Label Encoding，然後為各類別新增一個欄位，並以0s或1s表示</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line">onehotencoder &#x3D; OneHotEncoder(categorical_features &#x3D; [0])</span><br><span class="line">x &#x3D; onehotencoder.fit_transform(x).toarray()</span><br></pre></td></tr></table></figure>
+
+<h2 id="補充資料："><a href="#補充資料：" class="headerlink" title="補充資料："></a>補充資料：</h2><p>Label encoder Document<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html</a><br>One Hot Encoder<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html</a><br>Label encoding v.s. One Hot encoding<br><a href="https://medium.com/@contactsunny/label-encoder-vs-one-hot-encoder-in-machine-learning-3fc273365621" target="_blank" rel="noopener">https://medium.com/@contactsunny/label-encoder-vs-one-hot-encoder-in-machine-learning-3fc273365621</a><br>数据预处理：独热编码（One-Hot Encoding）和 LabelEncoder标签编码<br><a href="https://www.twblogs.net/a/5baab6e32b7177781a0e6859?lang=zh-cn" target="_blank" rel="noopener">https://www.twblogs.net/a/5baab6e32b7177781a0e6859?lang=zh-cn</a></p>
+<p></br></br></p>
+<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/資料類型及類別轉數值方式">資料類別及類別轉數值方式</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
+<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
+        <tag>類別型特徵處理</tag>
       </tags>
   </entry>
   <entry>

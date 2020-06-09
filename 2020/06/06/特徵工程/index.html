@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="機器學習馬拉松筆記,library," />
+  <meta name="keywords" content="機器學習馬拉松筆記,特徵工程," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Numpynumpy documenthttps:&#x2F;&#x2F;numpy.org&#x2F;doc&#x2F;1.18&#x2F;reference&#x2F;index.html ##下載Numpy 1python -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose  資料平滑處理 —- log1p()和exmp1()log1p() do">
+<meta name="description" content="特徵工程特徵工程是事實對應到後續評估分數的轉換特徵工程的 目的 就是最大限度地從原始數據中提取特徵以供算法和模型使用。以鐵達尼號中的生存為例，若從性別提取特徵，為男性評估點數為-2，女性評估為1假設有一資料組性別為男則給予他-2的點數，當然此點數本身未必會直接對應到機率，但會是後續評估的依據 通常來說特徵工程會在資料彙整後，擬和模型前。 由於資料包含類別型(文字型)特徵以及數值型特徵，所以通常特徵">
 <meta property="og:type" content="article">
-<meta property="og:title" content="numpy">
-<meta property="og:url" content="https://shoghilin.github.io/2020/05/23/numpy/index.html">
+<meta property="og:title" content="特徵工程">
+<meta property="og:url" content="https://shoghilin.github.io/2020/06/06/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Shoghi的隨手筆記">
-<meta property="og:description" content="Numpynumpy documenthttps:&#x2F;&#x2F;numpy.org&#x2F;doc&#x2F;1.18&#x2F;reference&#x2F;index.html ##下載Numpy 1python -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose  資料平滑處理 —- log1p()和exmp1()log1p() do">
+<meta property="og:description" content="特徵工程特徵工程是事實對應到後續評估分數的轉換特徵工程的 目的 就是最大限度地從原始數據中提取特徵以供算法和模型使用。以鐵達尼號中的生存為例，若從性別提取特徵，為男性評估點數為-2，女性評估為1假設有一資料組性別為男則給予他-2的點數，當然此點數本身未必會直接對應到機率，但會是後續評估的依據 通常來說特徵工程會在資料彙整後，擬和模型前。 由於資料包含類別型(文字型)特徵以及數值型特徵，所以通常特徵">
 <meta property="og:locale" content="zh_TW">
-<meta property="article:published_time" content="2020-05-23T13:51:10.000Z">
-<meta property="article:modified_time" content="2020-05-31T09:31:40.717Z">
+<meta property="article:published_time" content="2020-06-06T07:49:39.000Z">
+<meta property="article:modified_time" content="2020-06-07T02:09:24.030Z">
 <meta property="article:author" content="Shoghi">
 <meta property="article:tag" content="機器學習馬拉松筆記">
-<meta property="article:tag" content="library">
+<meta property="article:tag" content="特徵工程">
 <meta name="twitter:card" content="summary">
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://shoghilin.github.io/2020/05/23/numpy/"/>
+  <link rel="canonical" href="https://shoghilin.github.io/2020/06/06/特徵工程/"/>
 
 
 
 
 
-  <title>numpy | Shoghi的隨手筆記</title>
+  <title>特徵工程 | Shoghi的隨手筆記</title>
   
 
 
@@ -268,7 +268,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/05/23/numpy/">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/06/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Shoghi">
@@ -285,7 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">numpy</h1>
+          <h1 class="post-title" itemprop="name headline">特徵工程</h1>
         
 
         <div class="post-meta">
@@ -297,8 +297,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-23T21:51:10+08:00">
-                2020-05-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-06T15:49:39+08:00">
+                2020-06-06
               </time>
             
 
@@ -357,31 +357,11 @@
       
 
       
-        <h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><p>numpy document<br><a href="https://numpy.org/doc/1.18/reference/index.html" target="_blank" rel="noopener">https://numpy.org/doc/1.18/reference/index.html</a></p>
-<p>##下載Numpy</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose</span><br></pre></td></tr></table></figure>
+        <h1 id="特徵工程"><a href="#特徵工程" class="headerlink" title="特徵工程"></a>特徵工程</h1><h2 id="特徵工程是事實對應到後續評估分數的轉換"><a href="#特徵工程是事實對應到後續評估分數的轉換" class="headerlink" title="特徵工程是事實對應到後續評估分數的轉換"></a>特徵工程是事實對應到後續評估分數的轉換</h2><p>特徵工程的 <strong>目的</strong> 就是最大限度地從原始數據中提取特徵以供算法和模型使用。<br>以鐵達尼號中的生存為例，若從性別提取特徵，為男性評估點數為-2，女性評估為1<br>假設有一資料組性別為男則給予他-2的點數，當然此點數本身未必會直接對應到機率，但會是後續評估的依據</p>
+<p>通常來說特徵工程會在資料彙整後，擬和模型前。</p>
+<p>由於資料包含類別型(文字型)特徵以及數值型特徵，<br>所以通常特徵工程⾄少要包含一種類別編碼(LabelEncoder/OneHotEncoder)，以及一種特徵縮放方法(標準化或歸一化)</p>
+<h2 id="延伸："><a href="#延伸：" class="headerlink" title="延伸："></a>延伸：</h2><p>特征工程到底是什么？<br><a href="https://www.zhihu.com/question/29316149" target="_blank" rel="noopener">https://www.zhihu.com/question/29316149</a><br>為什麼特徵工程很重要<br><a href="https://ithelp.ithome.com.tw/articles/10200041?sc=iThelpR" target="_blank" rel="noopener">https://ithelp.ithome.com.tw/articles/10200041?sc=iThelpR</a></p>
 
-<h2 id="資料平滑處理-—-log1p-和exmp1"><a href="#資料平滑處理-—-log1p-和exmp1" class="headerlink" title="資料平滑處理 —- log1p()和exmp1()"></a>資料平滑處理 —- log1p()和exmp1()</h2><p><a href="https://numpy.org/doc/1.18/reference/generated/numpy.log1p.html" target="_blank" rel="noopener">log1p() document</a><br><a href="https://numpy.org/doc/1.18/reference/generated/numpy.expm1.html#numpy.expm1" target="_blank" rel="noopener">exmp1() document</a></p>
-<p>log1p( ) 的使用就像是一個數據壓縮到了一個區間，與資料的標準類似。其逆運算就是expm1的函式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">log1p :&#x3D; log(x+1)      即ln(x+1)</span><br><span class="line">expm1 :&#x3D; exp(x)-1</span><br></pre></td></tr></table></figure>
-<p>Example(log1p):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">np.log1p(1e-99)</span><br><span class="line">1e-99</span><br><span class="line">np.log(1 + 1e-99)</span><br><span class="line">0.0</span><br></pre></td></tr></table></figure>
-<p>Example(exmp1):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">np.expm1(1e-10)</span><br><span class="line">1.00000000005e-10</span><br><span class="line">np.exp(1e-10) - 1</span><br><span class="line">1.000000082740371e-10</span><br></pre></td></tr></table></figure>
-<h3 id="補充："><a href="#補充：" class="headerlink" title="補充："></a>補充：</h3><p><a href="/2020/05/24/資料平滑處理">資料平滑處理</a></p>
-<h2 id="限制array的值於特定範圍-clip-document"><a href="#限制array的值於特定範圍-clip-document" class="headerlink" title="限制array的值於特定範圍 clip (document)"></a>限制array的值於特定範圍 clip (<a href="https://numpy.org/doc/1.18/reference/generated/numpy.clip.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.clip(a, a_min, a_max, out&#x3D;None, **kwargs)</span><br></pre></td></tr></table></figure>
-<p>Example:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; np.arange(10)</span><br><span class="line">a</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</span><br><span class="line"></span><br><span class="line">np.clip(a, 1, 8)</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([1, 1, 2, 3, 4, 5, 6, 7, 8, 8])</span><br></pre></td></tr></table></figure>
-
-<h2 id="計算一個多維數組的任意百分比分位數-percentile-document"><a href="#計算一個多維數組的任意百分比分位數-percentile-document" class="headerlink" title="計算一個多維數組的任意百分比分位數 percentile(document)"></a>計算一個多維數組的任意百分比分位數 percentile(<a href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.percentile(a, q, axis&#x3D;None, out&#x3D;None, overwrite_input&#x3D;False, interpolation&#x3D;&#39;linear&#39;, keepdims&#x3D;False)</span><br></pre></td></tr></table></figure>
-<p>Example:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; np.array([[10, 7, 4], [3, 2, 1]])</span><br><span class="line">a</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([[10,  7,  4],</span><br><span class="line">       [ 3,  2,  1]])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">np.percentile(a, 50)   # (4+3)&#x2F;2&#x3D;3.5</span><br><span class="line">&gt;&gt;</span><br><span class="line">3.5</span><br></pre></td></tr></table></figure>
-
-<h2 id="相關矩陣函數-corrcoef"><a href="#相關矩陣函數-corrcoef" class="headerlink" title="相關矩陣函數 (corrcoef)"></a>相關矩陣函數 (corrcoef)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.corrcoef(x, y&#x3D;None, rowvar&#x3D;True, bias&#x3D;&lt;no value&gt;, ddof&#x3D;&lt;no value&gt;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="取區間-linspace-document"><a href="#取區間-linspace-document" class="headerlink" title="取區間 linspace(document)"></a>取區間 linspace(<a href="https://numpy.org/doc/stable/reference/generated/numpy.linspace.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.linspace(start, stop, num&#x3D;50, endpoint&#x3D;True, retstep&#x3D;False, dtype&#x3D;None, axis&#x3D;0)</span><br></pre></td></tr></table></figure>
-<p>Example:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">np.linspace(10,20,11)</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([20., 25., 30., 35., 40., 45., 50., 55., 60., 65., 70.])</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -400,7 +380,7 @@
           
             <a href="/tags/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E9%A6%AC%E6%8B%89%E6%9D%BE%E7%AD%86%E8%A8%98/" rel="tag"># 機器學習馬拉松筆記</a>
           
-            <a href="/tags/library/" rel="tag"># library</a>
+            <a href="/tags/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/" rel="tag"># 特徵工程</a>
           
         </div>
       
@@ -413,8 +393,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/" rel="next" title="資料中常見的特徵類型">
-                <i class="fa fa-chevron-left"></i> 資料中常見的特徵類型
+              <a href="/2020/06/01/%E9%9B%A2%E6%95%A3%E5%8C%96%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC/" rel="next" title="離散化連續數值">
+                <i class="fa fa-chevron-left"></i> 離散化連續數值
               </a>
             
           </div>
@@ -423,8 +403,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/05/23/Markdown%E7%9B%B8%E9%97%9C%E6%96%87%E4%BB%B6/" rel="prev" title="Markdown相關文件">
-                Markdown相關文件 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/06/07/%E5%8E%BB%E9%99%A4%E5%81%8F%E6%85%8B/" rel="prev" title="去除偏態">
+                去除偏態 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -591,7 +571,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Numpy"><span class="nav-number">1.</span> <span class="nav-text">Numpy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#資料平滑處理-—-log1p-和exmp1"><span class="nav-number">1.1.</span> <span class="nav-text">資料平滑處理 —- log1p()和exmp1()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#補充："><span class="nav-number">1.1.1.</span> <span class="nav-text">補充：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#限制array的值於特定範圍-clip-document"><span class="nav-number">1.2.</span> <span class="nav-text">限制array的值於特定範圍 clip (document)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#計算一個多維數組的任意百分比分位數-percentile-document"><span class="nav-number">1.3.</span> <span class="nav-text">計算一個多維數組的任意百分比分位數 percentile(document)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相關矩陣函數-corrcoef"><span class="nav-number">1.4.</span> <span class="nav-text">相關矩陣函數 (corrcoef)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取區間-linspace-document"><span class="nav-number">1.5.</span> <span class="nav-text">取區間 linspace(document)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#特徵工程"><span class="nav-number">1.</span> <span class="nav-text">特徵工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特徵工程是事實對應到後續評估分數的轉換"><span class="nav-number">1.1.</span> <span class="nav-text">特徵工程是事實對應到後續評估分數的轉換</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延伸："><span class="nav-number">1.2.</span> <span class="nav-text">延伸：</span></a></li></ol></li></ol></div>
             
 
           </div>
