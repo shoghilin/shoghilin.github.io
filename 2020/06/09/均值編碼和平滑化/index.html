@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="機器學習馬拉松筆記,EDA,類別型特徵處理," />
+  <meta name="keywords" content="機器學習馬拉松筆記,EDA,特徵工程,類別型特徵處理," />
 
 
 
@@ -87,10 +87,11 @@
 <meta property="og:description" content="均值編碼和平滑化均值編碼 (Mean Encoding)什麼是均值編碼？使用目標值的平均值，取代原本的類別型特徵 甚麼時候使用如果類別特徵看起來與目標值有顯著相關，那麼均值編碼便是一個不錯的選擇 缺點然而均值編碼的缺點是如果交易樣本非常少, 且剛好抽到極端值, 平均結果可能會有誤差很大。如：各籃球隊中鋒身高有{180,175,220,200,210}，然而若是抽到175，並以此作均值編碼，便會產生">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-06-09T04:05:10.000Z">
-<meta property="article:modified_time" content="2020-06-09T15:03:43.547Z">
+<meta property="article:modified_time" content="2020-06-11T03:01:56.309Z">
 <meta property="article:author" content="Shoghi">
 <meta property="article:tag" content="機器學習馬拉松筆記">
 <meta property="article:tag" content="EDA">
+<meta property="article:tag" content="特徵工程">
 <meta property="article:tag" content="類別型特徵處理">
 <meta name="twitter:card" content="summary">
 
@@ -367,14 +368,14 @@
 <h3 id="需要注意"><a href="#需要注意" class="headerlink" title="需要注意"></a>需要注意</h3><p>當使用均值編碼時，非常容易造成overfitting，即便使用平滑化能夠修正，但實際效果有限。<br>因此仍須 <strong>經過檢驗</strong> 後再決定是否該使用均值編碼</p>
 <p>延伸：<br>平均数编码：针对高基数定性特征（类别特征）的数据预处理/特征工程<br><a href="https://zhuanlan.zhihu.com/p/26308272" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/26308272</a></p>
 <h1 id="計數編碼-雜湊編碼"><a href="#計數編碼-雜湊編碼" class="headerlink" title="計數編碼/雜湊編碼"></a>計數編碼/雜湊編碼</h1><h2 id="計數編碼-Counting"><a href="#計數編碼-Counting" class="headerlink" title="計數編碼 (Counting)"></a>計數編碼 (Counting)</h2><h3 id="什麼是記數編碼"><a href="#什麼是記數編碼" class="headerlink" title="什麼是記數編碼"></a>什麼是記數編碼</h3><p>如果類別的 <strong>目標平均值</strong> 與 <strong>類別筆數</strong> 呈正相關(或負相關)，也可以將筆數本⾝身當成特徵<br>例如 : 購物網站的消費金額預測</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   		平均 	記錄筆數				記數編碼 </span><br><span class="line">美金		300		x3000				3000</span><br><span class="line">台幣		100		x500		&#x3D;&gt;		500</span><br><span class="line">日圓		50		x10					10</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   		平均 		記錄筆數				記數編碼 </span><br><span class="line">美金		300		x3000				3000</span><br><span class="line">台幣		100		x500		&#x3D;&gt;		500</span><br><span class="line">日圓		50		x10				10</span><br></pre></td></tr></table></figure>
 <p>p.s. 自然語言處理時，字詞的計數編碼又稱詞頻，本身就是一個很重要的特徵</p>
-<h3 id="實作例子"><a href="#實作例子" class="headerlink" title="實作例子"></a>實作例子</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">count_df &#x3D; df.groupby([&#39;Cabin&#39;])[&#39;Name&#39;].agg(&#123;&#39;Cabin_Count&#39;:&#39;size&#39;&#125;).reset_index()</span><br><span class="line">df &#x3D; pd.merge(df, count_df, on&#x3D;[&#39;Cabin&#39;], how&#x3D;&#39;left&#39;)</span><br><span class="line">--------------------------</span><br><span class="line">df_temp[&#39;Cabin_Count&#39;] &#x3D; df[&#39;Cabin_Count&#39;]</span><br></pre></td></tr></table></figure>
+<h3 id="實作方式"><a href="#實作方式" class="headerlink" title="實作方式"></a>實作方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">count_df &#x3D; df.groupby([&#39;Cabin&#39;])[&#39;Name&#39;].agg(&#123;&#39;Cabin_Count&#39;:&#39;size&#39;&#125;).reset_index()</span><br><span class="line">df &#x3D; pd.merge(df, count_df, on&#x3D;[&#39;Cabin&#39;], how&#x3D;&#39;left&#39;)</span><br><span class="line">--------------------------</span><br><span class="line">df_temp[&#39;Cabin_Count&#39;] &#x3D; df[&#39;Cabin_Count&#39;]</span><br></pre></td></tr></table></figure>
 
 <h2 id="特徵雜湊-Feature-Hash-wiki"><a href="#特徵雜湊-Feature-Hash-wiki" class="headerlink" title="特徵雜湊 ( Feature Hash ) wiki"></a>特徵雜湊 ( Feature Hash ) <a href="https://en.wikipedia.org/wiki/Feature_hashing" target="_blank" rel="noopener">wiki</a></h2><p>當類別型特徵最麻煩的問題 : 相異異類別的數量非常龐大, 該如何編碼?<br>然而這個問題並沒有通用的解決方法，只能通過折衷的方式達成<br>也就是 <strong>特徵雜湊</strong></p>
 <h3 id="什麼是特徵雜湊"><a href="#什麼是特徵雜湊" class="headerlink" title="什麼是特徵雜湊"></a>什麼是特徵雜湊</h3><p>特徵雜湊是一種折衷方案，將類別由雜湊函數定應到一組數字，調整雜湊函數對應值的數量，<br>在計算空間/時間與鑑別度間取折衷，也提高了訊息密度, 減少無用的標籤</p>
 <h3 id="什麼時候使用"><a href="#什麼時候使用" class="headerlink" title="什麼時候使用"></a>什麼時候使用</h3><p>當相異類別數量相當大且其他編碼方式效果更差時，可以考慮雜湊編碼以節省時間</p>
-<h3 id="實作方式"><a href="#實作方式" class="headerlink" title="實作方式"></a>實作方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_temp[&#39;Cabin_Hash&#39;] &#x3D; df[&#39;Cabin&#39;].map(lambda x: hash(x) % 10)</span><br></pre></td></tr></table></figure>
+<h3 id="實作方式-1"><a href="#實作方式-1" class="headerlink" title="實作方式"></a>實作方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_temp[&#39;Cabin_Hash&#39;] &#x3D; df[&#39;Cabin&#39;].map(lambda x: hash(x) % 10)</span><br></pre></td></tr></table></figure>
 
 <h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>Feature hashing(特征哈希)<br><a href="https://blog.csdn.net/laolu1573/article/details/79410187" target="_blank" rel="noopener">https://blog.csdn.net/laolu1573/article/details/79410187</a><br>基于sklearn的文本特征抽取<br><a href="https://www.jianshu.com/p/063840752151" target="_blank" rel="noopener">https://www.jianshu.com/p/063840752151</a></p>
 
@@ -398,6 +399,8 @@
           
             <a href="/tags/EDA/" rel="tag"># EDA</a>
           
+            <a href="/tags/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/" rel="tag"># 特徵工程</a>
+          
             <a href="/tags/%E9%A1%9E%E5%88%A5%E5%9E%8B%E7%89%B9%E5%BE%B5%E8%99%95%E7%90%86/" rel="tag"># 類別型特徵處理</a>
           
         </div>
@@ -420,6 +423,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/10/%E6%99%82%E9%96%93%E5%9E%8B%E7%89%B9%E5%BE%B5/" rel="prev" title="時間型特徵">
+                時間型特徵 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -496,7 +503,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -518,7 +525,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -532,7 +539,7 @@
             <div class="links-of-author motion-element">
                 
                   <span class="links-of-author-item">
-                    <a href="shoghi22@icloud.com" target="_blank" title="email">
+                    <a href="linboyu@fel.cvut.cz" target="_blank" title="email">
                       
                         <i class="fa fa-fw fa-globe"></i>email</a>
                   </span>
@@ -585,7 +592,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#均值編碼和平滑化"><span class="nav-number">1.</span> <span class="nav-text">均值編碼和平滑化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#均值編碼-Mean-Encoding"><span class="nav-number">1.1.</span> <span class="nav-text">均值編碼 (Mean Encoding)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼是均值編碼？"><span class="nav-number">1.1.1.</span> <span class="nav-text">什麼是均值編碼？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#甚麼時候使用"><span class="nav-number">1.1.2.</span> <span class="nav-text">甚麼時候使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺點"><span class="nav-number">1.1.3.</span> <span class="nav-text">缺點</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#怎麼解決呢"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">怎麼解決呢</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需要注意"><span class="nav-number">1.1.4.</span> <span class="nav-text">需要注意</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#計數編碼-雜湊編碼"><span class="nav-number">2.</span> <span class="nav-text">計數編碼&#x2F;雜湊編碼</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#計數編碼-Counting"><span class="nav-number">2.1.</span> <span class="nav-text">計數編碼 (Counting)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼是記數編碼"><span class="nav-number">2.1.1.</span> <span class="nav-text">什麼是記數編碼</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#實作例子"><span class="nav-number">2.1.2.</span> <span class="nav-text">實作例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特徵雜湊-Feature-Hash-wiki"><span class="nav-number">2.2.</span> <span class="nav-text">特徵雜湊 ( Feature Hash ) wiki</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼是特徵雜湊"><span class="nav-number">2.2.1.</span> <span class="nav-text">什麼是特徵雜湊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼時候使用"><span class="nav-number">2.2.2.</span> <span class="nav-text">什麼時候使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#實作方式"><span class="nav-number">2.2.3.</span> <span class="nav-text">實作方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延伸"><span class="nav-number">2.3.</span> <span class="nav-text">延伸</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#均值編碼和平滑化"><span class="nav-number">1.</span> <span class="nav-text">均值編碼和平滑化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#均值編碼-Mean-Encoding"><span class="nav-number">1.1.</span> <span class="nav-text">均值編碼 (Mean Encoding)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼是均值編碼？"><span class="nav-number">1.1.1.</span> <span class="nav-text">什麼是均值編碼？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#甚麼時候使用"><span class="nav-number">1.1.2.</span> <span class="nav-text">甚麼時候使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺點"><span class="nav-number">1.1.3.</span> <span class="nav-text">缺點</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#怎麼解決呢"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">怎麼解決呢</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#需要注意"><span class="nav-number">1.1.4.</span> <span class="nav-text">需要注意</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#計數編碼-雜湊編碼"><span class="nav-number">2.</span> <span class="nav-text">計數編碼&#x2F;雜湊編碼</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#計數編碼-Counting"><span class="nav-number">2.1.</span> <span class="nav-text">計數編碼 (Counting)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼是記數編碼"><span class="nav-number">2.1.1.</span> <span class="nav-text">什麼是記數編碼</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#實作方式"><span class="nav-number">2.1.2.</span> <span class="nav-text">實作方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特徵雜湊-Feature-Hash-wiki"><span class="nav-number">2.2.</span> <span class="nav-text">特徵雜湊 ( Feature Hash ) wiki</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼是特徵雜湊"><span class="nav-number">2.2.1.</span> <span class="nav-text">什麼是特徵雜湊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什麼時候使用"><span class="nav-number">2.2.2.</span> <span class="nav-text">什麼時候使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#實作方式-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">實作方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延伸"><span class="nav-number">2.3.</span> <span class="nav-text">延伸</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="機器學習馬拉松筆記,EDA," />
+  <meta name="keywords" content="機器學習馬拉松筆記,EDA,數值型特徵處理," />
 
 
 
@@ -79,19 +79,20 @@
 
 
 
-<meta name="description" content="離群值(Outlier)及其處理理何謂離群值(Outlier)離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 &#x2F; 最小最大化)就會出現很大的問題 檢查異異常值的⽅方法 統計值：如平均數、標準差、中位數、分位數 (dataframe.describe) 畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(ECDF)  延伸資料：Ways to Detect and">
+<meta name="description" content="離群值(Outlier)及其處理何謂離群值(Outlier)離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 &#x2F; 最小最大化)就會出現很大的問題 檢查異異常值的⽅方法 統計值：如平均數、標準差、中位數、分位數 (dataframe.describe) 畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(ECDF)  延伸資料：Ways to Detect and R">
 <meta property="og:type" content="article">
-<meta property="og:title" content="「探索式資料分析」-Exploratory-Data-Analysis-04(outliers)">
+<meta property="og:title" content="離群值outliers">
 <meta property="og:url" content="https://shoghilin.github.io/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/index.html">
 <meta property="og:site_name" content="Shoghi的隨手筆記">
-<meta property="og:description" content="離群值(Outlier)及其處理理何謂離群值(Outlier)離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 &#x2F; 最小最大化)就會出現很大的問題 檢查異異常值的⽅方法 統計值：如平均數、標準差、中位數、分位數 (dataframe.describe) 畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(ECDF)  延伸資料：Ways to Detect and">
+<meta property="og:description" content="離群值(Outlier)及其處理何謂離群值(Outlier)離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 &#x2F; 最小最大化)就會出現很大的問題 檢查異異常值的⽅方法 統計值：如平均數、標準差、中位數、分位數 (dataframe.describe) 畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(ECDF)  延伸資料：Ways to Detect and R">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://pic4.zhimg.com/80/v2-275cf87efb56d50fe65a6850c0c8828b_720w.jpg">
 <meta property="article:published_time" content="2020-05-26T09:24:13.000Z">
-<meta property="article:modified_time" content="2020-05-28T16:29:06.419Z">
+<meta property="article:modified_time" content="2020-06-10T02:57:33.228Z">
 <meta property="article:author" content="Shoghi">
 <meta property="article:tag" content="機器學習馬拉松筆記">
 <meta property="article:tag" content="EDA">
+<meta property="article:tag" content="數值型特徵處理">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic4.zhimg.com/80/v2-275cf87efb56d50fe65a6850c0c8828b_720w.jpg">
 
@@ -129,7 +130,7 @@
 
 
 
-  <title>「探索式資料分析」-Exploratory-Data-Analysis-04(outliers) | Shoghi的隨手筆記</title>
+  <title>離群值outliers | Shoghi的隨手筆記</title>
   
 
 
@@ -287,7 +288,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">「探索式資料分析」-Exploratory-Data-Analysis-04(outliers)</h1>
+          <h1 class="post-title" itemprop="name headline">離群值outliers</h1>
         
 
         <div class="post-meta">
@@ -359,7 +360,7 @@
       
 
       
-        <h1 id="離群值-Outlier-及其處理理"><a href="#離群值-Outlier-及其處理理" class="headerlink" title="離群值(Outlier)及其處理理"></a>離群值(Outlier)及其處理理</h1><h2 id="何謂離群值-Outlier"><a href="#何謂離群值-Outlier" class="headerlink" title="何謂離群值(Outlier)"></a>何謂離群值(Outlier)</h2><p>離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 / 最小最大化)就會出現很大的問題</p>
+        <h1 id="離群值-Outlier-及其處理"><a href="#離群值-Outlier-及其處理" class="headerlink" title="離群值(Outlier)及其處理"></a>離群值(Outlier)及其處理</h1><h2 id="何謂離群值-Outlier"><a href="#何謂離群值-Outlier" class="headerlink" title="何謂離群值(Outlier)"></a>何謂離群值(Outlier)</h2><p>離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 / 最小最大化)就會出現很大的問題</p>
 <h2 id="檢查異異常值的⽅方法"><a href="#檢查異異常值的⽅方法" class="headerlink" title="檢查異異常值的⽅方法"></a>檢查異異常值的⽅方法</h2><ul>
 <li>統計值：如平均數、標準差、中位數、分位數 (dataframe.describe)</li>
 <li>畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(<a href="/2020/05/26/ECDF">ECDF</a>)</li>
@@ -400,6 +401,8 @@
             <a href="/tags/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E9%A6%AC%E6%8B%89%E6%9D%BE%E7%AD%86%E8%A8%98/" rel="tag"># 機器學習馬拉松筆記</a>
           
             <a href="/tags/EDA/" rel="tag"># EDA</a>
+          
+            <a href="/tags/%E6%95%B8%E5%80%BC%E5%9E%8B%E7%89%B9%E5%BE%B5%E8%99%95%E7%90%86/" rel="tag"># 數值型特徵處理</a>
           
         </div>
       
@@ -501,7 +504,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -523,7 +526,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -537,7 +540,7 @@
             <div class="links-of-author motion-element">
                 
                   <span class="links-of-author-item">
-                    <a href="shoghi22@icloud.com" target="_blank" title="email">
+                    <a href="linboyu@fel.cvut.cz" target="_blank" title="email">
                       
                         <i class="fa fa-fw fa-globe"></i>email</a>
                   </span>
@@ -590,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#離群值-Outlier-及其處理理"><span class="nav-number">1.</span> <span class="nav-text">離群值(Outlier)及其處理理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#何謂離群值-Outlier"><span class="nav-number">1.1.</span> <span class="nav-text">何謂離群值(Outlier)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#檢查異異常值的⽅方法"><span class="nav-number">1.2.</span> <span class="nav-text">檢查異異常值的⽅方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#延伸資料："><span class="nav-number">1.2.1.</span> <span class="nav-text">延伸資料：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#處理理異異常值"><span class="nav-number">1.3.</span> <span class="nav-text">處理理異異常值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#處理完後的好處-壞處"><span class="nav-number">1.3.1.</span> <span class="nav-text">處理完後的好處&#x2F;壞處</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相關貼文"><span class="nav-number">1.3.2.</span> <span class="nav-text">相關貼文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#延伸資料：-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">延伸資料：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#「探索式資料分析」-EDA-相關："><span class="nav-number">2.</span> <span class="nav-text">「探索式資料分析」(EDA)相關：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#library介紹"><span class="nav-number">3.</span> <span class="nav-text">library介紹</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#離群值-Outlier-及其處理"><span class="nav-number">1.</span> <span class="nav-text">離群值(Outlier)及其處理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#何謂離群值-Outlier"><span class="nav-number">1.1.</span> <span class="nav-text">何謂離群值(Outlier)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#檢查異異常值的⽅方法"><span class="nav-number">1.2.</span> <span class="nav-text">檢查異異常值的⽅方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#延伸資料："><span class="nav-number">1.2.1.</span> <span class="nav-text">延伸資料：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#處理理異異常值"><span class="nav-number">1.3.</span> <span class="nav-text">處理理異異常值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#處理完後的好處-壞處"><span class="nav-number">1.3.1.</span> <span class="nav-text">處理完後的好處&#x2F;壞處</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相關貼文"><span class="nav-number">1.3.2.</span> <span class="nav-text">相關貼文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#延伸資料：-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">延伸資料：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#「探索式資料分析」-EDA-相關："><span class="nav-number">2.</span> <span class="nav-text">「探索式資料分析」(EDA)相關：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#library介紹"><span class="nav-number">3.</span> <span class="nav-text">library介紹</span></a></li></ol></div>
             
 
           </div>
