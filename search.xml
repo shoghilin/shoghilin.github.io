@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ECDF</title>
-    <url>/2020/05/26/ECDF/</url>
-    <content><![CDATA[<h1 id="ECDF-experience-empirical-distribution-function"><a href="#ECDF-experience-empirical-distribution-function" class="headerlink" title="ECDF (experience empirical distribution function)"></a>ECDF (experience empirical distribution function)</h1><p>ECDF 最主要的目的是希望看到資料的累積分布，y 軸是介於 0-1 的數字 (代表累積比例)，x 軸則是資料的實際數值分布。<br>透過 ECDF，我們可以很快看出我們有興趣的資料數值約占多少比例，並觀察圖形差異<br>而CDF跟ECDF的差別就是，CDF 是從理論函數來的，ECDF 則是由觀察值所得到的，因此CDF看起來較為平滑，ECDF則較多曲折。<br><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Empirical_CDF.png" alt="ECDF"><br>以馬拉松Day9為例子，找出 AMT_INCOME_TOTAL 的ECDF</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cdf &#x3D; app_train[&#39;AMT_INCOME_TOTAL&#39;].value_counts().sort_index().cumsum()</span><br></pre></td></tr></table></figure>
-<p>通過數出各項數總量，重新排列後，累加起來</p>
-<p>把圖畫出來</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">plt.plot(list(cdf.index), cdf&#x2F;cdf.max())</span><br><span class="line">plt.xlabel(&#39;Value&#39;)</span><br><span class="line">plt.ylabel(&#39;ECDF&#39;)</span><br><span class="line">plt.xlim([cdf.index.min(), cdf.index.max() * 1.05]) # 限制顯示圖片的範圍</span><br><span class="line">plt.ylim([-0.05,1.05]) # 限制顯示圖片的範圍</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="http://kwassistfile.cupoy.com/0000016A66C4BF1500000C7D6375706F795F72656C65617365414E53/1545817738326/large" alt="ECDF"><br>很明顯的圖跟我們期望的不一樣，因此數據中可能是含有異常的(可用log來調整)</p>
-<p>ps.<br>發現以下兩種情境可使用log調整：</p>
-<ol>
-<li>資料範圍太大，可以縮小一點</li>
-<li>資料偏態嚴重，可以集中一點</li>
-</ol>
+    <title>Markdown相關文件</title>
+    <url>/2020/05/23/Markdown%E7%9B%B8%E9%97%9C%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
+<p>hexo next mathjax數學公式設定<br><a href="https://dtes8617.github.io/2018/01/24/%E5%9C%A8Hexo%E9%A1%AF%E7%A4%BA%E6%95%B8%E5%AD%B8%E5%85%AC%E5%BC%8F/" target="_blank" rel="noopener">https://dtes8617.github.io/2018/01/24/%E5%9C%A8Hexo%E9%A1%AF%E7%A4%BA%E6%95%B8%E5%AD%B8%E5%85%AC%E5%BC%8F/</a></p>
+<p>如何在 Markdown 輸入數學公式及符號<br><a href="http://blog.maxkit.com.tw/2020/02/markdown.html" target="_blank" rel="noopener">http://blog.maxkit.com.tw/2020/02/markdown.html</a></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>My New Post</title>
-    <url>/2020/05/21/My-New-Post/</url>
-    <content><![CDATA[<p>I just trying to start my blog for coding note.<br>just for recording my learning path! XD</p>
-<p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
-<p>try upload same time</p>
-]]></content>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
   </entry>
   <entry>
     <title>EDA:correlation/相關係數</title>
@@ -51,6 +38,22 @@
         <tag>機器學習馬拉松筆記</tag>
         <tag>EDA</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>ECDF</title>
+    <url>/2020/05/26/ECDF/</url>
+    <content><![CDATA[<h1 id="ECDF-experience-empirical-distribution-function"><a href="#ECDF-experience-empirical-distribution-function" class="headerlink" title="ECDF (experience empirical distribution function)"></a>ECDF (experience empirical distribution function)</h1><p>ECDF 最主要的目的是希望看到資料的累積分布，y 軸是介於 0-1 的數字 (代表累積比例)，x 軸則是資料的實際數值分布。<br>透過 ECDF，我們可以很快看出我們有興趣的資料數值約占多少比例，並觀察圖形差異<br>而CDF跟ECDF的差別就是，CDF 是從理論函數來的，ECDF 則是由觀察值所得到的，因此CDF看起來較為平滑，ECDF則較多曲折。<br><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Empirical_CDF.png" alt="ECDF"><br>以馬拉松Day9為例子，找出 AMT_INCOME_TOTAL 的ECDF</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cdf &#x3D; app_train[&#39;AMT_INCOME_TOTAL&#39;].value_counts().sort_index().cumsum()</span><br></pre></td></tr></table></figure>
+<p>通過數出各項數總量，重新排列後，累加起來</p>
+<p>把圖畫出來</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">plt.plot(list(cdf.index), cdf&#x2F;cdf.max())</span><br><span class="line">plt.xlabel(&#39;Value&#39;)</span><br><span class="line">plt.ylabel(&#39;ECDF&#39;)</span><br><span class="line">plt.xlim([cdf.index.min(), cdf.index.max() * 1.05]) # 限制顯示圖片的範圍</span><br><span class="line">plt.ylim([-0.05,1.05]) # 限制顯示圖片的範圍</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="http://kwassistfile.cupoy.com/0000016A66C4BF1500000C7D6375706F795F72656C65617365414E53/1545817738326/large" alt="ECDF"><br>很明顯的圖跟我們期望的不一樣，因此數據中可能是含有異常的(可用log來調整)</p>
+<p>ps.<br>發現以下兩種情境可使用log調整：</p>
+<ol>
+<li>資料範圍太大，可以縮小一點</li>
+<li>資料偏態嚴重，可以集中一點</li>
+</ol>
+]]></content>
   </entry>
   <entry>
     <title>Kernel-Density-Estimation</title>
@@ -86,51 +89,12 @@
       </tags>
   </entry>
   <entry>
-    <title>Markdown相關文件</title>
-    <url>/2020/05/23/Markdown%E7%9B%B8%E9%97%9C%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
-<p>hexo next mathjax數學公式設定<br><a href="https://dtes8617.github.io/2018/01/24/%E5%9C%A8Hexo%E9%A1%AF%E7%A4%BA%E6%95%B8%E5%AD%B8%E5%85%AC%E5%BC%8F/" target="_blank" rel="noopener">https://dtes8617.github.io/2018/01/24/%E5%9C%A8Hexo%E9%A1%AF%E7%A4%BA%E6%95%B8%E5%AD%B8%E5%85%AC%E5%BC%8F/</a></p>
-<p>如何在 Markdown 輸入數學公式及符號<br><a href="http://blog.maxkit.com.tw/2020/02/markdown.html" target="_blank" rel="noopener">http://blog.maxkit.com.tw/2020/02/markdown.html</a></p>
+    <title>My New Post</title>
+    <url>/2020/05/21/My-New-Post/</url>
+    <content><![CDATA[<p>I just trying to start my blog for coding note.<br>just for recording my learning path! XD</p>
+<p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
+<p>try upload same time</p>
 ]]></content>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>numpy</title>
-    <url>/2020/05/23/numpy/</url>
-    <content><![CDATA[<h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><p>numpy document<br><a href="https://numpy.org/doc/1.18/reference/index.html" target="_blank" rel="noopener">https://numpy.org/doc/1.18/reference/index.html</a></p>
-<p>##下載Numpy</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose</span><br></pre></td></tr></table></figure>
-
-<h2 id="資料平滑處理-—-log1p-和exmp1"><a href="#資料平滑處理-—-log1p-和exmp1" class="headerlink" title="資料平滑處理 —- log1p()和exmp1()"></a>資料平滑處理 —- log1p()和exmp1()</h2><p><a href="https://numpy.org/doc/1.18/reference/generated/numpy.log1p.html" target="_blank" rel="noopener">log1p() document</a><br><a href="https://numpy.org/doc/1.18/reference/generated/numpy.expm1.html#numpy.expm1" target="_blank" rel="noopener">exmp1() document</a></p>
-<p>log1p( ) 的使用就像是一個數據壓縮到了一個區間，與資料的標準類似。其逆運算就是expm1的函式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">log1p :&#x3D; log(x+1)      即ln(x+1)</span><br><span class="line">expm1 :&#x3D; exp(x)-1</span><br></pre></td></tr></table></figure>
-<p>Example(log1p):</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">np.log1p(1e-99)</span><br><span class="line">1e-99</span><br><span class="line">np.log(1 + 1e-99)</span><br><span class="line">0.0</span><br></pre></td></tr></table></figure>
-<p>Example(exmp1):</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">np.expm1(1e-10)</span><br><span class="line">1.00000000005e-10</span><br><span class="line">np.exp(1e-10) - 1</span><br><span class="line">1.000000082740371e-10</span><br></pre></td></tr></table></figure>
-<h3 id="補充："><a href="#補充：" class="headerlink" title="補充："></a>補充：</h3><p><a href="/2020/05/24/資料平滑處理">資料平滑處理</a></p>
-<h2 id="限制array的值於特定範圍-clip-document"><a href="#限制array的值於特定範圍-clip-document" class="headerlink" title="限制array的值於特定範圍 clip (document)"></a>限制array的值於特定範圍 clip (<a href="https://numpy.org/doc/1.18/reference/generated/numpy.clip.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.clip(a, a_min, a_max, out&#x3D;None, **kwargs)</span><br></pre></td></tr></table></figure>
-<p>Example:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a &#x3D; np.arange(10)</span><br><span class="line">a</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</span><br><span class="line"></span><br><span class="line">np.clip(a, 1, 8)</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([1, 1, 2, 3, 4, 5, 6, 7, 8, 8])</span><br></pre></td></tr></table></figure>
-
-<h2 id="計算一個多維數組的任意百分比分位數-percentile-document"><a href="#計算一個多維數組的任意百分比分位數-percentile-document" class="headerlink" title="計算一個多維數組的任意百分比分位數 percentile(document)"></a>計算一個多維數組的任意百分比分位數 percentile(<a href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.percentile(a, q, axis&#x3D;None, out&#x3D;None, overwrite_input&#x3D;False, interpolation&#x3D;&#39;linear&#39;, keepdims&#x3D;False)</span><br></pre></td></tr></table></figure>
-<p>Example:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a &#x3D; np.array([[10, 7, 4], [3, 2, 1]])</span><br><span class="line">a</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([[10,  7,  4],</span><br><span class="line">       [ 3,  2,  1]])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">np.percentile(a, 50)   # (4+3)&#x2F;2&#x3D;3.5</span><br><span class="line">&gt;&gt;</span><br><span class="line">3.5</span><br></pre></td></tr></table></figure>
-
-<h2 id="相關矩陣函數-corrcoef"><a href="#相關矩陣函數-corrcoef" class="headerlink" title="相關矩陣函數 (corrcoef)"></a>相關矩陣函數 (corrcoef)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.corrcoef(x, y&#x3D;None, rowvar&#x3D;True, bias&#x3D;&lt;no value&gt;, ddof&#x3D;&lt;no value&gt;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="取區間-linspace-document"><a href="#取區間-linspace-document" class="headerlink" title="取區間 linspace(document)"></a>取區間 linspace(<a href="https://numpy.org/doc/stable/reference/generated/numpy.linspace.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.linspace(start, stop, num&#x3D;50, endpoint&#x3D;True, retstep&#x3D;False, dtype&#x3D;None, axis&#x3D;0)</span><br></pre></td></tr></table></figure>
-<p>Example:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">np.linspace(10,20,11)</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([20., 25., 30., 35., 40., 45., 50., 55., 60., 65., 70.])</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>library</tag>
-      </tags>
   </entry>
   <entry>
     <title>Hello World</title>
@@ -149,6 +113,34 @@
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Regression vs. Classification</title>
+    <url>/2020/06/22/Regression-vs-Classification/</url>
+    <content><![CDATA[<h1 id="機器學習的監督式學習中主要分為"><a href="#機器學習的監督式學習中主要分為" class="headerlink" title="機器學習的監督式學習中主要分為"></a>機器學習的監督式學習中主要分為</h1><ul>
+<li><p>回歸問題<br>回歸代表預測的⽬標值為實數 (-∞ ⾄ ∞)</p>
+</li>
+<li><p>分類問題。<br>分類代表預測的⽬標值為類別 (0 或 1)</p>
+</li>
+</ul>
+<h2 id="目的差異"><a href="#目的差異" class="headerlink" title="目的差異"></a>目的差異</h2><p><strong>Supervised classification</strong> 的目的是要找出decision boundary, 也就是新得到的一筆 <strong>資料</strong> 是在decision boundary(邊界)的哪一邊來決定賦予哪一種class label.<br>而 <strong>Regression</strong> 的目的, 則是找出那條最能夠區分所有資料的那條 <strong>“線”</strong> ，再找所求的點對應的線上位置<br>(一個找點的分類，一個找分類線本身)</p>
+<p><a href="http://zylix666.blogspot.com/2016/06/supervised-classificationregression.html" target="_blank" rel="noopener">更多</a></p>
+<h1 id="⼆元分類-binary-class-vs-多元分類-Multi-class"><a href="#⼆元分類-binary-class-vs-多元分類-Multi-class" class="headerlink" title="⼆元分類 (binary-class) vs. 多元分類 (Multi-class)"></a>⼆元分類 (binary-class) vs. 多元分類 (Multi-class)</h1><ul>
+<li><strong>二元分類</strong> ，顧名思義就是目標的類別僅有兩個(0 或 1)。<br>如垃圾郵件(垃圾郵件 vs. 非垃圾郵件)、瑕疵偵測 (瑕疵 vs. 正常)</li>
+</ul>
+<ul>
+<li><strong>多元分類</strong> ，則是目標類別有兩種以上。<br>如手寫數字辨識有 10 個類別(0 ~ 9)</li>
+</ul>
+<h1 id="Multi-class-vs-Multi-label"><a href="#Multi-class-vs-Multi-label" class="headerlink" title="Multi-class vs. Multi-label"></a>Multi-class vs. Multi-label</h1><p>當每個樣本都只能歸在⼀個類別，我們稱之為 <strong>多分類 (Multi-class)</strong> 問題</p>
+<p>而一個樣本如果可以同時有多個類別，則稱為 <strong>多標籤 (Multi-label)</strong> 問題</p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>模型選擇</tag>
+      </tags>
   </entry>
   <entry>
     <title>Pandas筆記</title>
@@ -283,6 +275,42 @@
       </tags>
   </entry>
   <entry>
+    <title>numpy</title>
+    <url>/2020/05/23/numpy/</url>
+    <content><![CDATA[<h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><p>numpy document<br><a href="https://numpy.org/doc/1.18/reference/index.html" target="_blank" rel="noopener">https://numpy.org/doc/1.18/reference/index.html</a></p>
+<p>##下載Numpy</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">python -m pip install --user numpy scipy matplotlib ipython jupyter pandas sympy nose</span><br></pre></td></tr></table></figure>
+
+<h2 id="資料平滑處理-—-log1p-和exmp1"><a href="#資料平滑處理-—-log1p-和exmp1" class="headerlink" title="資料平滑處理 —- log1p()和exmp1()"></a>資料平滑處理 —- log1p()和exmp1()</h2><p><a href="https://numpy.org/doc/1.18/reference/generated/numpy.log1p.html" target="_blank" rel="noopener">log1p() document</a><br><a href="https://numpy.org/doc/1.18/reference/generated/numpy.expm1.html#numpy.expm1" target="_blank" rel="noopener">exmp1() document</a></p>
+<p>log1p( ) 的使用就像是一個數據壓縮到了一個區間，與資料的標準類似。其逆運算就是expm1的函式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">log1p :&#x3D; log(x+1)      即ln(x+1)</span><br><span class="line">expm1 :&#x3D; exp(x)-1</span><br></pre></td></tr></table></figure>
+<p>Example(log1p):</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">np.log1p(1e-99)</span><br><span class="line">1e-99</span><br><span class="line">np.log(1 + 1e-99)</span><br><span class="line">0.0</span><br></pre></td></tr></table></figure>
+<p>Example(exmp1):</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">np.expm1(1e-10)</span><br><span class="line">1.00000000005e-10</span><br><span class="line">np.exp(1e-10) - 1</span><br><span class="line">1.000000082740371e-10</span><br></pre></td></tr></table></figure>
+<h3 id="補充："><a href="#補充：" class="headerlink" title="補充："></a>補充：</h3><p><a href="/2020/05/24/資料平滑處理">資料平滑處理</a></p>
+<h2 id="限制array的值於特定範圍-clip-document"><a href="#限制array的值於特定範圍-clip-document" class="headerlink" title="限制array的值於特定範圍 clip (document)"></a>限制array的值於特定範圍 clip (<a href="https://numpy.org/doc/1.18/reference/generated/numpy.clip.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.clip(a, a_min, a_max, out&#x3D;None, **kwargs)</span><br></pre></td></tr></table></figure>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a &#x3D; np.arange(10)</span><br><span class="line">a</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</span><br><span class="line"></span><br><span class="line">np.clip(a, 1, 8)</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([1, 1, 2, 3, 4, 5, 6, 7, 8, 8])</span><br></pre></td></tr></table></figure>
+
+<h2 id="計算一個多維數組的任意百分比分位數-percentile-document"><a href="#計算一個多維數組的任意百分比分位數-percentile-document" class="headerlink" title="計算一個多維數組的任意百分比分位數 percentile(document)"></a>計算一個多維數組的任意百分比分位數 percentile(<a href="https://numpy.org/doc/stable/reference/generated/numpy.percentile.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.percentile(a, q, axis&#x3D;None, out&#x3D;None, overwrite_input&#x3D;False, interpolation&#x3D;&#39;linear&#39;, keepdims&#x3D;False)</span><br></pre></td></tr></table></figure>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a &#x3D; np.array([[10, 7, 4], [3, 2, 1]])</span><br><span class="line">a</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([[10,  7,  4],</span><br><span class="line">       [ 3,  2,  1]])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">np.percentile(a, 50)   # (4+3)&#x2F;2&#x3D;3.5</span><br><span class="line">&gt;&gt;</span><br><span class="line">3.5</span><br></pre></td></tr></table></figure>
+
+<h2 id="相關矩陣函數-corrcoef"><a href="#相關矩陣函數-corrcoef" class="headerlink" title="相關矩陣函數 (corrcoef)"></a>相關矩陣函數 (corrcoef)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.corrcoef(x, y&#x3D;None, rowvar&#x3D;True, bias&#x3D;&lt;no value&gt;, ddof&#x3D;&lt;no value&gt;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="取區間-linspace-document"><a href="#取區間-linspace-document" class="headerlink" title="取區間 linspace(document)"></a>取區間 linspace(<a href="https://numpy.org/doc/stable/reference/generated/numpy.linspace.html" target="_blank" rel="noopener">document</a>)</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">numpy.linspace(start, stop, num&#x3D;50, endpoint&#x3D;True, retstep&#x3D;False, dtype&#x3D;None, axis&#x3D;0)</span><br></pre></td></tr></table></figure>
+<p>Example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">np.linspace(10,20,11)</span><br><span class="line">&gt;&gt;</span><br><span class="line">array([20., 25., 30., 35., 40., 45., 50., 55., 60., 65., 70.])</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>library</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>「探索式資料分析」(Exploratory Data Analysis) 01</title>
     <url>/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-01/</url>
     <content><![CDATA[<h1 id="在看到一筆資料時，第一件事就是去了解它。"><a href="#在看到一筆資料時，第一件事就是去了解它。" class="headerlink" title="在看到一筆資料時，第一件事就是去了解它。"></a>在看到一筆資料時，第一件事就是去了解它。</h1><p>仔細研究kaggle的資料描述<br>看看有多少資料來源？資料的格式？資料間的關係？<br>資料欄位的意義？每列的意義？<br>有多少筆資料？多少個欄位？<br>有沒有遺失值等等？</p>
@@ -296,63 +324,6 @@
       <tags>
         <tag>機器學習馬拉松筆記</tag>
         <tag>EDA</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>去除偏態</title>
-    <url>/2020/06/07/%E5%8E%BB%E9%99%A4%E5%81%8F%E6%85%8B/</url>
-    <content><![CDATA[<h1 id="特徵工程-數值型特徵-去除偏態"><a href="#特徵工程-數值型特徵-去除偏態" class="headerlink" title="特徵工程 數值型特徵 - 去除偏態"></a>特徵工程 數值型特徵 - 去除偏態</h1><p>去除偏態的目標在於讓數值更接近常態分布(左右對稱，集中點在中央)，讓平均值更具有代表性。<br>當離群資料比例太高，或者平均值沒有代表性時，皆可以考慮去除偏態。</p>
-<h2 id="去偏方式"><a href="#去偏方式" class="headerlink" title="去偏方式"></a>去偏方式</h2><ul>
-<li><p><strong>對數去偏 log1p</strong><br>對數去偏就是使用自然對數(log)去除偏態，常見用於非負值且可能為0的值<br>為了使對數0為0，需要在後面加上1(plus 1 -&gt; 1p)後，再取對數<br>還原時用expm1(exp + minus 1)</p>
-</li>
-<li><p><strong>方根去偏(sqrt)</strong><br>方根去偏就是將數值減去最⼩值後開根號，最大值有限的時候適用 (例 : 成績轉換)</p>
-</li>
-<li><p><strong>分布去偏(boxcox)</strong><br>分布去偏是採用boxcox轉換函數(詳情如下表)，函數的 lambda(λ) 參參數為 0 時<br>等於 log 函數，lambda(λ) 為 0.5 時等於開根號 (即sqrt)，因此可藉由參數的調整更靈<br>活地轉換數值，但要特別注意Y的輸入數值必須要為正 (不可為0)<br><img src="https://i1.kknews.cc/SIG=2pc2rsg/5nn00039sp58s81ss8o.jpg" alt="boxcox"></p>
-</li>
-</ul>
-<p>相關延伸：<br>偏度与峰度及其python实现<br><a href="https://blog.csdn.net/u013555719/article/details/78530879" target="_blank" rel="noopener">https://blog.csdn.net/u013555719/article/details/78530879</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>特徵工程</tag>
-        <tag>數值型特徵處理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>離群值outliers</title>
-    <url>/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/</url>
-    <content><![CDATA[<h1 id="離群值-Outlier-及其處理"><a href="#離群值-Outlier-及其處理" class="headerlink" title="離群值(Outlier)及其處理"></a>離群值(Outlier)及其處理</h1><h2 id="何謂離群值-Outlier"><a href="#何謂離群值-Outlier" class="headerlink" title="何謂離群值(Outlier)"></a>何謂離群值(Outlier)</h2><p>離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 / 最小最大化)就會出現很大的問題</p>
-<h2 id="檢查異異常值的⽅方法"><a href="#檢查異異常值的⽅方法" class="headerlink" title="檢查異異常值的⽅方法"></a>檢查異異常值的⽅方法</h2><ul>
-<li>統計值：如平均數、標準差、中位數、分位數 (dataframe.describe)</li>
-<li>畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(<a href="/2020/05/26/ECDF">ECDF</a>)</li>
-</ul>
-<h3 id="延伸資料："><a href="#延伸資料：" class="headerlink" title="延伸資料："></a>延伸資料：</h3><p>Ways to Detect and Remove the Outliers<br><a href="https://towardsdatascience.com/ways-to-detect-and-remove-the-outliers-404d16608dba" target="_blank" rel="noopener">https://towardsdatascience.com/ways-to-detect-and-remove-the-outliers-404d16608dba</a></p>
-<h2 id="處理理異異常值"><a href="#處理理異異常值" class="headerlink" title="處理理異異常值"></a>處理理異異常值</h2><ul>
-<li>取代補值：中位數、平均數等</li>
-<li>另建欄位</li>
-<li>整欄不用</li>
-<li>對數轉換<br>對存在離群值的變量作對數轉換可以克服其離群值問題，且對數轉換並不影響各觀察值之間在此變量上的相對大小<br><img src="https://pic4.zhimg.com/80/v2-275cf87efb56d50fe65a6850c0c8828b_720w.jpg" alt="對數轉換"><br>10 與 1000 相差百倍，但二者的對數值卻僅相差 3 倍，由此可知資料在經過對數轉換後變得更加集中</li>
-<li>縮尾<br>將超出變量特定百分位範圍的數值替換為其特定百分位數值的方法。</li>
-<li>截尾<br>將超出變量特定百分位範圍的數值予以刪除的方法。</li>
-<li>插值</li>
-</ul>
-<h3 id="處理完後的好處-壞處"><a href="#處理完後的好處-壞處" class="headerlink" title="處理完後的好處/壞處"></a>處理完後的好處/壞處</h3><p>好處是剩餘資料中模型較為單純且準確，壞處是有可能刪除掉重要資訊</p>
-<h3 id="相關貼文"><a href="#相關貼文" class="headerlink" title="相關貼文"></a>相關貼文</h3><p><a href="/2020/05/27/數值填補與連續數值標準化">數值填補與連續數值標準化</a></p>
-<h3 id="延伸資料：-1"><a href="#延伸資料：-1" class="headerlink" title="延伸資料："></a>延伸資料：</h3><p>How to Remove Outliers for Machine Learning<br><a href="https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/" target="_blank" rel="noopener">https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/</a><br>离群值！离群值？离群值！<br><a href="https://zhuanlan.zhihu.com/p/33468998" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33468998</a></p>
-<p></br></br></p>
-<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a><br><a href="/2020/05/26/「探索式資料分析」-Exploratory-Data-Analysis-04-outliers">「探索式資料分析」(EDA) 04: outlier</a></p>
-<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>EDA</tag>
-        <tag>數值型特徵處理</tag>
       </tags>
   </entry>
   <entry>
@@ -391,6 +362,81 @@
       </tags>
   </entry>
   <entry>
+    <title>離群值outliers</title>
+    <url>/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/</url>
+    <content><![CDATA[<h1 id="離群值-Outlier-及其處理"><a href="#離群值-Outlier-及其處理" class="headerlink" title="離群值(Outlier)及其處理"></a>離群值(Outlier)及其處理</h1><h2 id="何謂離群值-Outlier"><a href="#何謂離群值-Outlier" class="headerlink" title="何謂離群值(Outlier)"></a>何謂離群值(Outlier)</h2><p>離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 / 最小最大化)就會出現很大的問題</p>
+<h2 id="檢查異異常值的⽅方法"><a href="#檢查異異常值的⽅方法" class="headerlink" title="檢查異異常值的⽅方法"></a>檢查異異常值的⽅方法</h2><ul>
+<li>統計值：如平均數、標準差、中位數、分位數 (dataframe.describe)</li>
+<li>畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(<a href="/2020/05/26/ECDF">ECDF</a>)</li>
+</ul>
+<h3 id="延伸資料："><a href="#延伸資料：" class="headerlink" title="延伸資料："></a>延伸資料：</h3><p>Ways to Detect and Remove the Outliers<br><a href="https://towardsdatascience.com/ways-to-detect-and-remove-the-outliers-404d16608dba" target="_blank" rel="noopener">https://towardsdatascience.com/ways-to-detect-and-remove-the-outliers-404d16608dba</a></p>
+<h2 id="處理理異異常值"><a href="#處理理異異常值" class="headerlink" title="處理理異異常值"></a>處理理異異常值</h2><ul>
+<li>取代補值：中位數、平均數等</li>
+<li>另建欄位</li>
+<li>整欄不用</li>
+<li>對數轉換<br>對存在離群值的變量作對數轉換可以克服其離群值問題，且對數轉換並不影響各觀察值之間在此變量上的相對大小<br><img src="https://pic4.zhimg.com/80/v2-275cf87efb56d50fe65a6850c0c8828b_720w.jpg" alt="對數轉換"><br>10 與 1000 相差百倍，但二者的對數值卻僅相差 3 倍，由此可知資料在經過對數轉換後變得更加集中</li>
+<li>縮尾<br>將超出變量特定百分位範圍的數值替換為其特定百分位數值的方法。</li>
+<li>截尾<br>將超出變量特定百分位範圍的數值予以刪除的方法。</li>
+<li>插值</li>
+</ul>
+<h3 id="處理完後的好處-壞處"><a href="#處理完後的好處-壞處" class="headerlink" title="處理完後的好處/壞處"></a>處理完後的好處/壞處</h3><p>好處是剩餘資料中模型較為單純且準確，壞處是有可能刪除掉重要資訊</p>
+<h3 id="相關貼文"><a href="#相關貼文" class="headerlink" title="相關貼文"></a>相關貼文</h3><p><a href="/2020/05/27/數值填補與連續數值標準化">數值填補與連續數值標準化</a></p>
+<h3 id="延伸資料：-1"><a href="#延伸資料：-1" class="headerlink" title="延伸資料："></a>延伸資料：</h3><p>How to Remove Outliers for Machine Learning<br><a href="https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/" target="_blank" rel="noopener">https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/</a><br>离群值！离群值？离群值！<br><a href="https://zhuanlan.zhihu.com/p/33468998" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33468998</a></p>
+<p></br></br></p>
+<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a><br><a href="/2020/05/26/「探索式資料分析」-Exploratory-Data-Analysis-04-outliers">「探索式資料分析」(EDA) 04: outlier</a></p>
+<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
+        <tag>數值型特徵處理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分類型特徵優化-葉編碼</title>
+    <url>/2020/06/18/%E5%88%86%E9%A1%9E%E5%9E%8B%E7%89%B9%E5%BE%B5%E5%84%AA%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="葉編碼-leaf-encoding"><a href="#葉編碼-leaf-encoding" class="headerlink" title="葉編碼 (leaf encoding)"></a>葉編碼 (leaf encoding)</h1><p>葉編碼 (leaf encoding) 顧名思義，是採用決策樹的葉點作為編碼依據重新編碼<br>每棵樹視為一個新特徵，每個新特徵均為分類型特徵，決策樹的葉點與該特徵標籤一一對應，最後再以邏輯斯迴歸合併預測</p>
+<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>葉編碼的目的是重新 <strong>標記資料</strong>，以擬合後的樹狀模型分歧條件，將資料離散化，這樣比人為寫作的判斷條件更精準，更符合資料的分佈情形</p>
+<p>而葉編碼編完後，因為特徵數量較多，通常搭配 <strong>邏輯斯回歸(logistic regression)</strong> 或者 <strong>分解機(Factorization Machine)</strong> 做預測(也就是做分類預測的集成)，其他模型較不適合</p>
+<h3 id="分類預測的集成"><a href="#分類預測的集成" class="headerlink" title="分類預測的集成"></a>分類預測的集成</h3><p>多個分類預測結果(意義上是對機率的預估，而不同特徵表示不同的判斷條件)，需要先將機率倒推回對應數值相加後再由sigmoid 函數算回機率，類似邏輯斯回歸(logistic regression)的算法</p>
+<p>我們可以將sigmoid 函數理解成 「成功可能性與機率的互換」。這裡的成功可能性 正 表示較有可能，負 表示較不可能。<br>所以當我們使用 sigmoid 的反函數，就可以將機率重新轉為成功可能性，加完後再用 sigmoid 轉回機率</p>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>Feature transformations with ensembles of trees<br><a href="https://scikit-learn.org/stable/auto_examples/ensemble/plot_feature_transformation.html#example-ensemble-plot-feature-transformation-py" target="_blank" rel="noopener">https://scikit-learn.org/stable/auto_examples/ensemble/plot_feature_transformation.html#example-ensemble-plot-feature-transformation-py</a><br>CTR预估[十一]: Algorithm-GBDT Encoder<br><a href="https://zhuanlan.zhihu.com/p/31734283" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/31734283</a><br>三分鐘了解推薦系統中的分解機方法（Factorization Machine,FM）<br><a href="https://kknews.cc/code/62k4rml.html" target="_blank" rel="noopener">https://kknews.cc/code/62k4rml.html</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>特徵工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>去除偏態</title>
+    <url>/2020/06/07/%E5%8E%BB%E9%99%A4%E5%81%8F%E6%85%8B/</url>
+    <content><![CDATA[<h1 id="特徵工程-數值型特徵-去除偏態"><a href="#特徵工程-數值型特徵-去除偏態" class="headerlink" title="特徵工程 數值型特徵 - 去除偏態"></a>特徵工程 數值型特徵 - 去除偏態</h1><p>去除偏態的目標在於讓數值更接近常態分布(左右對稱，集中點在中央)，讓平均值更具有代表性。<br>當離群資料比例太高，或者平均值沒有代表性時，皆可以考慮去除偏態。</p>
+<h2 id="去偏方式"><a href="#去偏方式" class="headerlink" title="去偏方式"></a>去偏方式</h2><ul>
+<li><p><strong>對數去偏 log1p</strong><br>對數去偏就是使用自然對數(log)去除偏態，常見用於非負值且可能為0的值<br>為了使對數0為0，需要在後面加上1(plus 1 -&gt; 1p)後，再取對數<br>還原時用expm1(exp + minus 1)</p>
+</li>
+<li><p><strong>方根去偏(sqrt)</strong><br>方根去偏就是將數值減去最⼩值後開根號，最大值有限的時候適用 (例 : 成績轉換)</p>
+</li>
+<li><p><strong>分布去偏(boxcox)</strong><br>分布去偏是採用boxcox轉換函數(詳情如下表)，函數的 lambda(λ) 參參數為 0 時<br>等於 log 函數，lambda(λ) 為 0.5 時等於開根號 (即sqrt)，因此可藉由參數的調整更靈<br>活地轉換數值，但要特別注意Y的輸入數值必須要為正 (不可為0)<br><img src="https://i1.kknews.cc/SIG=2pc2rsg/5nn00039sp58s81ss8o.jpg" alt="boxcox"></p>
+</li>
+</ul>
+<p>相關延伸：<br>偏度与峰度及其python实现<br><a href="https://blog.csdn.net/u013555719/article/details/78530879" target="_blank" rel="noopener">https://blog.csdn.net/u013555719/article/details/78530879</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>數值型特徵處理</tag>
+        <tag>特徵工程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>均值編碼和平滑化</title>
     <url>/2020/06/09/%E5%9D%87%E5%80%BC%E7%B7%A8%E7%A2%BC%E5%92%8C%E5%B9%B3%E6%BB%91%E5%8C%96/</url>
     <content><![CDATA[<h1 id="均值編碼和平滑化"><a href="#均值編碼和平滑化" class="headerlink" title="均值編碼和平滑化"></a>均值編碼和平滑化</h1><h2 id="均值編碼-Mean-Encoding"><a href="#均值編碼-Mean-Encoding" class="headerlink" title="均值編碼 (Mean Encoding)"></a>均值編碼 (Mean Encoding)</h2><h3 id="什麼是均值編碼？"><a href="#什麼是均值編碼？" class="headerlink" title="什麼是均值編碼？"></a>什麼是均值編碼？</h3><p>使用目標值的平均值，取代原本的類別型特徵</p>
@@ -421,6 +467,26 @@
         <tag>EDA</tag>
         <tag>特徵工程</tag>
         <tag>類別型特徵處理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>為何建立需要dataframe</title>
+    <url>/2020/05/21/%E7%82%BA%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%9C%80%E8%A6%81dataframe/</url>
+    <content><![CDATA[<h1 id="為甚麼需要新建dataframe"><a href="#為甚麼需要新建dataframe" class="headerlink" title="為甚麼需要新建dataframe"></a>為甚麼需要新建dataframe</h1><ol>
+<li>需要將分析過程中產生的數據或結果儲存為結構性資料</li>
+<li>當資料過於複雜時，可簡化資料做程式測試</li>
+</ol>
+<h2 id="不同的資料有不同讀取⽅方式"><a href="#不同的資料有不同讀取⽅方式" class="headerlink" title="不同的資料有不同讀取⽅方式"></a>不同的資料有不同讀取⽅方式</h2><ul>
+<li>文字格式通常可以⽤ with open()</li>
+<li>圖像格式可以使⽤用 PIL(image), skimage 或是 cv2<br>CV2 的速度較快，但須注意讀入的格式為 BGR</li>
+<li>其他形式如 npy / pickle 可以儲存經過處理理後的資料</li>
+</ul>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
       </tags>
   </entry>
   <entry>
@@ -509,26 +575,6 @@ MinMaxScaler()</code></pre></li>
       </tags>
   </entry>
   <entry>
-    <title>為何建立需要dataframe</title>
-    <url>/2020/05/21/%E7%82%BA%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%9C%80%E8%A6%81dataframe/</url>
-    <content><![CDATA[<h1 id="為甚麼需要新建dataframe"><a href="#為甚麼需要新建dataframe" class="headerlink" title="為甚麼需要新建dataframe"></a>為甚麼需要新建dataframe</h1><ol>
-<li>需要將分析過程中產生的數據或結果儲存為結構性資料</li>
-<li>當資料過於複雜時，可簡化資料做程式測試</li>
-</ol>
-<h2 id="不同的資料有不同讀取⽅方式"><a href="#不同的資料有不同讀取⽅方式" class="headerlink" title="不同的資料有不同讀取⽅方式"></a>不同的資料有不同讀取⽅方式</h2><ul>
-<li>文字格式通常可以⽤ with open()</li>
-<li>圖像格式可以使⽤用 PIL(image), skimage 或是 cv2<br>CV2 的速度較快，但須注意讀入的格式為 BGR</li>
-<li>其他形式如 npy / pickle 可以儲存經過處理理後的資料</li>
-</ul>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>特徵工程</title>
     <url>/2020/06/06/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="特徵工程"><a href="#特徵工程" class="headerlink" title="特徵工程"></a>特徵工程</h1><h2 id="特徵工程是事實對應到後續評估分數的轉換"><a href="#特徵工程是事實對應到後續評估分數的轉換" class="headerlink" title="特徵工程是事實對應到後續評估分數的轉換"></a>特徵工程是事實對應到後續評估分數的轉換</h2><p>特徵工程的 <strong>目的</strong> 就是最大限度地從原始數據中提取特徵以供算法和模型使用。<br>以鐵達尼號中的生存為例，若從性別提取特徵，為男性評估點數為-2，女性評估為1<br>假設有一資料組性別為男則給予他-2的點數，當然此點數本身未必會直接對應到機率，但會是後續評估的依據</p>
@@ -563,6 +609,211 @@ MinMaxScaler()</code></pre></li>
       </tags>
   </entry>
   <entry>
+    <title>特徵選擇</title>
+    <url>/2020/06/15/%E7%89%B9%E5%BE%B5%E9%81%B8%E6%93%87/</url>
+    <content><![CDATA[<h1 id="特徵選擇概念"><a href="#特徵選擇概念" class="headerlink" title="特徵選擇概念"></a>特徵選擇概念</h1><h2 id="特徵需要適當的增加與減少，以提升精確度並減少計算時間"><a href="#特徵需要適當的增加與減少，以提升精確度並減少計算時間" class="headerlink" title="特徵需要適當的增加與減少，以提升精確度並減少計算時間"></a>特徵需要適當的增加與減少，以提升精確度並減少計算時間</h2><ul>
+<li>增加特徵 : 特徵組合 ，<a href="/2020/06/12/特徵組合-類別與數值組合">群聚編碼</a></li>
+<li>減少特徵 : 特徵選擇 </li>
+</ul>
+<h2 id="特徵選擇有三大類⽅方法"><a href="#特徵選擇有三大類⽅方法" class="headerlink" title="特徵選擇有三大類⽅方法"></a>特徵選擇有三大類⽅方法</h2><ul>
+<li>過濾法 (Filter) : 按照相關性或發散性選定統計數值與設定門檻，並刪除低於門檻的特徵</li>
+<li>包裝法 (Wrapper) : 根據目標函數，逐步加入特徵或刪除特徵</li>
+<li>嵌入法 (Embedded) : 使用機器學習模型，根據擬合後的係數，刪除係數低於⾨門檻的特徵</li>
+</ul>
+<h3 id="常用特徵選擇法"><a href="#常用特徵選擇法" class="headerlink" title="常用特徵選擇法"></a>常用特徵選擇法</h3><h4 id="過濾法"><a href="#過濾法" class="headerlink" title="過濾法 :"></a>過濾法 :</h4><ul>
+<li><strong>相關係數過濾法</strong><br>使用相關性熱圖，找到⽬標值之後，觀察其他特徵與目標值相關係數，接著訂出相關係數門檻值，<br>特徵相關係數絕對值低於門檻者刪除即可</li>
+</ul>
+<p>-&gt; 相關性熱圖實作</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">corr &#x3D; df.corr()</span><br><span class="line">sns.heatmap(corr)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h4 id="嵌入法"><a href="#嵌入法" class="headerlink" title="嵌入法 :"></a>嵌入法 :</h4><ul>
+<li><p><strong>L1(Lasso)嵌入法</strong><br>因為使用 <a href="https://zh.wikipedia.org/wiki/Lasso%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">Lasso Regression</a>時，調整不同的正規化程度，就會自然使得一部分的特徵係數為０，因此刪除的是係數為０的特徵，不須額外指定門檻，但需調整正規化程度<br>p.s. 正規化是指「Regularization」，作用是避免模型太複雜而產生 Overfitting 的狀況</p>
+</li>
+<li><p><strong>GDBT(梯度提升樹)嵌入法</strong><br>使用梯度提升樹擬合後，以特徵在節點出現的 <strong>頻率</strong> 當作 <strong>特徵重要性</strong> ，以此刪除重要性低於門檻的特徵，這種作法也稱為 GDBT 嵌入法</p>
+</li>
+</ul>
+<h4 id="效能對比"><a href="#效能對比" class="headerlink" title="效能對比"></a>效能對比</h4><table>
+<thead>
+<tr>
+<th></th>
+<th>計算時間</th>
+<th>共線性</th>
+<th>特徵穩定性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>相關係數過濾法</td>
+<td>快速</td>
+<td>無法排除</td>
+<td>穩定</td>
+</tr>
+<tr>
+<td>Lasso 嵌入法</td>
+<td>快速</td>
+<td>能排除</td>
+<td>不穩定</td>
+</tr>
+<tr>
+<td>GDBT 嵌入法</td>
+<td>較慢</td>
+<td>能排除</td>
+<td>穩定</td>
+</tr>
+</tbody></table>
+<p>ps.因近期出現大量GDBT改良版，大大改善了計算時間，因此GDBT為現在的主流</p>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>特征选择<br><a href="https://zhuanlan.zhihu.com/p/32749489" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/32749489</a><br>特徵選擇 Feature Selection<br><a href="https://machine-learning-python.kspax.io/intro-1" target="_blank" rel="noopener">https://machine-learning-python.kspax.io/intro-1</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>特徵工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>特徵重要性</title>
+    <url>/2020/06/16/%E7%89%B9%E5%BE%B5%E9%87%8D%E8%A6%81%E6%80%A7/</url>
+    <content><![CDATA[<h1 id="特徵重要性"><a href="#特徵重要性" class="headerlink" title="特徵重要性"></a>特徵重要性</h1><p>特徵重要性是增刪特徵的重要判定準則，在領域知識不足時，便是改善模型的最大幫手</p>
+<h2 id="樹狀模型的特徵重要性"><a href="#樹狀模型的特徵重要性" class="headerlink" title="樹狀模型的特徵重要性"></a>樹狀模型的特徵重要性</h2><p>樹狀模型的特徵重要性，預設方式是取 <strong>特徵決定分支的次數</strong><br>除此之外，還有兩種更直覺的特徵重要性 : 特徵覆蓋度、損失函數降低量</p>
+<h2 id="實作方面"><a href="#實作方面" class="headerlink" title="實作方面"></a>實作方面</h2><p>在實作方面，<strong>sklearn</strong> 當中的樹狀模型，都有特徵重要性這項方法(.feature_importances_)，並都採用分支次數<br>而 <strong>進階版的GDBT模型</strong> (xgboost, lightgbm, catboost) 中，才有上述三種不同的重要性</p>
+<h1 id="排列重要性-permutation-Importance"><a href="#排列重要性-permutation-Importance" class="headerlink" title="排列重要性 (permutation Importance)"></a>排列重要性 (permutation Importance)</h1><p>雖然特徵重要性相當實用，然而計算原理必須基於樹狀模型，於是有了可延伸至非樹狀狀模型的 <strong>排序重要性</strong> </p>
+<h2 id="何謂排序重要性"><a href="#何謂排序重要性" class="headerlink" title="何謂排序重要性"></a>何謂排序重要性</h2><p>排序重要性計算，是打散單一特徵的資料排序順序，再用原本模型重新預測，觀察打散前後誤差會變化多少。<br>相較起特徵重要性，雖計算時間較長，但可以應用在各種機器學習模型中。</p>
+<h1 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h1><p>机器学习 - 特征选择算法流程、分类、优化与发展综述<br><a href="https://juejin.im/post/5a1f7903f265da431c70144c" target="_blank" rel="noopener">https://juejin.im/post/5a1f7903f265da431c70144c</a><br>Machine Learning Explainability Home Page<br><a href="https://www.kaggle.com/dansbecker/permutation-importance?utm_medium=email&amp;utm_source=mailchimp&amp;utm_campaign=ml4insights" target="_blank" rel="noopener">https://www.kaggle.com/dansbecker/permutation-importance?utm_medium=email&amp;utm_source=mailchimp&amp;utm_campaign=ml4insights</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>特徵工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>機器如何學習?</title>
+    <url>/2020/06/19/%E6%A9%9F%E5%99%A8%E5%A6%82%E4%BD%95%E5%AD%B8%E7%BF%92/</url>
+    <content><![CDATA[<h1 id="機器的學習可分為3個步驟"><a href="#機器的學習可分為3個步驟" class="headerlink" title="機器的學習可分為3個步驟"></a>機器的學習可分為3個步驟</h1><ol>
+<li>定義好模型 (可以是線性回歸、決策樹、神經網路路等等)</li>
+<li>評估模型的好壞</li>
+<li>找出讓訓練目標最佳的模型參數</li>
+</ol>
+<h2 id="定義模型"><a href="#定義模型" class="headerlink" title="定義模型"></a>定義模型</h2><p>選擇一個適合我們數據組的模型。當我們輸入⼀個 x 進到模型中，不同參數的模型就會產生不同的 ŷ</p>
+<h2 id="評估模型的好壞"><a href="#評估模型的好壞" class="headerlink" title="評估模型的好壞"></a>評估模型的好壞</h2><p>定義⼀個目標函數 (Objective function) 也可稱作損失函數 (Loss function)，來衡量模型的好壞</p>
+<p>如線性回歸模型我們可以使用均方差 (mean square error) 來衡量<br>$$MSE = \frac{1}{n} \sum_{i=1}^n (y_i - ŷ_i)^2$$</p>
+<p>Loss 越大，代表這組參數的模型預測出的 ŷ 越不準，也代表不應該選這組參數的模型</p>
+<h2 id="找出讓訓練目標最佳的模型參數"><a href="#找出讓訓練目標最佳的模型參數" class="headerlink" title="找出讓訓練目標最佳的模型參數"></a>找出讓訓練目標最佳的模型參數</h2><p>使用像是梯度下降 (Gradient Descent)、增量訓練 (Additive Training) 等方式找出一組參數，讓模型產生的 ŷ 與真正的 y 很接近</p>
+<h1 id="過擬合-over-fitting"><a href="#過擬合-over-fitting" class="headerlink" title="過擬合 (over-fitting)"></a>過擬合 (over-fitting)</h1><p>過擬合代表模型可能學習到資料中的噪音，導致在實際應用時預測失準</p>
+<p>可以通過 <strong>學習曲線 Learning curve</strong> ，來觀察是否已經過擬合了</p>
+<h2 id="如何解決過擬合-欠擬合"><a href="#如何解決過擬合-欠擬合" class="headerlink" title="如何解決過擬合/欠擬合"></a>如何解決過擬合/欠擬合</h2><p>過擬合</p>
+<ul>
+<li>增加資料量</li>
+<li>降低模型複雜度</li>
+<li>使用正規化 (Regularization)</li>
+</ul>
+<p>欠擬合</p>
+<ul>
+<li>增加模型複雜度</li>
+<li>減輕或不使用正規化</li>
+</ul>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>理解機器學習中很重要的 Bias/Variance tradeoff的意義為何<br><a href="http://bangqu.com/yjB839.html" target="_blank" rel="noopener">http://bangqu.com/yjB839.html</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>模型選擇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>訓練/測試集切分</title>
+    <url>/2020/06/20/%E8%A8%93%E7%B7%B4-%E6%B8%AC%E8%A9%A6%E9%9B%86%E5%88%87%E5%88%86/</url>
+    <content><![CDATA[<h1 id="為何需要切分訓練集跟測試集"><a href="#為何需要切分訓練集跟測試集" class="headerlink" title="為何需要切分訓練集跟測試集"></a>為何需要切分訓練集跟測試集</h1><p>若將手上所有資料都送進模型訓練，這樣就沒有額外資料來評估模型訓練情形！<br>且為了避免過擬合，需透過驗證/測試集進行評估</p>
+<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="Scikit-learn-train-test-split-函數-document"><a href="#Scikit-learn-train-test-split-函數-document" class="headerlink" title="Scikit-learn train-test split 函數(document)"></a>Scikit-learn train-test split 函數(<a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html" target="_blank" rel="noopener">document</a>)</h3><p>Python 中的機器學習套件 Scikit-learn 提供了了一個 train-test split 函數，可以幫助快速對資料進行切分</p>
+<h3 id="K-fold-Cross-validation-document"><a href="#K-fold-Cross-validation-document" class="headerlink" title="K-fold Cross-validation(document)"></a>K-fold Cross-validation(<a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html" target="_blank" rel="noopener">document</a>)</h3><p>若僅做一次訓練/測試集切分，有些資料會沒有被拿來訓練過，因此後續就有 cross-validation 的方法，可以讓結果更為穩定(Ｋ為 fold 數量)。在k-fold中，每筆資料都曾經當過一次驗證集，再取平均得到最終結果。</p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>模型選擇</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>資料中常見的特徵類型</title>
+    <url>/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/</url>
+    <content><![CDATA[<h2 id="常見兩大類型-數值型-numerical-data、類別型-categorical-data"><a href="#常見兩大類型-數值型-numerical-data、類別型-categorical-data" class="headerlink" title="常見兩大類型(數值型 numerical data、類別型 categorical data )"></a>常見兩大類型(數值型 numerical data、類別型 categorical data )</h2><h3 id="數值型特徵-有不同轉換方式，函數-條件式都可以"><a href="#數值型特徵-有不同轉換方式，函數-條件式都可以" class="headerlink" title="數值型特徵 : 有不同轉換方式，函數 / 條件式都可以"></a>數值型特徵 : 有不同轉換方式，函數 / 條件式都可以</h3><p>最容易轉成特徵，但需要注意很多細節</p>
+<ul>
+<li>e.g.(函數)<br>數值： 20坪<br>函數： 一坪20萬</li>
+<li>e.g.(條件式)<br>年齡： 30<br>條件： 若 50以上：0點，30～50：1點，30以下：2點</li>
+</ul>
+<h3 id="類別型特徵-通常一種類別對應一種分數"><a href="#類別型特徵-通常一種類別對應一種分數" class="headerlink" title="類別型特徵 : 通常一種類別對應一種分數"></a>類別型特徵 : 通常一種類別對應一種分數</h3><p>通常一種類別對應一種分數，問題在如何對應</p>
+<h2 id="其他類型"><a href="#其他類型" class="headerlink" title="其他類型"></a>其他類型</h2><h3 id="二元特徵"><a href="#二元特徵" class="headerlink" title="二元特徵"></a>二元特徵</h3><p>僅有True(1)跟False(0)兩特徵<br>可作為數值、亦可作為類別</p>
+<h3 id="排序型特徵"><a href="#排序型特徵" class="headerlink" title="排序型特徵"></a>排序型特徵</h3><p>如名次/百分等級，有大小關係，但並非連續數字<br>通常做為數值型，因做為類別型會失去排序資料</p>
+<h3 id="時間型特徵"><a href="#時間型特徵" class="headerlink" title="時間型特徵"></a>時間型特徵</h3><p>e.g. 2020/05/23 20:49:00<br>有週期性<br>雖然時間型特徵可當作數值型特徵或類別型特徵，但都不適合</p>
+<h2 id="其他資料類別可參考"><a href="#其他資料類別可參考" class="headerlink" title="其他資料類別可參考:"></a>其他資料類別可參考:</h2><p>Built-in Types<br><a href="https://docs.python.org/3/library/stdtypes.html" target="_blank" rel="noopener">https://docs.python.org/3/library/stdtypes.html</a><br>Python 3 Tutorial 第二堂（2）數值與字串型態<br><a href="https://openhome.cc/Gossip/CodeData/PythonTutorial/NumericStringPy3.html" target="_blank" rel="noopener">https://openhome.cc/Gossip/CodeData/PythonTutorial/NumericStringPy3.html</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>評估指標選定(Evaluation metrics)</title>
+    <url>/2020/06/23/%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99%E9%81%B8%E5%AE%9A-Evaluation-metrics/</url>
+    <content><![CDATA[<h1 id="評估指標"><a href="#評估指標" class="headerlink" title="評估指標"></a>評估指標</h1><p>設定各項指標來評估模型預測的準確性，最常見的是<br>$$ 準確率(Accuracy) = \frac{正確分類樣本數}{總樣本數} = \frac{TP + TN}{P + N} $$<br>(TP:True positive, TN: True negative, P: Positive, N: Negative)</p>
+<p><strong>sklearn 有相關lib</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn import metrics</span><br></pre></td></tr></table></figure>
+
+<h2 id="回歸"><a href="#回歸" class="headerlink" title="回歸"></a>回歸</h2><p>觀察「預測值」 (Prediction) 與「實際值」 (Ground truth) 的 <strong>差距</strong></p>
+<ul>
+<li>MAE, Mean Absolute Error, 範圍: [0, ∞]<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mae &#x3D; metrics.mean_absolute_error(prediction, y) # 使用 MAE 評估</span><br></pre></td></tr></table></figure></li>
+<li>MSE, Mean Square Error, 範圍: [0, ∞]<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mse &#x3D; metrics.mean_squared_error(prediction, y) # 使用 MSE 評估</span><br></pre></td></tr></table></figure></li>
+<li>R-square, 範圍: [0, 1] <strong>(常用)</strong><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">r2 &#x3D; metrics.r2_score(prediction, y) # 使用 r-square 評估</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="分類"><a href="#分類" class="headerlink" title="分類"></a>分類</h2><p>觀察「預測值」 (prediction) 與「實際值」 (Ground truth) 的 <strong>正確程度</strong></p>
+<ul>
+<li>AUC, Area Under Curve, 範圍: [0, 1]</li>
+<li>F1 - Score (Precision, Recall), 範圍: [0, 1]</li>
+</ul>
+<h3 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h3><p>AUC 指摽是分類問題常⽤的指標，通常分類問題都需要定⼀個閾值(threshold) 來決定分類的類別<br>(通常為機率 &gt; 0.5 判定為 1, 機率 &lt; 0.5 判定為 0)<br>而 AUC 是 <strong>衡量曲線下的⾯積</strong> ，因此可考量所有閾值下的準確性，在分類型比賽中常用。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">auc &#x3D; metrics.roc_auc_score(y_test, y_pred) # 使用 roc_auc_score 來評估。 </span><br><span class="line">## **這邊特別注意 y_pred 必須要放機率值進去!**</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="F1-Score"><a href="#F1-Score" class="headerlink" title="F1-Score"></a>F1-Score</h3><p>分類問題中，我們有時會對某⼀類別的準確率特別有興趣。例如瑕疵/正常樣本分類，我們希望任何瑕疵樣本都不能被漏掉。<br>(如判斷一個人是否有得病)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">threshold &#x3D; 0.5 </span><br><span class="line">y_pred_binarized &#x3D; np.where(y_pred&gt;threshold, 1, 0) # 使用 np.where 函數, 將 y_pred &gt; 0.5 的值變為 1，小於 0.5 的為 0</span><br></pre></td></tr></table></figure>
+
+<p>Precision，Recall 則是針對某類別進⾏評估</p>
+<ul>
+<li><p>Precision: 模型判定瑕疵，樣本確實為瑕疵的比例<br>$$ Precision = \frac{TP}{TP+FP} $$</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">precision &#x3D; metrics.precision_score(y_test, y_pred_binarized) # 使用 Precision 評估</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Recall: 模型判定的瑕疵，佔樣本所有瑕疵的比例<br>$$ Recall = \frac{TP}{TP+FN} $$</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">recall  &#x3D; metrics.recall_score(y_test, y_pred_binarized) # 使用 recall 評估</span><br></pre></td></tr></table></figure>
+<p>(以瑕疵檢測為例，若為 recall=1 則代表所有瑕疵都被找到)</p>
+</li>
+</ul>
+<p>F1-Score 則是 Precision, Recall 的調和平均數<br>$$ F1Score = \frac{2 * Precision * Recall} {Precision + Recall} $$</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">f1 &#x3D; metrics.f1_score(y_test, y_pred_binarized) # 使用 F1-Score 評估</span><br></pre></td></tr></table></figure>
+
+<p>PS,<br>F1-Score 其實是 F-Score 中的 β 值為 1 的特例，代表 Precision 與 Recall 的權重相同<br>標準公式如下<br>$$ F_\beta = (1 + \beta^2) * \frac{Precision * Recall} {(\beta^2 * Precision) + Recall}$$</p>
+<h3 id="混淆矩陣-Confusion-Matrix"><a href="#混淆矩陣-Confusion-Matrix" class="headerlink" title="混淆矩陣 (Confusion Matrix)"></a>混淆矩陣 (Confusion Matrix)</h3><p>縱軸為模型預測，橫軸為正確答案<br>可以清楚看出每個 Class 間預測的準確率，完美的模型就會在對⾓線上呈現 100 % 的準確率<br><img src="https://www.mathworks.com/help/examples/nnet/win64/PlotConfusionMatrixUsingCategoricalLabelsExample_02.png" width="50%" height="50%"><center><a href="https://www.mathworks.com/help/deeplearning/ref/plotconfusion.html" target="_blank" rel="noopener">mathwork</a></center></p>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>深入了解超常⽤的指標 AUC<br><a href="https://www.dataschool.io/roc-curves-and-auc-explained/" target="_blank" rel="noopener">https://www.dataschool.io/roc-curves-and-auc-explained/</a><br>學習更多評估指標，來衡量機器學習模型的準確度<br><a href="https://zhuanlan.zhihu.com/p/30721429" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/30721429</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>模型選擇</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>資料平滑處理</title>
     <url>/2020/05/24/%E8%B3%87%E6%96%99%E5%B9%B3%E6%BB%91%E8%99%95%E7%90%86/</url>
     <content><![CDATA[<h1 id="資料平滑處理-—-log1p-和exmp1"><a href="#資料平滑處理-—-log1p-和exmp1" class="headerlink" title="資料平滑處理 —- log1p()和exmp1()"></a>資料平滑處理 —- log1p()和exmp1()</h1><p><a href="https://numpy.org/doc/1.18/reference/generated/numpy.log1p.html" target="_blank" rel="noopener">log1p() document</a><br><a href="https://numpy.org/doc/1.18/reference/generated/numpy.expm1.html#numpy.expm1" target="_blank" rel="noopener">exmp1() document</a></p>
@@ -582,6 +833,35 @@ MinMaxScaler()</code></pre></li>
       </categories>
       <tags>
         <tag>機器學習馬拉松筆記</tag>
+        <tag>特徵工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>離散化連續數值</title>
+    <url>/2020/06/01/%E9%9B%A2%E6%95%A3%E5%8C%96%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC/</url>
+    <content><![CDATA[<h1 id="離散化連續數值的意義以及方法"><a href="#離散化連續數值的意義以及方法" class="headerlink" title="離散化連續數值的意義以及方法"></a>離散化連續數值的意義以及方法</h1><h2 id="離散化的目的"><a href="#離散化的目的" class="headerlink" title="離散化的目的"></a>離散化的目的</h2><ul>
+<li>簡化model(減少可能性)<br>原年齡有0～100歲的可能，若以十歲間距離散，就剩下10種可能</li>
+<li>變數較穩定<br>若有異常值(如年齡=300)可直接設超過60為1，其他為0，降低他的影響力</li>
+</ul>
+<h3 id="關鍵點"><a href="#關鍵點" class="headerlink" title="關鍵點"></a>關鍵點</h3><ul>
+<li>組的數量<br>以年齡為例，並設10歲為間距，即可分成10組</li>
+<li>組的寬度<br>一組的寬度是 10 歲</li>
+</ul>
+<h2 id="離散化的方法"><a href="#離散化的方法" class="headerlink" title="離散化的方法"></a>離散化的方法</h2><p>主要的方法</p>
+<ul>
+<li>等寬劃分(pd.cut())：按照相同寬度將資料分成幾等份。缺點是受到異異常值的影響比較⼤大。</li>
+<li>等頻劃分(pd.qcut())：將資料分成幾等份，每等份資料裡面的個數是一樣的。</li>
+<li>聚類劃分：使⽤用<a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/400018/" target="_blank" rel="noopener">聚類演算法</a>將資料聚成幾類，每一個類為一個劃分。</li>
+</ul>
+<p><a href="https://medium.com/@morris_tai/pandas%E7%9A%84cut-qcut%E5%87%BD%E6%95%B8-93c244e34cfc" target="_blank" rel="noopener">cut &amp; qcut</a></p>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>在什么情况下将连续的特征离散化之后可以获得更好的效果？<br><a href="https://www.zhihu.com/question/31989952" target="_blank" rel="noopener">https://www.zhihu.com/question/31989952</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
         <tag>特徵工程</tag>
       </tags>
   </entry>
@@ -627,56 +907,6 @@ MinMaxScaler()</code></pre></li>
         <tag>EDA</tag>
         <tag>特徵工程</tag>
         <tag>類別型特徵處理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>資料中常見的特徵類型</title>
-    <url>/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/</url>
-    <content><![CDATA[<h2 id="常見兩大類型-數值型-numerical-data、類別型-categorical-data"><a href="#常見兩大類型-數值型-numerical-data、類別型-categorical-data" class="headerlink" title="常見兩大類型(數值型 numerical data、類別型 categorical data )"></a>常見兩大類型(數值型 numerical data、類別型 categorical data )</h2><h3 id="數值型特徵-有不同轉換方式，函數-條件式都可以"><a href="#數值型特徵-有不同轉換方式，函數-條件式都可以" class="headerlink" title="數值型特徵 : 有不同轉換方式，函數 / 條件式都可以"></a>數值型特徵 : 有不同轉換方式，函數 / 條件式都可以</h3><p>最容易轉成特徵，但需要注意很多細節</p>
-<ul>
-<li>e.g.(函數)<br>數值： 20坪<br>函數： 一坪20萬</li>
-<li>e.g.(條件式)<br>年齡： 30<br>條件： 若 50以上：0點，30～50：1點，30以下：2點</li>
-</ul>
-<h3 id="類別型特徵-通常一種類別對應一種分數"><a href="#類別型特徵-通常一種類別對應一種分數" class="headerlink" title="類別型特徵 : 通常一種類別對應一種分數"></a>類別型特徵 : 通常一種類別對應一種分數</h3><p>通常一種類別對應一種分數，問題在如何對應</p>
-<h2 id="其他類型"><a href="#其他類型" class="headerlink" title="其他類型"></a>其他類型</h2><h3 id="二元特徵"><a href="#二元特徵" class="headerlink" title="二元特徵"></a>二元特徵</h3><p>僅有True(1)跟False(0)兩特徵<br>可作為數值、亦可作為類別</p>
-<h3 id="排序型特徵"><a href="#排序型特徵" class="headerlink" title="排序型特徵"></a>排序型特徵</h3><p>如名次/百分等級，有大小關係，但並非連續數字<br>通常做為數值型，因做為類別型會失去排序資料</p>
-<h3 id="時間型特徵"><a href="#時間型特徵" class="headerlink" title="時間型特徵"></a>時間型特徵</h3><p>e.g. 2020/05/23 20:49:00<br>有週期性<br>雖然時間型特徵可當作數值型特徵或類別型特徵，但都不適合</p>
-<h2 id="其他資料類別可參考"><a href="#其他資料類別可參考" class="headerlink" title="其他資料類別可參考:"></a>其他資料類別可參考:</h2><p>Built-in Types<br><a href="https://docs.python.org/3/library/stdtypes.html" target="_blank" rel="noopener">https://docs.python.org/3/library/stdtypes.html</a><br>Python 3 Tutorial 第二堂（2）數值與字串型態<br><a href="https://openhome.cc/Gossip/CodeData/PythonTutorial/NumericStringPy3.html" target="_blank" rel="noopener">https://openhome.cc/Gossip/CodeData/PythonTutorial/NumericStringPy3.html</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>離散化連續數值</title>
-    <url>/2020/06/01/%E9%9B%A2%E6%95%A3%E5%8C%96%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC/</url>
-    <content><![CDATA[<h1 id="離散化連續數值的意義以及方法"><a href="#離散化連續數值的意義以及方法" class="headerlink" title="離散化連續數值的意義以及方法"></a>離散化連續數值的意義以及方法</h1><h2 id="離散化的目的"><a href="#離散化的目的" class="headerlink" title="離散化的目的"></a>離散化的目的</h2><ul>
-<li>簡化model(減少可能性)<br>原年齡有0～100歲的可能，若以十歲間距離散，就剩下10種可能</li>
-<li>變數較穩定<br>若有異常值(如年齡=300)可直接設超過60為1，其他為0，降低他的影響力</li>
-</ul>
-<h3 id="關鍵點"><a href="#關鍵點" class="headerlink" title="關鍵點"></a>關鍵點</h3><ul>
-<li>組的數量<br>以年齡為例，並設10歲為間距，即可分成10組</li>
-<li>組的寬度<br>一組的寬度是 10 歲</li>
-</ul>
-<h2 id="離散化的方法"><a href="#離散化的方法" class="headerlink" title="離散化的方法"></a>離散化的方法</h2><p>主要的方法</p>
-<ul>
-<li>等寬劃分(pd.cut())：按照相同寬度將資料分成幾等份。缺點是受到異異常值的影響比較⼤大。</li>
-<li>等頻劃分(pd.qcut())：將資料分成幾等份，每等份資料裡面的個數是一樣的。</li>
-<li>聚類劃分：使⽤用<a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/400018/" target="_blank" rel="noopener">聚類演算法</a>將資料聚成幾類，每一個類為一個劃分。</li>
-</ul>
-<p><a href="https://medium.com/@morris_tai/pandas%E7%9A%84cut-qcut%E5%87%BD%E6%95%B8-93c244e34cfc" target="_blank" rel="noopener">cut &amp; qcut</a></p>
-<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>在什么情况下将连续的特征离散化之后可以获得更好的效果？<br><a href="https://www.zhihu.com/question/31989952" target="_blank" rel="noopener">https://www.zhihu.com/question/31989952</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>EDA</tag>
-        <tag>特徵工程</tag>
       </tags>
   </entry>
   <entry>
