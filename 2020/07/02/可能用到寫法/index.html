@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="單純記錄下未來可能用到的寫法基本流程載入要用的libary123456789import pandas as pdimport numpy as npimport copy, timefrom IPython.display import displayfrom sklearn.preprocessing import MinMaxScalerfrom sklearn.model_selectio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="可能用到寫法">
+<meta property="og:url" content="https://shoghilin.github.io/2020/07/02/%E5%8F%AF%E8%83%BD%E7%94%A8%E5%88%B0%E5%AF%AB%E6%B3%95/index.html">
+<meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="單純記錄下未來可能用到的寫法基本流程載入要用的libary123456789import pandas as pdimport numpy as npimport copy, timefrom IPython.display import displayfrom sklearn.preprocessing import MinMaxScalerfrom sklearn.model_selectio">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-07-02T04:02:02.000Z">
+<meta property="article:modified_time" content="2020-07-06T10:14:03.531Z">
+<meta property="article:author" content="Shoghi">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://shoghilin.github.io/2020/07/02/可能用到寫法/"/>
+
+
+
+
+
+  <title>可能用到寫法 | Shoghi的隨手筆記</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-TW">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Shoghi的隨手筆記</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/07/02/%E5%8F%AF%E8%83%BD%E7%94%A8%E5%88%B0%E5%AF%AB%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">可能用到寫法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-02T12:02:02+08:00">
+                2020-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="單純記錄下未來可能用到的寫法"><a href="#單純記錄下未來可能用到的寫法" class="headerlink" title="單純記錄下未來可能用到的寫法"></a>單純記錄下未來可能用到的寫法</h1><h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><h3 id="載入要用的libary"><a href="#載入要用的libary" class="headerlink" title="載入要用的libary"></a>載入要用的libary</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import copy, time</span><br><span class="line">from IPython.display import display</span><br><span class="line">from sklearn.preprocessing import MinMaxScaler</span><br><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor</span><br><span class="line">from sklearn.preprocessing import LabelEncoder</span><br></pre></td></tr></table></figure>
+
+<h3 id="載入資料"><a href="#載入資料" class="headerlink" title="載入資料"></a>載入資料</h3><p>再載入資料後，對目標值做平滑化。接著拿掉id和目標值，並合併測試集及訓練集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data_path &#x3D; &#39;..&#x2F;data&#x2F;&#39;</span><br><span class="line">df_train &#x3D; pd.read_csv(data_path + &#39;house_train.csv.gz&#39;)</span><br><span class="line">df_test &#x3D; pd.read_csv(data_path + &#39;house_test.csv.gz&#39;)</span><br><span class="line"></span><br><span class="line">train_Y &#x3D; np.log1p(df_train[&#39;SalePrice&#39;])</span><br><span class="line">ids &#x3D; df_test[&#39;Id&#39;]</span><br><span class="line">df_train &#x3D; df_train.drop([&#39;Id&#39;, &#39;SalePrice&#39;] , axis&#x3D;1)</span><br><span class="line">df_test &#x3D; df_test.drop([&#39;Id&#39;] , axis&#x3D;1)</span><br><span class="line">df &#x3D; pd.concat([df_train, df_test])</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+<h3 id="特徵工程"><a href="#特徵工程" class="headerlink" title="特徵工程"></a>特徵工程</h3><h4 id="檢查-DataFrame-空缺值的狀態"><a href="#檢查-DataFrame-空缺值的狀態" class="headerlink" title="檢查 DataFrame 空缺值的狀態"></a>檢查 DataFrame 空缺值的狀態</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 檢查 DataFrame 空缺值的狀態</span><br><span class="line">def na_check(df_data):</span><br><span class="line">    data_na &#x3D; (df_data.isnull().sum() &#x2F; len(df_data)) * 100</span><br><span class="line">    data_na &#x3D; data_na.drop(data_na[data_na &#x3D;&#x3D; 0].index).sort_values(ascending&#x3D;False)</span><br><span class="line">    missing_data &#x3D; pd.DataFrame(&#123;&#39;Missing Ratio&#39; :data_na&#125;)</span><br><span class="line">    display(missing_data.head(10))</span><br><span class="line">na_check(df)</span><br></pre></td></tr></table></figure>
+
+<h4 id="將各column依不同類型分類"><a href="#將各column依不同類型分類" class="headerlink" title="將各column依不同類型分類"></a>將各column依不同類型分類</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#確定只有 int64, float64, object 三種類型後, 分別將欄位名稱存於三個 list 中</span><br><span class="line">int_features &#x3D; []</span><br><span class="line">float_features &#x3D; []</span><br><span class="line">object_features &#x3D; []</span><br><span class="line">for dtype, feature in zip(df.dtypes, df.columns):</span><br><span class="line">    if dtype &#x3D;&#x3D; &#39;float64&#39;:</span><br><span class="line">        float_features.append(feature)</span><br><span class="line">    elif dtype &#x3D;&#x3D; &#39;int64&#39;:</span><br><span class="line">        int_features.append(feature)</span><br><span class="line">    else:</span><br><span class="line">        object_features.append(feature)</span><br><span class="line">print(f&#39;&#123;len(int_features)&#125; Integer Features : &#123;int_features&#125;\n&#39;)</span><br><span class="line">print(f&#39;&#123;len(float_features)&#125; Float Features : &#123;float_features&#125;\n&#39;)</span><br><span class="line">print(f&#39;&#123;len(object_features)&#125; Object Features : &#123;object_features&#125;&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="補空缺值"><a href="#補空缺值" class="headerlink" title="補空缺值"></a>補空缺值</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 部分欄位缺值補 &#39;None&#39;</span><br><span class="line">none_cols &#x3D; [&#39;PoolQC&#39;, &#39;MiscFeature&#39;, &#39;Alley&#39;, &#39;Fence&#39;, &#39;FireplaceQu&#39;, &#39;FireplaceQu&#39;, &#39;FireplaceQu&#39;, &#39;FireplaceQu&#39;, </span><br><span class="line">            &#39;GarageType&#39;, &#39;GarageFinish&#39;, &#39;GarageQual&#39;, &#39;GarageCond&#39;, &#39;BsmtQual&#39;, &#39;BsmtCond&#39;, &#39;BsmtExposure&#39;, </span><br><span class="line">             &#39;BsmtFinType1&#39;, &#39;BsmtFinType2&#39;, &#39;MasVnrType&#39;, &#39;Functional&#39;, &#39;MSSubClass&#39;]</span><br><span class="line">for col in none_cols:</span><br><span class="line">    df[col] &#x3D; df[col].fillna(&quot;None&quot;)</span><br><span class="line">    </span><br><span class="line"># 部分欄位缺值填補 0</span><br><span class="line">zero_cols &#x3D; [&#39;GarageYrBlt&#39;, &#39;GarageArea&#39;, &#39;GarageCars&#39;, &#39;BsmtFinSF1&#39;, &#39;BsmtFinSF2&#39;, &#39;BsmtUnfSF&#39;,&#39;TotalBsmtSF&#39;, </span><br><span class="line">             &#39;BsmtFullBath&#39;, &#39;BsmtHalfBath&#39;, &#39;MasVnrArea&#39;]</span><br><span class="line">for col in zero_cols:</span><br><span class="line">    df[col] &#x3D; df[col].fillna(0)</span><br><span class="line"></span><br><span class="line"># 部分欄位缺值補眾數</span><br><span class="line">mode_cols &#x3D; [&#39;MSZoning&#39;, &#39;Electrical&#39;, &#39;KitchenQual&#39;, &#39;Exterior1st&#39;, &#39;Exterior2nd&#39;, &#39;SaleType&#39;]</span><br><span class="line">for col in mode_cols:</span><br><span class="line">    df[col] &#x3D; df[col].fillna(df[col].mode()[0])</span><br><span class="line">    </span><br><span class="line"># &#39;LotFrontage&#39; 有空缺時, 以同一區 (Neighborhood) 的 LotFrontage 中位數填補 (可以視為填補一種群聚編碼 )</span><br><span class="line">df[&quot;LotFrontage&quot;] &#x3D; df.groupby(&quot;Neighborhood&quot;)[&quot;LotFrontage&quot;].transform(lambda x: x.fillna(x.median()))</span><br><span class="line"></span><br><span class="line"># Utilities 參考資訊很少, 所以直接捨棄</span><br><span class="line">df &#x3D; df.drop([&#39;Utilities&#39;], axis&#x3D;1)</span><br><span class="line"></span><br><span class="line"># 做完各種補缺值, 確認一下有沒有遺漏</span><br><span class="line">na_check(df)</span><br></pre></td></tr></table></figure>
+
+<h4 id="做類別轉換-類別做LabelEncoding、數值轉類別"><a href="#做類別轉換-類別做LabelEncoding、數值轉類別" class="headerlink" title="做類別轉換(類別做LabelEncoding、數值轉類別)"></a>做類別轉換(類別做LabelEncoding、數值轉類別)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 四個數值欄位, 因為相異值有限, 轉成文字</span><br><span class="line">label_cols &#x3D; [&#39;MSSubClass&#39;, &#39;OverallCond&#39;, &#39;YrSold&#39;, &#39;MoSold&#39;]</span><br><span class="line">for col in mode_cols:</span><br><span class="line">    df[col] &#x3D; df[col].astype(str)</span><br><span class="line">    </span><br><span class="line"># 相異值不太具有代表性的, 做標籤編碼</span><br><span class="line">cols &#x3D; (&#39;FireplaceQu&#39;, &#39;BsmtQual&#39;, &#39;BsmtCond&#39;, &#39;GarageQual&#39;, &#39;GarageCond&#39;, </span><br><span class="line">        &#39;ExterQual&#39;, &#39;ExterCond&#39;,&#39;HeatingQC&#39;, &#39;PoolQC&#39;, &#39;KitchenQual&#39;, &#39;BsmtFinType1&#39;, </span><br><span class="line">        &#39;BsmtFinType2&#39;, &#39;Functional&#39;, &#39;Fence&#39;, &#39;BsmtExposure&#39;, &#39;GarageFinish&#39;, &#39;LandSlope&#39;,</span><br><span class="line">        &#39;LotShape&#39;, &#39;PavedDrive&#39;, &#39;Street&#39;, &#39;Alley&#39;, &#39;CentralAir&#39;, &#39;MSSubClass&#39;, &#39;OverallCond&#39;, </span><br><span class="line">        &#39;YrSold&#39;, &#39;MoSold&#39;)</span><br><span class="line">for c in cols:</span><br><span class="line">    lbl &#x3D; LabelEncoder() </span><br><span class="line">    lbl.fit(list(df[c].values)) </span><br><span class="line">    df[c] &#x3D; lbl.transform(list(df[c].values))</span><br></pre></td></tr></table></figure>
+
+<h4 id="確定關聯性"><a href="#確定關聯性" class="headerlink" title="確定關聯性"></a>確定關聯性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">correlations &#x3D; app_train.corr()[&#39;TARGET&#39;].sort_values()</span><br><span class="line"></span><br><span class="line"># 顯示相關係數最大 &#x2F; 最小的各15個欄位名稱</span><br><span class="line">print(&#39;Most Positive Correlations:\n&#39;, correlations.tail(15))</span><br><span class="line">print(&#39;\nMost Negative Correlations:\n&#39;, correlations.head(15))</span><br></pre></td></tr></table></figure>
+
+<h4 id="特徵組合"><a href="#特徵組合" class="headerlink" title="特徵組合"></a>特徵組合</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 由地下室面積 + 1樓面積 + 2樓面積, 計算總坪數特徵   </span><br><span class="line">df[&#39;TotalSF&#39;] &#x3D; df[&#39;TotalBsmtSF&#39;] + df[&#39;1stFlrSF&#39;] + df[&#39;2ndFlrSF&#39;]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 看看目前特徵工程的結果</span><br><span class="line">print(&#39;Shape df: &#123;&#125;&#39;.format(df.shape))</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+
+<h4 id="將剩下的類別型欄位做one-hot-encoding"><a href="#將剩下的類別型欄位做one-hot-encoding" class="headerlink" title="將剩下的類別型欄位做one hot encoding"></a>將剩下的類別型欄位做one hot encoding</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 把剩下少數重要的類別型欄位, 做獨熱編碼 (已變成數字的欄位, 會自動跳過)</span><br><span class="line">df &#x3D; pd.get_dummies(df)</span><br><span class="line">print(df.shape)</span><br></pre></td></tr></table></figure>
+
+<h3 id="建立模型"><a href="#建立模型" class="headerlink" title="建立模型"></a>建立模型</h3><h4 id="將做完特徵工程的資料轉回train-x-test-x"><a href="#將做完特徵工程的資料轉回train-x-test-x" class="headerlink" title="將做完特徵工程的資料轉回train_x, test_x"></a>將做完特徵工程的資料轉回train_x, test_x</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 將前述轉換完畢資料 df , 重新切成 train_X, test_X</span><br><span class="line">train_num &#x3D; train_Y.shape[0]</span><br><span class="line">train_X &#x3D; df[:train_num]</span><br><span class="line">test_X &#x3D; df[train_num:]</span><br></pre></td></tr></table></figure>
+
+<h4 id="載入模型"><a href="#載入模型" class="headerlink" title="載入模型"></a>載入模型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 使用三種模型 : 線性迴歸 &#x2F; 梯度提升機 &#x2F; 隨機森林, 參數使用 Random Search 尋找</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor</span><br><span class="line">linear &#x3D; LinearRegression(normalize&#x3D;False, fit_intercept&#x3D;True, copy_X&#x3D;True)</span><br><span class="line">gdbt &#x3D; GradientBoostingRegressor(tol&#x3D;0.1, subsample&#x3D;0.37, n_estimators&#x3D;200, max_features&#x3D;20, </span><br><span class="line">                                 max_depth&#x3D;6, learning_rate&#x3D;0.03)</span><br><span class="line">rf &#x3D; RandomForestRegressor(n_estimators&#x3D;300, min_samples_split&#x3D;9, min_samples_leaf&#x3D;10, </span><br><span class="line">                           max_features&#x3D;&#39;sqrt&#39;, max_depth&#x3D;8, bootstrap&#x3D;False)</span><br></pre></td></tr></table></figure>
+
+<h4 id="開始預測，並存為csv檔"><a href="#開始預測，並存為csv檔" class="headerlink" title="開始預測，並存為csv檔"></a>開始預測，並存為csv檔</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 線性迴歸預測檔</span><br><span class="line">linear.fit(train_X, train_Y)</span><br><span class="line">linear_pred &#x3D; linear.predict(test_X)</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(linear_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_linear.csv&#39;, index&#x3D;False) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 梯度提升機預測檔 </span><br><span class="line">gdbt.fit(train_X, train_Y)</span><br><span class="line">gdbt_pred &#x3D; gdbt.predict(test_X)</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(gdbt_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_gdbt.csv&#39;, index&#x3D;False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 隨機森林預測檔</span><br><span class="line">rf.fit(train_X, train_Y)</span><br><span class="line">rf_pred &#x3D; rf.predict(test_X)</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(rf_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_rf.csv&#39;, index&#x3D;False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 混合泛化預測檔 (依 Kaggle 傳回分數調整比重, 越準確者比重越高, 依資料性質有所不同)</span><br><span class="line">blending_pred &#x3D; linear_pred*0.30 + gdbt_pred*0.67 + rf_pred*0.03</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(blending_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_blending.csv&#39;, index&#x3D;False)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/30/%E8%B6%85%EF%A5%AB%E6%95%B8%E8%AA%BF%E6%95%B4/" rel="next" title="超參數調整">
+                <i class="fa fa-chevron-left"></i> 超參數調整
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/02/%E9%9B%86%E6%88%90Ensemble/" rel="prev" title="集成Ensemble">
+                集成Ensemble <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Shoghi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="linboyu@fel.cvut.cz" target="_blank" title="email">
+                      
+                        <i class="fa fa-fw fa-globe"></i>email</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shoghilin" target="_blank" title="github">
+                      
+                        <i class="fa fa-fw fa-globe"></i>github</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/shoghilin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linboyu@fel.cvut.cz" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.linkedin.com/in/柏宇-林-03995a1a0" target="_blank" title="Linkedin">
+                      
+                        <i class="fa fa-fw fa-linkedin-square"></i>Linkedin</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#單純記錄下未來可能用到的寫法"><span class="nav-number">1.</span> <span class="nav-text">單純記錄下未來可能用到的寫法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本流程"><span class="nav-number">1.1.</span> <span class="nav-text">基本流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#載入要用的libary"><span class="nav-number">1.1.1.</span> <span class="nav-text">載入要用的libary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#載入資料"><span class="nav-number">1.1.2.</span> <span class="nav-text">載入資料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特徵工程"><span class="nav-number">1.1.3.</span> <span class="nav-text">特徵工程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#檢查-DataFrame-空缺值的狀態"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">檢查 DataFrame 空缺值的狀態</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#將各column依不同類型分類"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">將各column依不同類型分類</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#補空缺值"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">補空缺值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#做類別轉換-類別做LabelEncoding、數值轉類別"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">做類別轉換(類別做LabelEncoding、數值轉類別)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#確定關聯性"><span class="nav-number">1.1.3.5.</span> <span class="nav-text">確定關聯性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特徵組合"><span class="nav-number">1.1.3.6.</span> <span class="nav-text">特徵組合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#將剩下的類別型欄位做one-hot-encoding"><span class="nav-number">1.1.3.7.</span> <span class="nav-text">將剩下的類別型欄位做one hot encoding</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立模型"><span class="nav-number">1.1.4.</span> <span class="nav-text">建立模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#將做完特徵工程的資料轉回train-x-test-x"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">將做完特徵工程的資料轉回train_x, test_x</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#載入模型"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">載入模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#開始預測，並存為csv檔"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">開始預測，並存為csv檔</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shoghi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+</body>
+</html>

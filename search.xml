@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Markdown相關文件</title>
-    <url>/2020/05/23/Markdown%E7%9B%B8%E9%97%9C%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
-<p>hexo next mathjax數學公式設定<br><a href="https://dtes8617.github.io/2018/01/24/%E5%9C%A8Hexo%E9%A1%AF%E7%A4%BA%E6%95%B8%E5%AD%B8%E5%85%AC%E5%BC%8F/" target="_blank" rel="noopener">https://dtes8617.github.io/2018/01/24/%E5%9C%A8Hexo%E9%A1%AF%E7%A4%BA%E6%95%B8%E5%AD%B8%E5%85%AC%E5%BC%8F/</a></p>
-<p>如何在 Markdown 輸入數學公式及符號<br><a href="http://blog.maxkit.com.tw/2020/02/markdown.html" target="_blank" rel="noopener">http://blog.maxkit.com.tw/2020/02/markdown.html</a></p>
+    <title>ECDF</title>
+    <url>/2020/05/26/ECDF/</url>
+    <content><![CDATA[<h1 id="ECDF-experience-empirical-distribution-function"><a href="#ECDF-experience-empirical-distribution-function" class="headerlink" title="ECDF (experience empirical distribution function)"></a>ECDF (experience empirical distribution function)</h1><p>ECDF 最主要的目的是希望看到資料的累積分布，y 軸是介於 0-1 的數字 (代表累積比例)，x 軸則是資料的實際數值分布。<br>透過 ECDF，我們可以很快看出我們有興趣的資料數值約占多少比例，並觀察圖形差異<br>而CDF跟ECDF的差別就是，CDF 是從理論函數來的，ECDF 則是由觀察值所得到的，因此CDF看起來較為平滑，ECDF則較多曲折。<br><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Empirical_CDF.png" alt="ECDF"><br>以馬拉松Day9為例子，找出 AMT_INCOME_TOTAL 的ECDF</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cdf &#x3D; app_train[&#39;AMT_INCOME_TOTAL&#39;].value_counts().sort_index().cumsum()</span><br></pre></td></tr></table></figure>
+<p>通過數出各項數總量，重新排列後，累加起來</p>
+<p>把圖畫出來</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">plt.plot(list(cdf.index), cdf&#x2F;cdf.max())</span><br><span class="line">plt.xlabel(&#39;Value&#39;)</span><br><span class="line">plt.ylabel(&#39;ECDF&#39;)</span><br><span class="line">plt.xlim([cdf.index.min(), cdf.index.max() * 1.05]) # 限制顯示圖片的範圍</span><br><span class="line">plt.ylim([-0.05,1.05]) # 限制顯示圖片的範圍</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="http://kwassistfile.cupoy.com/0000016A66C4BF1500000C7D6375706F795F72656C65617365414E53/1545817738326/large" alt="ECDF"><br>很明顯的圖跟我們期望的不一樣，因此數據中可能是含有異常的(可用log來調整)</p>
+<p>ps.<br>發現以下兩種情境可使用log調整：</p>
+<ol>
+<li>資料範圍太大，可以縮小一點</li>
+<li>資料偏態嚴重，可以集中一點</li>
+</ol>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Keras Module API</title>
+    <url>/2020/07/25/Keras-Module-API/</url>
+    <content><![CDATA[<h1 id="函數式API"><a href="#函數式API" class="headerlink" title="函數式API"></a>函數式API</h1><p>定義復雜模型（如多輸出模型、有向無環圖，或具有共享層的模型）的方法</p>
+<p>所有的模型都可調用，就像網絡層一樣</p>
+<ul>
+<li>利用函數式API，可以輕易地重用訓練好的模型：可以將任何模型看作是一個層，然後通過傳遞一個張量來調用它。注意，在調用模型時，您不僅重用模型的結構，還重用了它的權重</li>
+</ul>
+<p>範例</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">x &#x3D; input(shape(784,))</span><br><span class="line">y &#x3D; model(x)</span><br></pre></td></tr></table></figure>
+
+<h2 id="函數式API-與-序列模型"><a href="#函數式API-與-序列模型" class="headerlink" title="函數式API 與 序列模型"></a>函數式API 與 序列模型</h2><p>模型需要多於一個的輸出，應該選擇函數式模型<br>函數式模型是最廣泛的一類模型，序列模型（<a href="/2020/07/25/Keras-Sequential-API">Sequential</a>）只是它的一種特殊情況</p>
+<p>利用函數式 API，可以輕易地重用訓練好的模型：可以將任何模型看作是一個層，然後通過傳遞一個張量來調用它。注意，在調用模型時，您不僅重用模型的結構，還重用了它的權重<br>具有多個輸入和輸出的模型。函數式 API 使處理大量交織的數據流變得容易</p>
+<p>共享網路層 </p>
+<ul>
+<li>函數式API 的另一個用途是使用共享網絡層的模型</li>
+<li>我們來看看共享層<br>來考慮推特推文數據集。<br>我們想要建立一個模型來分辨兩條推文是否來自同一個人（例如，通過推文的相似性來對用戶進行比較）<br>實現這個目標的一種方法是建立一個模型，將兩條推文編碼成兩個向量，連接向量，然後添加邏輯回歸層；<br>這將輸出兩條推文來自同一作者的概率。模型將接收一對對正負表示的推特數據<br>由於這個問題是對稱的，編碼第一條推文的機制應該被完全重用來編碼第二條推文（權重及其他全部）</li>
+</ul>
+<h2 id="keras-框架"><a href="#keras-框架" class="headerlink" title="keras 框架"></a>keras 框架</h2><p><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294271/1593754429437" alt="image"></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
       <tags>
-        <tag>markdown</tag>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>keras</tag>
       </tags>
   </entry>
   <entry>
@@ -40,20 +73,56 @@
       </tags>
   </entry>
   <entry>
-    <title>ECDF</title>
-    <url>/2020/05/26/ECDF/</url>
-    <content><![CDATA[<h1 id="ECDF-experience-empirical-distribution-function"><a href="#ECDF-experience-empirical-distribution-function" class="headerlink" title="ECDF (experience empirical distribution function)"></a>ECDF (experience empirical distribution function)</h1><p>ECDF 最主要的目的是希望看到資料的累積分布，y 軸是介於 0-1 的數字 (代表累積比例)，x 軸則是資料的實際數值分布。<br>透過 ECDF，我們可以很快看出我們有興趣的資料數值約占多少比例，並觀察圖形差異<br>而CDF跟ECDF的差別就是，CDF 是從理論函數來的，ECDF 則是由觀察值所得到的，因此CDF看起來較為平滑，ECDF則較多曲折。<br><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Empirical_CDF.png" alt="ECDF"><br>以馬拉松Day9為例子，找出 AMT_INCOME_TOTAL 的ECDF</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cdf &#x3D; app_train[&#39;AMT_INCOME_TOTAL&#39;].value_counts().sort_index().cumsum()</span><br></pre></td></tr></table></figure>
-<p>通過數出各項數總量，重新排列後，累加起來</p>
-<p>把圖畫出來</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">plt.plot(list(cdf.index), cdf&#x2F;cdf.max())</span><br><span class="line">plt.xlabel(&#39;Value&#39;)</span><br><span class="line">plt.ylabel(&#39;ECDF&#39;)</span><br><span class="line">plt.xlim([cdf.index.min(), cdf.index.max() * 1.05]) # 限制顯示圖片的範圍</span><br><span class="line">plt.ylim([-0.05,1.05]) # 限制顯示圖片的範圍</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="http://kwassistfile.cupoy.com/0000016A66C4BF1500000C7D6375706F795F72656C65617365414E53/1545817738326/large" alt="ECDF"><br>很明顯的圖跟我們期望的不一樣，因此數據中可能是含有異常的(可用log來調整)</p>
-<p>ps.<br>發現以下兩種情境可使用log調整：</p>
-<ol>
-<li>資料範圍太大，可以縮小一點</li>
-<li>資料偏態嚴重，可以集中一點</li>
-</ol>
+    <title>Keras_Sequential_API</title>
+    <url>/2020/07/25/Keras-Sequential-API/</url>
+    <content><![CDATA[<h1 id="序列模型"><a href="#序列模型" class="headerlink" title="序列模型"></a>序列模型</h1><p>序列模型是多個網路層的線性堆疊。<br>Sequential 是一系列模型的簡單線性疊加，</p>
+<ul>
+<li><p>可以在構造函數中傳入一些列的網路層：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from keras.models import Sequential</span><br><span class="line">from keras.layers import Dense, Activation</span><br><span class="line"></span><br><span class="line">model &#x3D; Sequential(Dense(32, _input_shap&#x3D;(784,), Activation(“relu”))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以透過 .add</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">model &#x3D; Sequential()</span><br><span class="line">model.add(Dense(32, _input_dim&#x3D;784))</span><br><span class="line">model.add(Activation(“relu”))</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="Sequential-模型的基本元件"><a href="#Sequential-模型的基本元件" class="headerlink" title="Sequential 模型的基本元件"></a>Sequential 模型的基本元件</h2><p>Sequential 模型的基本元件一般需要：</p>
+<ul>
+<li>Model 宣告</li>
+<li>model.add，添加層；</li>
+<li>model.compile,模型訓練；</li>
+<li>model.fit，模型訓練參數設置 + 訓練；</li>
+<li>模型評估</li>
+<li>模型預測</li>
+</ul>
+<p>例如<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294269/1593748586095" alt="sequential"></p>
+<h2 id="keras-框架"><a href="#keras-框架" class="headerlink" title="keras 框架"></a>keras 框架</h2><p><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294271/1593754429437" alt="image"></p>
+<h2 id="指定模型的輸入維度"><a href="#指定模型的輸入維度" class="headerlink" title="指定模型的輸入維度"></a>指定模型的輸入維度</h2><p>Sequential 的第一層(只有第一層，後面的層會自動匹配)需要知道輸入的shape(<strong>input_shape</strong>)</p>
+<ul>
+<li>在第一層加入一個 input_shape 參數，input_shape 應該是一個 shape 的 tuple 資料類型。</li>
+<li>input_shape 是一系列整數的 tuple，某些位置可為 None</li>
+<li>input_shape 中不用指明 batch_size 的數目。</li>
+</ul>
+<p>2D 的網路層，如 Dense，允許在層的構造函數的 input_dim 中指定輸入的維度。<br>對於某些 3D 時間層，可以在構造函數中指定 input_dim 和 input_length 來實現。<br>對於某些 RNN，可以指定 batch_size。這樣後面的輸入必須是(batch_size, input_shape)的輸入</p>
+<h2 id="常用參數說明"><a href="#常用參數說明" class="headerlink" title="常用參數說明"></a>常用參數說明</h2><p><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294269/1593748569180" alt="often used"></p>
 ]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>keras</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Markdown相關文件</title>
+    <url>/2020/05/23/Markdown%E7%9B%B8%E9%97%9C%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
+<p>hexo next mathjax數學公式設定<br><a href="https://dtes8617.github.io/2018/01/24/%E5%9C%A8Hexo%E9%A1%AF%E7%A4%BA%E6%95%B8%E5%AD%B8%E5%85%AC%E5%BC%8F/" target="_blank" rel="noopener">https://dtes8617.github.io/2018/01/24/%E5%9C%A8Hexo%E9%A1%AF%E7%A4%BA%E6%95%B8%E5%AD%B8%E5%85%AC%E5%BC%8F/</a></p>
+<p>如何在 Markdown 輸入數學公式及符號<br><a href="http://blog.maxkit.com.tw/2020/02/markdown.html" target="_blank" rel="noopener">http://blog.maxkit.com.tw/2020/02/markdown.html</a></p>
+]]></content>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
   </entry>
   <entry>
     <title>Kernel-Density-Estimation</title>
@@ -97,22 +166,89 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2020/05/21/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+    <title>activation-function</title>
+    <url>/2020/07/27/activation-function/</url>
+    <content><![CDATA[<h1 id="啟動函數-activation-function"><a href="#啟動函數-activation-function" class="headerlink" title="啟動函數 activation function"></a>啟動函數 activation function</h1><p>啟動函數定義了<br>每個節點（神經元）的輸出和輸入關係的函數為神經元提供規模化非線性化能力，讓神經網路具備強大的擬合能力</p>
+<h2 id="啟動函數的作用"><a href="#啟動函數的作用" class="headerlink" title="啟動函數的作用"></a>啟動函數的作用</h2><ul>
+<li><p>深度學習的基本原理是基於人工神經網路，信號從一個神經元進入，經過非線性的 activation function<br>如此循環往復，直到輸出層。正是由於這些非線性函數的反覆疊加，才使得神經網路有足夠的 capacity 來抓取複雜的 pattern</p>
+</li>
+<li><p>啟動函數的最大作用就是非線性化<br>如果不用啟動函數的話，無論神經網路有多少層，輸出都是輸入的線性組合</p>
+</li>
+<li><p>啟動函數的另一個重要特徵<br>它應該是可以區分forward-propagation與back-propagation的網路參數更新，然後相應地使用梯度下降或任何其他優化技術優化權重以減少誤差</p>
+</li>
+</ul>
+<h2 id="常見啟動函數介紹"><a href="#常見啟動函數介紹" class="headerlink" title="常見啟動函數介紹"></a>常見啟動函數介紹</h2><h3 id="sigmoid"><a href="#sigmoid" class="headerlink" title="sigmoid"></a>sigmoid</h3><p>特點是會把輸出限定在 0~1 之間，在 x&lt;0 ，輸出就是 0，在 x&gt;0，輸出就是 1，這樣使得數據在傳遞過程中不容易發散</p>
+<h4 id="主要缺點"><a href="#主要缺點" class="headerlink" title="主要缺點"></a>主要缺點</h4><ul>
+<li>Sigmoid 容易過飽和，丟失梯度。這樣在反向傳播時，很容易出現梯度消失的情況，導致訓練無法完整</li>
+<li>Sigmoid 的輸出均值不是 0</li>
+</ul>
+<p>函式：<br>$$\sigma(x) = \frac{1}{1+e^{-x}}$$<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899630177" width = "400" height = "300" alt="sigmoid" align=center /></p>
+<h3 id="softmax"><a href="#softmax" class="headerlink" title="softmax"></a>softmax</h3><p>Softmax 把一個 k 維的 real value 向量（a1,a2,a3,a4….）映射成一個（b1,b2,b3,b4….）其中 bi 是一個 0~1 的常數，輸出神經元之和為 1.0，所以也可以拿來做多分類的機率預測</p>
+<h4 id="為什麼要取指數？"><a href="#為什麼要取指數？" class="headerlink" title="為什麼要取指數？"></a>為什麼要取指數？</h4><ul>
+<li>要模擬 max 的行為，所以要讓大的更大</li>
+<li>需要一個可導的函數</li>
+</ul>
+<p>函式：<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899676578" width = "300" height = "200" alt="softmax fomula" align=center /><br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899693493" width = "400" height = "300" alt="softmax" align=center /></p>
+<h3 id="Tanh"><a href="#Tanh" class="headerlink" title="Tanh"></a>Tanh</h3><p>tanh 讀作 Hyperbolic Tangent<br>tanh 也稱為雙切正切函數，取值範圍為 [-1,1]</p>
+<p>tanh 在特徵相差明顯時的效果會很好，在循環過程中會不斷擴大特徵效果</p>
+<p>函式：<br>$$tanh(x)=2\sigma(2x) - 1$$<br>$$tanh(x) = \frac{e^x - e^{-x}}{e^x+e^{-x}}$$</p>
+<img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899747636" width = "400" height = "300" alt="tanh" align=center />
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="ReLU"><a href="#ReLU" class="headerlink" title="ReLU"></a>ReLU</h3><p>修正線性單元（Rectified linear unit，ReLU）</p>
+<ul>
+<li>在 x &gt; 0 時導數恆為 1</li>
+<li>對於 x &lt; 0，其梯度恆為 0，這時候它也會出現飽和的現象，甚至使神經元直接無效，從而其權重無法得到更新（在這種情況下通常稱為 dying ReLU）</li>
+<li>Leaky ReLU 和 PReLU 的提出正是為了解決這一問題</li>
+</ul>
+<p>函式：<br>$$f(x)=max(0, x)$$<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899800436" width = "400" height = "300" alt="ReLU" align=center /></p>
+<p>p.s.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ReLU &#x3D; lambda x: abs(x) * (x&gt;0)</span><br><span class="line">dReLU &#x3D; lambda x: 1 * (x&gt;0)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h4 id="ReLU-II"><a href="#ReLU-II" class="headerlink" title="ReLU (II)"></a>ReLU (II)</h4><p>ELU 函數是針對 ReLU 函數的一個改進型，相比於 ReLU 函數，在輸入為負數的情況下，是有一定的輸出的</p>
+<ul>
+<li>這樣可以消除 ReLU 死掉的問題</li>
+<li>但還是有 <strong>梯度飽和</strong> 和 <strong>指數運算</strong> 的問題</li>
+</ul>
+<p>函式：<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899836437" width = "300" height = "200" alt="ELU fomula" align=center /><br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899845136" width = "400" height = "300" alt="ELU" align=center /></p>
+<h4 id="ReLU-III"><a href="#ReLU-III" class="headerlink" title="ReLU (III)"></a>ReLU (III)</h4><ol>
+<li>PReLU<br>參數化修正線性單元（Parameteric Rectified Linear Unit，PReLU）屬於 ReLU 修正類啟動函數的一員</li>
+<li>Leaky ReLU<br>當 α=0.1 時，我們叫 PReLU 為Leaky ReLU，算是 PReLU 的一種特殊情況</li>
+<li>RReLU 以及 Leaky ReLU 有一些共同點，即爲負值輸入添加了一個線性項</li>
+</ol>
+<p>函式：<br>$$f(x)=max(ax, x)$$<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1593000067651" width = "400" height = "300" alt="" align=center /></p>
+<h3 id="Maxout"><a href="#Maxout" class="headerlink" title="Maxout"></a>Maxout</h3><p>Maxout 是深度學習網路中的一層網路，就像池化層、卷積層一樣，可以看成是網路的啟動函數層<br>Maxout 神經元的啟動函數是取得所有這些「函數層」中的最大值<br>Maxout 的擬合能力是非​​常強的，<strong>優點</strong> 是計算簡單，不會過飽和，同時又沒有 ReLU 的缺點<br>Maxout 的 <strong>缺點</strong> 是過程參數相當於多了一倍</p>
+<p>函式：<br>$$f(x)=max(wT1x+b1, wT2x+b2)$$<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592900004136" width = "400" height = "300" alt="" align=center /></p>
+<h2 id="Sigmoid-vs-Tanh"><a href="#Sigmoid-vs-Tanh" class="headerlink" title="Sigmoid vs Tanh"></a>Sigmoid vs Tanh</h2><p>tanh 函數將輸入值壓縮到 -1~1 的範圍，因此它是 0 均值的，<br>這解決了Sigmoid 函數的非 zero-centered 問題，但是它也存在 <strong>梯度消失</strong> 和 <strong>冪運算</strong> 的問題。<br>其實 tanh(x)=2sigmoid(2x)-1<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592900066747" width = "400" height = "300" alt="Sigmoid vs Tanh" align=center /><br>左邊是 Sigmoid 非線性函數，將實數壓縮到［0,1］之間。右邊是 Tanh 函數，將實數壓縮到［-1,1］。</p>
+<h2 id="Sigmoid-vs-Softmax"><a href="#Sigmoid-vs-Softmax" class="headerlink" title="Sigmoid vs Softmax"></a>Sigmoid vs Softmax</h2><ul>
+<li>Sigmoid 將一個 real value 映射到（0,1）的區間，用來做二分類</li>
+<li>Softmax 把一個 k 維的 real value 向量（a1,a2,a3,a4….）映射成一個（b1,b2,b3,b4….）其中 bi 是一個 0～1 的常數，輸出神經元之和為 1.0，所以可以拿來做多分類的機率預測</li>
+<li>二分類問題時 sigmoid 和 softmax 是一樣的，求的都是 cross entropy loss</li>
+</ul>
+<h2 id="梯度消失-Vanishing-gradient-problem"><a href="#梯度消失-Vanishing-gradient-problem" class="headerlink" title="梯度消失 Vanishing gradient problem"></a>梯度消失 Vanishing gradient problem</h2><p>原因：前面的層比後面的層梯度變化更小，故變化更慢</p>
+<p>結果：Output 變化慢 =&gt; Gradient小 =&gt; 學得慢  </p>
+<p>Sigmoid，Tanh 都有這樣特性不適合用在 Layers 多的DNN 架構<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1593491298051" width = "400" height = "300" alt="梯度消失" align=center /></p>
+<h2 id="如何選擇正確的啟動函數"><a href="#如何選擇正確的啟動函數" class="headerlink" title="如何選擇正確的啟動函數"></a>如何選擇正確的啟動函數</h2><h3 id="根據各個函數的優缺點來配置"><a href="#根據各個函數的優缺點來配置" class="headerlink" title="根據各個函數的優缺點來配置"></a>根據各個函數的優缺點來配置</h3><p>如果使用 ReLU，要小心設置 learning rate，注意不要讓網路出現很多「dead」 神經元，如果不好解決，可以試試 Leaky ReLU、PReLU 或者Maxout</p>
+<p>p.s.<br>dead neurons的主因為神經元陷入永遠只能產生特定值，且有0個梯度(經常發生在ReLU)<br><a href="https://medium.com/joelthchao/how-dead-neurons-hurt-training-5fc127d8db6a" target="_blank" rel="noopener">更多</a></p>
+<h3 id="根據問題的性質"><a href="#根據問題的性質" class="headerlink" title="根據問題的性質"></a>根據問題的性質</h3><ul>
+<li>用於分類器時，Sigmoid 函數及其組合通常效果更好</li>
+<li>由於梯度消失問題，有時要避免使用 sigmoid 和 tanh 函數。ReLU 函數是一個通用的啟動函數，目前在大多數情況下使用</li>
+<li>如果神經網路中出現死神經元，那麼 PReLU 函數就是最好的選擇</li>
+<li>ReLU 函數建議只能在隱藏層中使用</li>
+</ul>
+<h3 id="考慮-DNN-損失函數和啟動函數"><a href="#考慮-DNN-損失函數和啟動函數" class="headerlink" title="考慮 DNN 損失函數和啟動函數"></a>考慮 DNN 損失函數和啟動函數</h3><ul>
+<li>如果使用 sigmoid 啟動函數，則交叉熵損失函數一般肯定比均方差損失函數好</li>
+<li>如果是 DNN 用於分類，則一般在輸出層使用 softmax 啟動函數</li>
+<li>ReLU 啟動函數對梯度消失問題有一定程度的解決，尤其是在 CNN模型中</li>
+</ul>
 ]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>keras</tag>
+      </tags>
   </entry>
   <entry>
     <title>Regression vs. Classification</title>
@@ -260,6 +396,24 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2020/05/21/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>sklearn</title>
     <url>/2020/05/27/sklearn/</url>
     <content><![CDATA[<h2 id="LinearRegression"><a href="#LinearRegression" class="headerlink" title="LinearRegression()"></a>LinearRegression()</h2><p>document<br><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html" target="_blank" rel="noopener">https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html</a><br>machine learning 下的 Linear Regression 實作(使用python)<br><a href="https://medium.com/@jacky308082/machine-learning-%E4%B8%8B%E7%9A%84-linear-regression-%E5%AF%A6%E4%BD%9C-%E4%BD%BF%E7%94%A8python-7e1dd03a4d46" target="_blank" rel="noopener">https://medium.com/@jacky308082/machine-learning-%E4%B8%8B%E7%9A%84-linear-regression-%E5%AF%A6%E4%BD%9C-%E4%BD%BF%E7%94%A8python-7e1dd03a4d46</a></p>
@@ -311,22 +465,6 @@
       </tags>
   </entry>
   <entry>
-    <title>「探索式資料分析」(Exploratory Data Analysis) 01</title>
-    <url>/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-01/</url>
-    <content><![CDATA[<h1 id="在看到一筆資料時，第一件事就是去了解它。"><a href="#在看到一筆資料時，第一件事就是去了解它。" class="headerlink" title="在看到一筆資料時，第一件事就是去了解它。"></a>在看到一筆資料時，第一件事就是去了解它。</h1><p>仔細研究kaggle的資料描述<br>看看有多少資料來源？資料的格式？資料間的關係？<br>資料欄位的意義？每列的意義？<br>有多少筆資料？多少個欄位？<br>有沒有遺失值等等？</p>
-<p></br></br></p>
-<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
-<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>EDA</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>「探索式資料分析」(Exploratory Data Analysis) 03</title>
     <url>/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03/</url>
     <content><![CDATA[<h1 id="統計量化的方式"><a href="#統計量化的方式" class="headerlink" title="統計量化的方式"></a>統計量化的方式</h1><p>以單變量分析來來說，量化的分析方式可包含</p>
@@ -349,6 +487,22 @@
 <li><a href="https://matplotlib.org/gallery/index.html" target="_blank" rel="noopener">matplotlib</a></li>
 <li><a href="https://seaborn.pydata.org/examples/index.html" target="_blank" rel="noopener">seaborn</a></li>
 </ul>
+<p></br></br></p>
+<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
+<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>「探索式資料分析」(Exploratory Data Analysis) 01</title>
+    <url>/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-01/</url>
+    <content><![CDATA[<h1 id="在看到一筆資料時，第一件事就是去了解它。"><a href="#在看到一筆資料時，第一件事就是去了解它。" class="headerlink" title="在看到一筆資料時，第一件事就是去了解它。"></a>在看到一筆資料時，第一件事就是去了解它。</h1><p>仔細研究kaggle的資料描述<br>看看有多少資料來源？資料的格式？資料間的關係？<br>資料欄位的意義？每列的意義？<br>有多少筆資料？多少個欄位？<br>有沒有遺失值等等？</p>
 <p></br></br></p>
 <h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
 <h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
@@ -437,6 +591,72 @@
       </tags>
   </entry>
   <entry>
+    <title>損失函數</title>
+    <url>/2020/07/27/%E6%90%8D%E5%A4%B1%E5%87%BD%E6%95%B8/</url>
+    <content><![CDATA[<h1 id="損失函數"><a href="#損失函數" class="headerlink" title="損失函數"></a>損失函數</h1><p>機器學習中所有的算法都需要最大化或最小化一個函數，這個函數被稱為「目標函數」。其中，我們一般把最小化的一類函數，稱為「損失函數」。它能根據預測結果，衡量出模型預測能力的好壞</p>
+<p>損失函數大致可分為：分類問題的損失函數和回歸問題的損失函數</p>
+<p>$y$ 表示實際值，$\hat{y}$ 表示預測值</p>
+<h2 id="均方誤差-MSE-mean-squared-error"><a href="#均方誤差-MSE-mean-squared-error" class="headerlink" title="均方誤差(MSE, mean_squared_error)"></a>均方誤差(MSE, mean_squared_error)</h2><p>就是最小平方法(Least Square) 的目標函數 – 預測值與實際值的差距之平均值。<br>還有其他變形的函數,<br>如 mean_absolute_error 、 mean_absolute_percentage_error 、 mean_squared_logarithmic_error等等</p>
+<p>$$ \sum{(\hat{y} - y)^2 / N}$$</p>
+<h3 id="使用時機"><a href="#使用時機" class="headerlink" title="使用時機"></a>使用時機</h3><ul>
+<li>n 個樣本的預測值（$\hat{y}$）與（$\hat{y}$）的差距</li>
+<li>Numerical 相關</li>
+</ul>
+<h3 id="Keras-上的調用方式"><a href="#Keras-上的調用方式" class="headerlink" title="Keras 上的調用方式"></a>Keras 上的調用方式</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from keras import losses</span><br><span class="line">model.compile(loss&#x3D; &#39;mean_squared_error&#39;, optimizer&#x3D;&#39;sgd&#39;)</span><br><span class="line">其中，包含 y_true， y_pred 的傳遞，函數是表達如下：</span><br><span class="line">keras.losses.mean_squared_error(y_true, y_pred)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Cross-Entropy"><a href="#Cross-Entropy" class="headerlink" title="Cross Entropy"></a>Cross Entropy</h2><p>當預測值與實際值愈相近，損失函數就愈小，反之差距很大時，就會使損失函數愈小</p>
+<p>為何要用 Cross Entropy 取代 MSE?<br>  因為，在梯度下降時，Cross Entropy 計算速度較快</p>
+<h3 id="使用時機："><a href="#使用時機：" class="headerlink" title="使用時機："></a>使用時機：</h3><ul>
+<li>整數目標：Sparse categorical_crossentropy</li>
+<li>分類目標：categorical_crossentropy</li>
+<li>二分類目標：binary_crossentropy</li>
+</ul>
+<h3 id="Keras-上的調用方式："><a href="#Keras-上的調用方式：" class="headerlink" title="Keras 上的調用方式："></a>Keras 上的調用方式：</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from keras import losses</span><br><span class="line">model.compile(loss&#x3D; &#39;categorical_crossentropy&#39;, optimizer&#x3D;&#39;sgd&#39;)</span><br><span class="line">其中, 包含y_true， y_pred的傳遞, 函數是表達如下：</span><br><span class="line">keras.losses.categorical_crossentropy(y_true, y_pred)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Hinge-Error-hinge"><a href="#Hinge-Error-hinge" class="headerlink" title="Hinge Error (hinge)"></a>Hinge Error (hinge)</h2><p>是一種單邊誤差，不考慮負值。 同樣也有多種變形，squared_hinge、categorical_hinge</p>
+<p>$$l(y) = max(0, 1-t*y)$$</p>
+<h3 id="使用時機：-1"><a href="#使用時機：-1" class="headerlink" title="使用時機："></a>使用時機：</h3><ul>
+<li>適用於『支援向量機』(SVM)的最大間隔分類法(maximum-margin classification)</li>
+</ul>
+<h3 id="Keras-上的調用方式：-1"><a href="#Keras-上的調用方式：-1" class="headerlink" title="Keras 上的調用方式："></a>Keras 上的調用方式：</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from keras import losses</span><br><span class="line">model.compile(loss&#x3D; ‘hinge‘, optimizer&#x3D;&#39;sgd’)</span><br><span class="line">其中，包含 y_true，y_pred 的傳遞, 函數是表達如下:</span><br><span class="line">keras.losses.hinge(y_true, y_pred)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>keras</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>可能用到寫法</title>
+    <url>/2020/07/02/%E5%8F%AF%E8%83%BD%E7%94%A8%E5%88%B0%E5%AF%AB%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="單純記錄下未來可能用到的寫法"><a href="#單純記錄下未來可能用到的寫法" class="headerlink" title="單純記錄下未來可能用到的寫法"></a>單純記錄下未來可能用到的寫法</h1><h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><h3 id="載入要用的libary"><a href="#載入要用的libary" class="headerlink" title="載入要用的libary"></a>載入要用的libary</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import copy, time</span><br><span class="line">from IPython.display import display</span><br><span class="line">from sklearn.preprocessing import MinMaxScaler</span><br><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor</span><br><span class="line">from sklearn.preprocessing import LabelEncoder</span><br></pre></td></tr></table></figure>
+
+<h3 id="載入資料"><a href="#載入資料" class="headerlink" title="載入資料"></a>載入資料</h3><p>再載入資料後，對目標值做平滑化。接著拿掉id和目標值，並合併測試集及訓練集</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">data_path &#x3D; &#39;..&#x2F;data&#x2F;&#39;</span><br><span class="line">df_train &#x3D; pd.read_csv(data_path + &#39;house_train.csv.gz&#39;)</span><br><span class="line">df_test &#x3D; pd.read_csv(data_path + &#39;house_test.csv.gz&#39;)</span><br><span class="line"></span><br><span class="line">train_Y &#x3D; np.log1p(df_train[&#39;SalePrice&#39;])</span><br><span class="line">ids &#x3D; df_test[&#39;Id&#39;]</span><br><span class="line">df_train &#x3D; df_train.drop([&#39;Id&#39;, &#39;SalePrice&#39;] , axis&#x3D;1)</span><br><span class="line">df_test &#x3D; df_test.drop([&#39;Id&#39;] , axis&#x3D;1)</span><br><span class="line">df &#x3D; pd.concat([df_train, df_test])</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+<h3 id="特徵工程"><a href="#特徵工程" class="headerlink" title="特徵工程"></a>特徵工程</h3><h4 id="檢查-DataFrame-空缺值的狀態"><a href="#檢查-DataFrame-空缺值的狀態" class="headerlink" title="檢查 DataFrame 空缺值的狀態"></a>檢查 DataFrame 空缺值的狀態</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 檢查 DataFrame 空缺值的狀態</span><br><span class="line">def na_check(df_data):</span><br><span class="line">    data_na &#x3D; (df_data.isnull().sum() &#x2F; len(df_data)) * 100</span><br><span class="line">    data_na &#x3D; data_na.drop(data_na[data_na &#x3D;&#x3D; 0].index).sort_values(ascending&#x3D;False)</span><br><span class="line">    missing_data &#x3D; pd.DataFrame(&#123;&#39;Missing Ratio&#39; :data_na&#125;)</span><br><span class="line">    display(missing_data.head(10))</span><br><span class="line">na_check(df)</span><br></pre></td></tr></table></figure>
+
+<h4 id="將各column依不同類型分類"><a href="#將各column依不同類型分類" class="headerlink" title="將各column依不同類型分類"></a>將各column依不同類型分類</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#確定只有 int64, float64, object 三種類型後, 分別將欄位名稱存於三個 list 中</span><br><span class="line">int_features &#x3D; []</span><br><span class="line">float_features &#x3D; []</span><br><span class="line">object_features &#x3D; []</span><br><span class="line">for dtype, feature in zip(df.dtypes, df.columns):</span><br><span class="line">    if dtype &#x3D;&#x3D; &#39;float64&#39;:</span><br><span class="line">        float_features.append(feature)</span><br><span class="line">    elif dtype &#x3D;&#x3D; &#39;int64&#39;:</span><br><span class="line">        int_features.append(feature)</span><br><span class="line">    else:</span><br><span class="line">        object_features.append(feature)</span><br><span class="line">print(f&#39;&#123;len(int_features)&#125; Integer Features : &#123;int_features&#125;\n&#39;)</span><br><span class="line">print(f&#39;&#123;len(float_features)&#125; Float Features : &#123;float_features&#125;\n&#39;)</span><br><span class="line">print(f&#39;&#123;len(object_features)&#125; Object Features : &#123;object_features&#125;&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="補空缺值"><a href="#補空缺值" class="headerlink" title="補空缺值"></a>補空缺值</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 部分欄位缺值補 &#39;None&#39;</span><br><span class="line">none_cols &#x3D; [&#39;PoolQC&#39;, &#39;MiscFeature&#39;, &#39;Alley&#39;, &#39;Fence&#39;, &#39;FireplaceQu&#39;, &#39;FireplaceQu&#39;, &#39;FireplaceQu&#39;, &#39;FireplaceQu&#39;, </span><br><span class="line">            &#39;GarageType&#39;, &#39;GarageFinish&#39;, &#39;GarageQual&#39;, &#39;GarageCond&#39;, &#39;BsmtQual&#39;, &#39;BsmtCond&#39;, &#39;BsmtExposure&#39;, </span><br><span class="line">             &#39;BsmtFinType1&#39;, &#39;BsmtFinType2&#39;, &#39;MasVnrType&#39;, &#39;Functional&#39;, &#39;MSSubClass&#39;]</span><br><span class="line">for col in none_cols:</span><br><span class="line">    df[col] &#x3D; df[col].fillna(&quot;None&quot;)</span><br><span class="line">    </span><br><span class="line"># 部分欄位缺值填補 0</span><br><span class="line">zero_cols &#x3D; [&#39;GarageYrBlt&#39;, &#39;GarageArea&#39;, &#39;GarageCars&#39;, &#39;BsmtFinSF1&#39;, &#39;BsmtFinSF2&#39;, &#39;BsmtUnfSF&#39;,&#39;TotalBsmtSF&#39;, </span><br><span class="line">             &#39;BsmtFullBath&#39;, &#39;BsmtHalfBath&#39;, &#39;MasVnrArea&#39;]</span><br><span class="line">for col in zero_cols:</span><br><span class="line">    df[col] &#x3D; df[col].fillna(0)</span><br><span class="line"></span><br><span class="line"># 部分欄位缺值補眾數</span><br><span class="line">mode_cols &#x3D; [&#39;MSZoning&#39;, &#39;Electrical&#39;, &#39;KitchenQual&#39;, &#39;Exterior1st&#39;, &#39;Exterior2nd&#39;, &#39;SaleType&#39;]</span><br><span class="line">for col in mode_cols:</span><br><span class="line">    df[col] &#x3D; df[col].fillna(df[col].mode()[0])</span><br><span class="line">    </span><br><span class="line"># &#39;LotFrontage&#39; 有空缺時, 以同一區 (Neighborhood) 的 LotFrontage 中位數填補 (可以視為填補一種群聚編碼 )</span><br><span class="line">df[&quot;LotFrontage&quot;] &#x3D; df.groupby(&quot;Neighborhood&quot;)[&quot;LotFrontage&quot;].transform(lambda x: x.fillna(x.median()))</span><br><span class="line"></span><br><span class="line"># Utilities 參考資訊很少, 所以直接捨棄</span><br><span class="line">df &#x3D; df.drop([&#39;Utilities&#39;], axis&#x3D;1)</span><br><span class="line"></span><br><span class="line"># 做完各種補缺值, 確認一下有沒有遺漏</span><br><span class="line">na_check(df)</span><br></pre></td></tr></table></figure>
+
+<h4 id="做類別轉換-類別做LabelEncoding、數值轉類別"><a href="#做類別轉換-類別做LabelEncoding、數值轉類別" class="headerlink" title="做類別轉換(類別做LabelEncoding、數值轉類別)"></a>做類別轉換(類別做LabelEncoding、數值轉類別)</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 四個數值欄位, 因為相異值有限, 轉成文字</span><br><span class="line">label_cols &#x3D; [&#39;MSSubClass&#39;, &#39;OverallCond&#39;, &#39;YrSold&#39;, &#39;MoSold&#39;]</span><br><span class="line">for col in mode_cols:</span><br><span class="line">    df[col] &#x3D; df[col].astype(str)</span><br><span class="line">    </span><br><span class="line"># 相異值不太具有代表性的, 做標籤編碼</span><br><span class="line">cols &#x3D; (&#39;FireplaceQu&#39;, &#39;BsmtQual&#39;, &#39;BsmtCond&#39;, &#39;GarageQual&#39;, &#39;GarageCond&#39;, </span><br><span class="line">        &#39;ExterQual&#39;, &#39;ExterCond&#39;,&#39;HeatingQC&#39;, &#39;PoolQC&#39;, &#39;KitchenQual&#39;, &#39;BsmtFinType1&#39;, </span><br><span class="line">        &#39;BsmtFinType2&#39;, &#39;Functional&#39;, &#39;Fence&#39;, &#39;BsmtExposure&#39;, &#39;GarageFinish&#39;, &#39;LandSlope&#39;,</span><br><span class="line">        &#39;LotShape&#39;, &#39;PavedDrive&#39;, &#39;Street&#39;, &#39;Alley&#39;, &#39;CentralAir&#39;, &#39;MSSubClass&#39;, &#39;OverallCond&#39;, </span><br><span class="line">        &#39;YrSold&#39;, &#39;MoSold&#39;)</span><br><span class="line">for c in cols:</span><br><span class="line">    lbl &#x3D; LabelEncoder() </span><br><span class="line">    lbl.fit(list(df[c].values)) </span><br><span class="line">    df[c] &#x3D; lbl.transform(list(df[c].values))</span><br></pre></td></tr></table></figure>
+
+<h4 id="確定關聯性"><a href="#確定關聯性" class="headerlink" title="確定關聯性"></a>確定關聯性</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">correlations &#x3D; app_train.corr()[&#39;TARGET&#39;].sort_values()</span><br><span class="line"></span><br><span class="line"># 顯示相關係數最大 &#x2F; 最小的各15個欄位名稱</span><br><span class="line">print(&#39;Most Positive Correlations:\n&#39;, correlations.tail(15))</span><br><span class="line">print(&#39;\nMost Negative Correlations:\n&#39;, correlations.head(15))</span><br></pre></td></tr></table></figure>
+
+<h4 id="特徵組合"><a href="#特徵組合" class="headerlink" title="特徵組合"></a>特徵組合</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 由地下室面積 + 1樓面積 + 2樓面積, 計算總坪數特徵   </span><br><span class="line">df[&#39;TotalSF&#39;] &#x3D; df[&#39;TotalBsmtSF&#39;] + df[&#39;1stFlrSF&#39;] + df[&#39;2ndFlrSF&#39;]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 看看目前特徵工程的結果</span><br><span class="line">print(&#39;Shape df: &#123;&#125;&#39;.format(df.shape))</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+
+<h4 id="將剩下的類別型欄位做one-hot-encoding"><a href="#將剩下的類別型欄位做one-hot-encoding" class="headerlink" title="將剩下的類別型欄位做one hot encoding"></a>將剩下的類別型欄位做one hot encoding</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 把剩下少數重要的類別型欄位, 做獨熱編碼 (已變成數字的欄位, 會自動跳過)</span><br><span class="line">df &#x3D; pd.get_dummies(df)</span><br><span class="line">print(df.shape)</span><br></pre></td></tr></table></figure>
+
+<h3 id="建立模型"><a href="#建立模型" class="headerlink" title="建立模型"></a>建立模型</h3><h4 id="將做完特徵工程的資料轉回train-x-test-x"><a href="#將做完特徵工程的資料轉回train-x-test-x" class="headerlink" title="將做完特徵工程的資料轉回train_x, test_x"></a>將做完特徵工程的資料轉回train_x, test_x</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 將前述轉換完畢資料 df , 重新切成 train_X, test_X</span><br><span class="line">train_num &#x3D; train_Y.shape[0]</span><br><span class="line">train_X &#x3D; df[:train_num]</span><br><span class="line">test_X &#x3D; df[train_num:]</span><br></pre></td></tr></table></figure>
+
+<h4 id="載入模型"><a href="#載入模型" class="headerlink" title="載入模型"></a>載入模型</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 使用三種模型 : 線性迴歸 &#x2F; 梯度提升機 &#x2F; 隨機森林, 參數使用 Random Search 尋找</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor</span><br><span class="line">linear &#x3D; LinearRegression(normalize&#x3D;False, fit_intercept&#x3D;True, copy_X&#x3D;True)</span><br><span class="line">gdbt &#x3D; GradientBoostingRegressor(tol&#x3D;0.1, subsample&#x3D;0.37, n_estimators&#x3D;200, max_features&#x3D;20, </span><br><span class="line">                                 max_depth&#x3D;6, learning_rate&#x3D;0.03)</span><br><span class="line">rf &#x3D; RandomForestRegressor(n_estimators&#x3D;300, min_samples_split&#x3D;9, min_samples_leaf&#x3D;10, </span><br><span class="line">                           max_features&#x3D;&#39;sqrt&#39;, max_depth&#x3D;8, bootstrap&#x3D;False)</span><br></pre></td></tr></table></figure>
+
+<h4 id="開始預測，並存為csv檔"><a href="#開始預測，並存為csv檔" class="headerlink" title="開始預測，並存為csv檔"></a>開始預測，並存為csv檔</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 線性迴歸預測檔</span><br><span class="line">linear.fit(train_X, train_Y)</span><br><span class="line">linear_pred &#x3D; linear.predict(test_X)</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(linear_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_linear.csv&#39;, index&#x3D;False) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 梯度提升機預測檔 </span><br><span class="line">gdbt.fit(train_X, train_Y)</span><br><span class="line">gdbt_pred &#x3D; gdbt.predict(test_X)</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(gdbt_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_gdbt.csv&#39;, index&#x3D;False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 隨機森林預測檔</span><br><span class="line">rf.fit(train_X, train_Y)</span><br><span class="line">rf_pred &#x3D; rf.predict(test_X)</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(rf_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_rf.csv&#39;, index&#x3D;False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 混合泛化預測檔 (依 Kaggle 傳回分數調整比重, 越準確者比重越高, 依資料性質有所不同)</span><br><span class="line">blending_pred &#x3D; linear_pred*0.30 + gdbt_pred*0.67 + rf_pred*0.03</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(blending_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_blending.csv&#39;, index&#x3D;False)</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
     <title>均值編碼和平滑化</title>
     <url>/2020/06/09/%E5%9D%87%E5%80%BC%E7%B7%A8%E7%A2%BC%E5%92%8C%E5%B9%B3%E6%BB%91%E5%8C%96/</url>
     <content><![CDATA[<h1 id="均值編碼和平滑化"><a href="#均值編碼和平滑化" class="headerlink" title="均值編碼和平滑化"></a>均值編碼和平滑化</h1><h2 id="均值編碼-Mean-Encoding"><a href="#均值編碼-Mean-Encoding" class="headerlink" title="均值編碼 (Mean Encoding)"></a>均值編碼 (Mean Encoding)</h2><h3 id="什麼是均值編碼？"><a href="#什麼是均值編碼？" class="headerlink" title="什麼是均值編碼？"></a>什麼是均值編碼？</h3><p>使用目標值的平均值，取代原本的類別型特徵</p>
@@ -467,26 +687,6 @@
         <tag>EDA</tag>
         <tag>特徵工程</tag>
         <tag>類別型特徵處理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>為何建立需要dataframe</title>
-    <url>/2020/05/21/%E7%82%BA%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%9C%80%E8%A6%81dataframe/</url>
-    <content><![CDATA[<h1 id="為甚麼需要新建dataframe"><a href="#為甚麼需要新建dataframe" class="headerlink" title="為甚麼需要新建dataframe"></a>為甚麼需要新建dataframe</h1><ol>
-<li>需要將分析過程中產生的數據或結果儲存為結構性資料</li>
-<li>當資料過於複雜時，可簡化資料做程式測試</li>
-</ol>
-<h2 id="不同的資料有不同讀取⽅方式"><a href="#不同的資料有不同讀取⽅方式" class="headerlink" title="不同的資料有不同讀取⽅方式"></a>不同的資料有不同讀取⽅方式</h2><ul>
-<li>文字格式通常可以⽤ with open()</li>
-<li>圖像格式可以使⽤用 PIL(image), skimage 或是 cv2<br>CV2 的速度較快，但須注意讀入的格式為 BGR</li>
-<li>其他形式如 npy / pickle 可以儲存經過處理理後的資料</li>
-</ul>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
       </tags>
   </entry>
   <entry>
@@ -572,6 +772,62 @@ MinMaxScaler()</code></pre></li>
       <tags>
         <tag>機器學習馬拉松筆記</tag>
         <tag>特徵工程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>為何建立需要dataframe</title>
+    <url>/2020/05/21/%E7%82%BA%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%9C%80%E8%A6%81dataframe/</url>
+    <content><![CDATA[<h1 id="為甚麼需要新建dataframe"><a href="#為甚麼需要新建dataframe" class="headerlink" title="為甚麼需要新建dataframe"></a>為甚麼需要新建dataframe</h1><ol>
+<li>需要將分析過程中產生的數據或結果儲存為結構性資料</li>
+<li>當資料過於複雜時，可簡化資料做程式測試</li>
+</ol>
+<h2 id="不同的資料有不同讀取⽅方式"><a href="#不同的資料有不同讀取⽅方式" class="headerlink" title="不同的資料有不同讀取⽅方式"></a>不同的資料有不同讀取⽅方式</h2><ul>
+<li>文字格式通常可以⽤ with open()</li>
+<li>圖像格式可以使⽤用 PIL(image), skimage 或是 cv2<br>CV2 的速度較快，但須注意讀入的格式為 BGR</li>
+<li>其他形式如 npy / pickle 可以儲存經過處理理後的資料</li>
+</ul>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>機器如何學習?</title>
+    <url>/2020/06/19/%E6%A9%9F%E5%99%A8%E5%A6%82%E4%BD%95%E5%AD%B8%E7%BF%92/</url>
+    <content><![CDATA[<h1 id="機器的學習可分為3個步驟"><a href="#機器的學習可分為3個步驟" class="headerlink" title="機器的學習可分為3個步驟"></a>機器的學習可分為3個步驟</h1><ol>
+<li>定義好模型 (可以是線性回歸、決策樹、神經網路路等等)</li>
+<li>評估模型的好壞</li>
+<li>找出讓訓練目標最佳的模型參數</li>
+</ol>
+<h2 id="定義模型"><a href="#定義模型" class="headerlink" title="定義模型"></a>定義模型</h2><p>選擇一個適合我們數據組的模型。當我們輸入⼀個 x 進到模型中，不同參數的模型就會產生不同的 ŷ</p>
+<h2 id="評估模型的好壞"><a href="#評估模型的好壞" class="headerlink" title="評估模型的好壞"></a>評估模型的好壞</h2><p>定義⼀個目標函數 (Objective function) 也可稱作損失函數 (Loss function)，來衡量模型的好壞</p>
+<p>如線性回歸模型我們可以使用均方差 (mean square error) 來衡量<br>$$MSE = \frac{1}{n} \sum_{i=1}^n (y_i - ŷ_i)^2$$</p>
+<p>Loss 越大，代表這組參數的模型預測出的 ŷ 越不準，也代表不應該選這組參數的模型</p>
+<h2 id="找出讓訓練目標最佳的模型參數"><a href="#找出讓訓練目標最佳的模型參數" class="headerlink" title="找出讓訓練目標最佳的模型參數"></a>找出讓訓練目標最佳的模型參數</h2><p>使用像是梯度下降 (Gradient Descent)、增量訓練 (Additive Training) 等方式找出一組參數，讓模型產生的 ŷ 與真正的 y 很接近</p>
+<h1 id="過擬合-over-fitting"><a href="#過擬合-over-fitting" class="headerlink" title="過擬合 (over-fitting)"></a>過擬合 (over-fitting)</h1><p>過擬合代表模型可能學習到資料中的噪音，導致在實際應用時預測失準</p>
+<p>可以通過 <strong>學習曲線 Learning curve</strong> ，來觀察是否已經過擬合了</p>
+<h2 id="如何解決過擬合-欠擬合"><a href="#如何解決過擬合-欠擬合" class="headerlink" title="如何解決過擬合/欠擬合"></a>如何解決過擬合/欠擬合</h2><p>過擬合</p>
+<ul>
+<li>增加資料量</li>
+<li>降低模型複雜度</li>
+<li>使用正規化 (Regularization)</li>
+</ul>
+<p>欠擬合</p>
+<ul>
+<li>增加模型複雜度</li>
+<li>減輕或不使用正規化</li>
+</ul>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>理解機器學習中很重要的 Bias/Variance tradeoff的意義為何<br><a href="http://bangqu.com/yjB839.html" target="_blank" rel="noopener">http://bangqu.com/yjB839.html</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>模型選擇</tag>
       </tags>
   </entry>
   <entry>
@@ -690,42 +946,6 @@ MinMaxScaler()</code></pre></li>
       </tags>
   </entry>
   <entry>
-    <title>機器如何學習?</title>
-    <url>/2020/06/19/%E6%A9%9F%E5%99%A8%E5%A6%82%E4%BD%95%E5%AD%B8%E7%BF%92/</url>
-    <content><![CDATA[<h1 id="機器的學習可分為3個步驟"><a href="#機器的學習可分為3個步驟" class="headerlink" title="機器的學習可分為3個步驟"></a>機器的學習可分為3個步驟</h1><ol>
-<li>定義好模型 (可以是線性回歸、決策樹、神經網路路等等)</li>
-<li>評估模型的好壞</li>
-<li>找出讓訓練目標最佳的模型參數</li>
-</ol>
-<h2 id="定義模型"><a href="#定義模型" class="headerlink" title="定義模型"></a>定義模型</h2><p>選擇一個適合我們數據組的模型。當我們輸入⼀個 x 進到模型中，不同參數的模型就會產生不同的 ŷ</p>
-<h2 id="評估模型的好壞"><a href="#評估模型的好壞" class="headerlink" title="評估模型的好壞"></a>評估模型的好壞</h2><p>定義⼀個目標函數 (Objective function) 也可稱作損失函數 (Loss function)，來衡量模型的好壞</p>
-<p>如線性回歸模型我們可以使用均方差 (mean square error) 來衡量<br>$$MSE = \frac{1}{n} \sum_{i=1}^n (y_i - ŷ_i)^2$$</p>
-<p>Loss 越大，代表這組參數的模型預測出的 ŷ 越不準，也代表不應該選這組參數的模型</p>
-<h2 id="找出讓訓練目標最佳的模型參數"><a href="#找出讓訓練目標最佳的模型參數" class="headerlink" title="找出讓訓練目標最佳的模型參數"></a>找出讓訓練目標最佳的模型參數</h2><p>使用像是梯度下降 (Gradient Descent)、增量訓練 (Additive Training) 等方式找出一組參數，讓模型產生的 ŷ 與真正的 y 很接近</p>
-<h1 id="過擬合-over-fitting"><a href="#過擬合-over-fitting" class="headerlink" title="過擬合 (over-fitting)"></a>過擬合 (over-fitting)</h1><p>過擬合代表模型可能學習到資料中的噪音，導致在實際應用時預測失準</p>
-<p>可以通過 <strong>學習曲線 Learning curve</strong> ，來觀察是否已經過擬合了</p>
-<h2 id="如何解決過擬合-欠擬合"><a href="#如何解決過擬合-欠擬合" class="headerlink" title="如何解決過擬合/欠擬合"></a>如何解決過擬合/欠擬合</h2><p>過擬合</p>
-<ul>
-<li>增加資料量</li>
-<li>降低模型複雜度</li>
-<li>使用正規化 (Regularization)</li>
-</ul>
-<p>欠擬合</p>
-<ul>
-<li>增加模型複雜度</li>
-<li>減輕或不使用正規化</li>
-</ul>
-<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>理解機器學習中很重要的 Bias/Variance tradeoff的意義為何<br><a href="http://bangqu.com/yjB839.html" target="_blank" rel="noopener">http://bangqu.com/yjB839.html</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>模型選擇</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>訓練/測試集切分</title>
     <url>/2020/06/20/%E8%A8%93%E7%B7%B4-%E6%B8%AC%E8%A9%A6%E9%9B%86%E5%88%87%E5%88%86/</url>
     <content><![CDATA[<h1 id="為何需要切分訓練集跟測試集"><a href="#為何需要切分訓練集跟測試集" class="headerlink" title="為何需要切分訓練集跟測試集"></a>為何需要切分訓練集跟測試集</h1><p>若將手上所有資料都送進模型訓練，這樣就沒有額外資料來評估模型訓練情形！<br>且為了避免過擬合，需透過驗證/測試集進行評估</p>
@@ -738,27 +958,6 @@ MinMaxScaler()</code></pre></li>
       <tags>
         <tag>機器學習馬拉松筆記</tag>
         <tag>模型選擇</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>資料中常見的特徵類型</title>
-    <url>/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/</url>
-    <content><![CDATA[<h2 id="常見兩大類型-數值型-numerical-data、類別型-categorical-data"><a href="#常見兩大類型-數值型-numerical-data、類別型-categorical-data" class="headerlink" title="常見兩大類型(數值型 numerical data、類別型 categorical data )"></a>常見兩大類型(數值型 numerical data、類別型 categorical data )</h2><h3 id="數值型特徵-有不同轉換方式，函數-條件式都可以"><a href="#數值型特徵-有不同轉換方式，函數-條件式都可以" class="headerlink" title="數值型特徵 : 有不同轉換方式，函數 / 條件式都可以"></a>數值型特徵 : 有不同轉換方式，函數 / 條件式都可以</h3><p>最容易轉成特徵，但需要注意很多細節</p>
-<ul>
-<li>e.g.(函數)<br>數值： 20坪<br>函數： 一坪20萬</li>
-<li>e.g.(條件式)<br>年齡： 30<br>條件： 若 50以上：0點，30～50：1點，30以下：2點</li>
-</ul>
-<h3 id="類別型特徵-通常一種類別對應一種分數"><a href="#類別型特徵-通常一種類別對應一種分數" class="headerlink" title="類別型特徵 : 通常一種類別對應一種分數"></a>類別型特徵 : 通常一種類別對應一種分數</h3><p>通常一種類別對應一種分數，問題在如何對應</p>
-<h2 id="其他類型"><a href="#其他類型" class="headerlink" title="其他類型"></a>其他類型</h2><h3 id="二元特徵"><a href="#二元特徵" class="headerlink" title="二元特徵"></a>二元特徵</h3><p>僅有True(1)跟False(0)兩特徵<br>可作為數值、亦可作為類別</p>
-<h3 id="排序型特徵"><a href="#排序型特徵" class="headerlink" title="排序型特徵"></a>排序型特徵</h3><p>如名次/百分等級，有大小關係，但並非連續數字<br>通常做為數值型，因做為類別型會失去排序資料</p>
-<h3 id="時間型特徵"><a href="#時間型特徵" class="headerlink" title="時間型特徵"></a>時間型特徵</h3><p>e.g. 2020/05/23 20:49:00<br>有週期性<br>雖然時間型特徵可當作數值型特徵或類別型特徵，但都不適合</p>
-<h2 id="其他資料類別可參考"><a href="#其他資料類別可參考" class="headerlink" title="其他資料類別可參考:"></a>其他資料類別可參考:</h2><p>Built-in Types<br><a href="https://docs.python.org/3/library/stdtypes.html" target="_blank" rel="noopener">https://docs.python.org/3/library/stdtypes.html</a><br>Python 3 Tutorial 第二堂（2）數值與字串型態<br><a href="https://openhome.cc/Gossip/CodeData/PythonTutorial/NumericStringPy3.html" target="_blank" rel="noopener">https://openhome.cc/Gossip/CodeData/PythonTutorial/NumericStringPy3.html</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
       </tags>
   </entry>
   <entry>
@@ -814,6 +1013,27 @@ MinMaxScaler()</code></pre></li>
       </tags>
   </entry>
   <entry>
+    <title>資料中常見的特徵類型</title>
+    <url>/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/</url>
+    <content><![CDATA[<h2 id="常見兩大類型-數值型-numerical-data、類別型-categorical-data"><a href="#常見兩大類型-數值型-numerical-data、類別型-categorical-data" class="headerlink" title="常見兩大類型(數值型 numerical data、類別型 categorical data )"></a>常見兩大類型(數值型 numerical data、類別型 categorical data )</h2><h3 id="數值型特徵-有不同轉換方式，函數-條件式都可以"><a href="#數值型特徵-有不同轉換方式，函數-條件式都可以" class="headerlink" title="數值型特徵 : 有不同轉換方式，函數 / 條件式都可以"></a>數值型特徵 : 有不同轉換方式，函數 / 條件式都可以</h3><p>最容易轉成特徵，但需要注意很多細節</p>
+<ul>
+<li>e.g.(函數)<br>數值： 20坪<br>函數： 一坪20萬</li>
+<li>e.g.(條件式)<br>年齡： 30<br>條件： 若 50以上：0點，30～50：1點，30以下：2點</li>
+</ul>
+<h3 id="類別型特徵-通常一種類別對應一種分數"><a href="#類別型特徵-通常一種類別對應一種分數" class="headerlink" title="類別型特徵 : 通常一種類別對應一種分數"></a>類別型特徵 : 通常一種類別對應一種分數</h3><p>通常一種類別對應一種分數，問題在如何對應</p>
+<h2 id="其他類型"><a href="#其他類型" class="headerlink" title="其他類型"></a>其他類型</h2><h3 id="二元特徵"><a href="#二元特徵" class="headerlink" title="二元特徵"></a>二元特徵</h3><p>僅有True(1)跟False(0)兩特徵<br>可作為數值、亦可作為類別</p>
+<h3 id="排序型特徵"><a href="#排序型特徵" class="headerlink" title="排序型特徵"></a>排序型特徵</h3><p>如名次/百分等級，有大小關係，但並非連續數字<br>通常做為數值型，因做為類別型會失去排序資料</p>
+<h3 id="時間型特徵"><a href="#時間型特徵" class="headerlink" title="時間型特徵"></a>時間型特徵</h3><p>e.g. 2020/05/23 20:49:00<br>有週期性<br>雖然時間型特徵可當作數值型特徵或類別型特徵，但都不適合</p>
+<h2 id="其他資料類別可參考"><a href="#其他資料類別可參考" class="headerlink" title="其他資料類別可參考:"></a>其他資料類別可參考:</h2><p>Built-in Types<br><a href="https://docs.python.org/3/library/stdtypes.html" target="_blank" rel="noopener">https://docs.python.org/3/library/stdtypes.html</a><br>Python 3 Tutorial 第二堂（2）數值與字串型態<br><a href="https://openhome.cc/Gossip/CodeData/PythonTutorial/NumericStringPy3.html" target="_blank" rel="noopener">https://openhome.cc/Gossip/CodeData/PythonTutorial/NumericStringPy3.html</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>資料平滑處理</title>
     <url>/2020/05/24/%E8%B3%87%E6%96%99%E5%B9%B3%E6%BB%91%E8%99%95%E7%90%86/</url>
     <content><![CDATA[<h1 id="資料平滑處理-—-log1p-和exmp1"><a href="#資料平滑處理-—-log1p-和exmp1" class="headerlink" title="資料平滑處理 —- log1p()和exmp1()"></a>資料平滑處理 —- log1p()和exmp1()</h1><p><a href="https://numpy.org/doc/1.18/reference/generated/numpy.log1p.html" target="_blank" rel="noopener">log1p() document</a><br><a href="https://numpy.org/doc/1.18/reference/generated/numpy.expm1.html#numpy.expm1" target="_blank" rel="noopener">exmp1() document</a></p>
@@ -833,35 +1053,6 @@ MinMaxScaler()</code></pre></li>
       </categories>
       <tags>
         <tag>機器學習馬拉松筆記</tag>
-        <tag>特徵工程</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>離散化連續數值</title>
-    <url>/2020/06/01/%E9%9B%A2%E6%95%A3%E5%8C%96%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC/</url>
-    <content><![CDATA[<h1 id="離散化連續數值的意義以及方法"><a href="#離散化連續數值的意義以及方法" class="headerlink" title="離散化連續數值的意義以及方法"></a>離散化連續數值的意義以及方法</h1><h2 id="離散化的目的"><a href="#離散化的目的" class="headerlink" title="離散化的目的"></a>離散化的目的</h2><ul>
-<li>簡化model(減少可能性)<br>原年齡有0～100歲的可能，若以十歲間距離散，就剩下10種可能</li>
-<li>變數較穩定<br>若有異常值(如年齡=300)可直接設超過60為1，其他為0，降低他的影響力</li>
-</ul>
-<h3 id="關鍵點"><a href="#關鍵點" class="headerlink" title="關鍵點"></a>關鍵點</h3><ul>
-<li>組的數量<br>以年齡為例，並設10歲為間距，即可分成10組</li>
-<li>組的寬度<br>一組的寬度是 10 歲</li>
-</ul>
-<h2 id="離散化的方法"><a href="#離散化的方法" class="headerlink" title="離散化的方法"></a>離散化的方法</h2><p>主要的方法</p>
-<ul>
-<li>等寬劃分(pd.cut())：按照相同寬度將資料分成幾等份。缺點是受到異異常值的影響比較⼤大。</li>
-<li>等頻劃分(pd.qcut())：將資料分成幾等份，每等份資料裡面的個數是一樣的。</li>
-<li>聚類劃分：使⽤用<a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/400018/" target="_blank" rel="noopener">聚類演算法</a>將資料聚成幾類，每一個類為一個劃分。</li>
-</ul>
-<p><a href="https://medium.com/@morris_tai/pandas%E7%9A%84cut-qcut%E5%87%BD%E6%95%B8-93c244e34cfc" target="_blank" rel="noopener">cut &amp; qcut</a></p>
-<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>在什么情况下将连续的特征离散化之后可以获得更好的效果？<br><a href="https://www.zhihu.com/question/31989952" target="_blank" rel="noopener">https://www.zhihu.com/question/31989952</a></p>
-]]></content>
-      <categories>
-        <category>程式筆記</category>
-      </categories>
-      <tags>
-        <tag>機器學習馬拉松筆記</tag>
-        <tag>EDA</tag>
         <tag>特徵工程</tag>
       </tags>
   </entry>
@@ -907,6 +1098,102 @@ MinMaxScaler()</code></pre></li>
         <tag>EDA</tag>
         <tag>特徵工程</tag>
         <tag>類別型特徵處理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>超參數調整</title>
+    <url>/2020/06/30/%E8%B6%85%EF%A5%AB%E6%95%B8%E8%AA%BF%E6%95%B4/</url>
+    <content><![CDATA[<h1 id="超參數調整-hyper-parameter-optimization"><a href="#超參數調整-hyper-parameter-optimization" class="headerlink" title="超參數調整(hyper-parameter optimization)"></a>超參數調整(hyper-parameter optimization)</h1><p>之前接觸到的所有模型都有 超參數 需要設置，諸如</p>
+<ul>
+<li>LASSO，Ridge: α 的大小</li>
+<li>決策樹：樹的深度、節點最小樣本數</li>
+<li>隨機森林：樹的數量  </li>
+</ul>
+<p>然而，雖然 超參數 會影響結果，但提升的效果有限，<br>將注意力放在資料清理與特徵工程才能最有效的提升準確率，而調整參數只是一個加分的工具而已</p>
+<h2 id="超參數調整方法"><a href="#超參數調整方法" class="headerlink" title="超參數調整方法"></a>超參數調整方法</h2><ul>
+<li>窮舉法 (Grid Search)：直接指定超參數的組合範圍，每一組參數都訓練完成，再根據驗證集 (validation) 的結果選擇最佳參數</li>
+<li>隨機搜尋 (Random Search)：指定超參數的範圍，用均勻分布進行參數抽樣，用抽到的參數進行訓練，再根據驗證集的結果選擇最佳參數</li>
+</ul>
+<h3 id="隨機搜尋通常都能獲得更佳的結果-更多"><a href="#隨機搜尋通常都能獲得更佳的結果-更多" class="headerlink" title="隨機搜尋通常都能獲得更佳的結果 (更多)"></a>隨機搜尋通常都能獲得更佳的結果 (<a href="https://medium.com/rants-on-machine-learning/smarter-parameter-sweeps-or-why-grid-search-is-plain-stupid-c17d97a0e881" target="_blank" rel="noopener">更多</a>)</h3><p>在大多數情況下，目標函數的顛簸表面在所有維度上都不會那麼顛簸。有些參數對cost function的影響要比其他參數小得多，<strong>如果每個參數的重要性已知，則可以使用在grid seach每個參數選取值的數量中</strong>  但通常來說不是這樣的狀況。無論如何，<strong>只要嘗試相同的次數，僅使用random search可以探索每個參數更多的值</strong>， 進而帶來更好的結果。</p>
+<h2 id="超參數調整步驟"><a href="#超參數調整步驟" class="headerlink" title="超參數調整步驟"></a>超參數調整步驟</h2><ol>
+<li>先將資料切分為訓練/測試集，測試集保留不使用</li>
+<li>將剛切分好的訓練集，再使用Cross-validation 切分 K 份訓練/驗證集</li>
+<li>用 grid/random search 的超參數進行訓練與評估</li>
+<li>選出最佳的參數，用該參數與全部訓練集建模</li>
+<li>最後使用測試集評估結果</li>
+</ol>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>Scanning hyperspace: how to tune machine learning models<br><a href="https://cambridgecoding.wordpress.com/2016/04/03/scanning-hyperspace-how-to-tune-machine-learning-models/" target="_blank" rel="noopener">https://cambridgecoding.wordpress.com/2016/04/03/scanning-hyperspace-how-to-tune-machine-learning-models/</a><br>Hyperparameter Tuning the Random Forest in Python<br><a href="https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74" target="_blank" rel="noopener">https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>集成Ensemble</title>
+    <url>/2020/07/02/%E9%9B%86%E6%88%90Ensemble/</url>
+    <content><![CDATA[<h1 id="什麼是集成-ensemble"><a href="#什麼是集成-ensemble" class="headerlink" title="什麼是集成(ensemble)"></a>什麼是集成(ensemble)</h1><p>集成是使⽤不同⽅式，結合多個/多種不同分類器，作為綜合預測的做法統稱。<br>通過對模型截長補短的方式，來取得更好的分數</p>
+<p>其中⼜分為 <strong>資料⾯的集成</strong> : 如裝袋法(Bagging) / 提升法(Boosting)<br>以及 <strong>模型與特徵的集成</strong> : 如混合泛化(Blending) / 堆疊泛化(Stacking)</p>
+<h2 id="資料⾯集成-裝袋法-Bagging"><a href="#資料⾯集成-裝袋法-Bagging" class="headerlink" title="資料⾯集成 : 裝袋法 ( Bagging )"></a>資料⾯集成 : 裝袋法 ( Bagging )</h2><p>裝袋法顧名思義，是將資料放入袋中抽取，每回合結束後全部放回袋中重抽<br>再搭配弱分類器取平均/多數決結果，最有名的就是前⾯學過的 <strong>隨機森林(Random Forest)</strong></p>
+<h2 id="資料⾯集成-提升法-Boosting"><a href="#資料⾯集成-提升法-Boosting" class="headerlink" title="資料⾯集成 : 提升法 ( Boosting )"></a>資料⾯集成 : 提升法 ( Boosting )</h2><p>提升法則是由之前模型的預測結果，去改變資料被抽到的權重或⽬標值<br>將錯判資料被抽中的機率放⼤，正確的縮⼩，就是 <strong>⾃適應提升 (AdaBoost,Adaptive Boosting)</strong><br>如果是依照估計誤差的殘差項調整新⽬標值，則就是 <strong>梯度提升機 (GradientBoosting Machine)</strong> 的作法，只是梯度提升機還加上⽤梯度來選擇決策樹分⽀</p>
+<h2 id="資料集成-v-s-模型與特徵集成"><a href="#資料集成-v-s-模型與特徵集成" class="headerlink" title="資料集成 v.s. 模型與特徵集成"></a>資料集成 v.s. 模型與特徵集成</h2><p>值得一提的是雖然兩者都稱為集成，其實適⽤範圍差異很⼤，通常不會⼀起提及<br>但為了避免混淆，在這邊將兩者做個對比</p>
+<h3 id="資料集成"><a href="#資料集成" class="headerlink" title="資料集成"></a>資料集成</h3><p>Bagging / Boosting</p>
+<ul>
+<li>使⽤不同訓練資料 + 同⼀種模型，多次估計的結果合成最終預測</li>
+</ul>
+<h3 id="模型與特徵集成"><a href="#模型與特徵集成" class="headerlink" title="模型與特徵集成"></a>模型與特徵集成</h3><p>Voting / Blending / Stacking</p>
+<ul>
+<li>使⽤同⼀資料 + 不同模型，合成出不同預測結果</li>
+</ul>
+<h2 id="混合泛化-Blending"><a href="#混合泛化-Blending" class="headerlink" title="混合泛化 (Blending)"></a>混合泛化 (Blending)</h2><p>其實混合泛化非常單純，就是將不同模型的預測值 <strong>加權合成</strong> ，權重和為 1<br>如果取預測的平均 or ⼀⼈⼀票多數決(每個模型權重相同)，則⼜稱為 投票泛化(Voting)<br>混合泛化提升預測⼒的原因是基於模型差異度⼤，在預測細節上能互補，因此預測模型只要各⾃調參優化過且原理不同，通常都能使⽤混合泛化集成</p>
+<h3 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h3><p>雖然blending可以有效的提升成績，然而 Blending 的前提是 : 個別單模效果都很好(有調參)並且模型差異⼤，<br>其中單模要好尤其重要，如果單模效果差異太⼤，Blending 的效果提升就相當有限</p>
+<h3 id="延伸："><a href="#延伸：" class="headerlink" title="延伸："></a>延伸：</h3><p>林軒⽥老師公開課程中有更詳細的解說<br><a href="https://www.youtube.com/watch?v=mjUKsp0MvMI&amp;list=PLXVfgk9fNX2IQOYPmqjqWsNUFl2kpk1U2&amp;index=26" target="_blank" rel="noopener">https://www.youtube.com/watch?v=mjUKsp0MvMI&amp;list=PLXVfgk9fNX2IQOYPmqjqWsNUFl2kpk1U2&amp;index=26</a></p>
+<h2 id="堆疊泛化-Stacking-原始paper"><a href="#堆疊泛化-Stacking-原始paper" class="headerlink" title="堆疊泛化(Stacking)  原始paper"></a>堆疊泛化(Stacking)  <a href="http://www.machine-learning.martinsewell.com/ensembles/stacking/Wolpert1992.pdf" target="_blank" rel="noopener">原始paper</a></h2><h3 id="相對於-Blending-的改良"><a href="#相對於-Blending-的改良" class="headerlink" title="相對於 Blending 的改良"></a>相對於 Blending 的改良</h3><p>不只將預測結果混合，而是使用預測結果當新特徵<br>更進一步的運用了資料輔助集成，但也使得 Stacking 複雜許多</p>
+<h3 id="Stacking-的設計挑戰-訓練測試的不可重複性"><a href="#Stacking-的設計挑戰-訓練測試的不可重複性" class="headerlink" title="Stacking 的設計挑戰 : 訓練測試的不可重複性"></a>Stacking 的設計挑戰 : 訓練測試的不可重複性</h3><p>Stacking 主要是把模型當作下一階的特徵編碼器來使用，但是待編碼資料與用來訓練編碼器的資料不可重複 (訓練測試的不可重複性)<br>若將訓練資料切成兩組 :<br>待編碼資料太少，下一層的資料筆數就會太少，<br>訓練編碼器的資料太少，則編碼器的強度就會不夠，</p>
+<p>這樣的困境該如何解決呢?</p>
+<h4 id="巧妙的-K-Fold-拆分"><a href="#巧妙的-K-Fold-拆分" class="headerlink" title="巧妙的 K-Fold 拆分"></a>巧妙的 K-Fold 拆分</h4><p>Stacking 最終採取 將資料拆成 K 份，每份含 1/K 的資料，要編碼時，使用其他的 K-1 組資料訓練模型/編碼器。<br>這樣資料就沒有變少，K 夠大時 編碼器的強韌性也夠，唯一的問題就是計算時間隨著 K 變大而變長，但 K 可以調整，且相對深度學習所需的時間來說，這樣的時間長度也還算可接受</p>
+<h3 id="常見問題"><a href="#常見問題" class="headerlink" title="常見問題"></a>常見問題</h3><p>Q1：能不能新舊特徵一起用，再用模型預測呢?<br>A1：可以，這裡其實有個有趣的思考，也就是 : 這樣不就可以一直一直無限增加特徵下去?<br>這樣後面的特徵還有意義嗎? 不會 Overfitting 嗎?…<br>其實加太多次是會 Overfitting 的，因此必須謹慎切分 Fold 以及新增次數</p>
+<p>Q2：新的特徵，能不能再搭配模型創造特徵，第三層第四層…⼀一直下去呢?<br>A2：可以，但是每多一層，模型會越複雜 : 因此泛化(又稱為魯棒性)會做得更好，精準度也會下降，<br>所以除非第一層的單模調得很好，否則兩三層就不需要繼續往下了了</p>
+<p>Q3：既然同層新特徵會 Overfitting，層數加深會增加泛化，兩者同時用是不是就能把缺點互相抵銷呢?<br>A3：可以!! 而且這正是 Stacking 最有趣的地方，但真正實踐時，程式複雜，運算時間又要再往上一個量級，之前曾有⼤大神寫過 StackNet實現這個想法，用JVM 加速運算，但實際上使用時調參數困難，後繼使用的人就少了</p>
+<h3 id="注意事項-1"><a href="#注意事項-1" class="headerlink" title="注意事項"></a>注意事項</h3><p>「分類問題」的 Stacking 要注意兩件事：記得加上 use_probas=True(輸出特徵才會是機率值)，<br>以及輸出的總特徵數會是：模型數量*分類數量(回歸問題特徵數=模型數量)</p>
+<h3 id="相關"><a href="#相關" class="headerlink" title="相關"></a>相關</h3><p>StackingCVClassifier    - mlxtrend 官⽅方網站<br><a href="http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/" target="_blank" rel="noopener">http://rasbt.github.io/mlxtend/user_guide/classifier/StackingCVClassifier/</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>離散化連續數值</title>
+    <url>/2020/06/01/%E9%9B%A2%E6%95%A3%E5%8C%96%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC/</url>
+    <content><![CDATA[<h1 id="離散化連續數值的意義以及方法"><a href="#離散化連續數值的意義以及方法" class="headerlink" title="離散化連續數值的意義以及方法"></a>離散化連續數值的意義以及方法</h1><h2 id="離散化的目的"><a href="#離散化的目的" class="headerlink" title="離散化的目的"></a>離散化的目的</h2><ul>
+<li>簡化model(減少可能性)<br>原年齡有0～100歲的可能，若以十歲間距離散，就剩下10種可能</li>
+<li>變數較穩定<br>若有異常值(如年齡=300)可直接設超過60為1，其他為0，降低他的影響力</li>
+</ul>
+<h3 id="關鍵點"><a href="#關鍵點" class="headerlink" title="關鍵點"></a>關鍵點</h3><ul>
+<li>組的數量<br>以年齡為例，並設10歲為間距，即可分成10組</li>
+<li>組的寬度<br>一組的寬度是 10 歲</li>
+</ul>
+<h2 id="離散化的方法"><a href="#離散化的方法" class="headerlink" title="離散化的方法"></a>離散化的方法</h2><p>主要的方法</p>
+<ul>
+<li>等寬劃分(pd.cut())：按照相同寬度將資料分成幾等份。缺點是受到異異常值的影響比較⼤大。</li>
+<li>等頻劃分(pd.qcut())：將資料分成幾等份，每等份資料裡面的個數是一樣的。</li>
+<li>聚類劃分：使⽤用<a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/400018/" target="_blank" rel="noopener">聚類演算法</a>將資料聚成幾類，每一個類為一個劃分。</li>
+</ul>
+<p><a href="https://medium.com/@morris_tai/pandas%E7%9A%84cut-qcut%E5%87%BD%E6%95%B8-93c244e34cfc" target="_blank" rel="noopener">cut &amp; qcut</a></p>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>在什么情况下将连续的特征离散化之后可以获得更好的效果？<br><a href="https://www.zhihu.com/question/31989952" target="_blank" rel="noopener">https://www.zhihu.com/question/31989952</a></p>
+]]></content>
+      <categories>
+        <category>程式筆記</category>
+      </categories>
+      <tags>
+        <tag>機器學習馬拉松筆記</tag>
+        <tag>EDA</tag>
+        <tag>特徵工程</tag>
       </tags>
   </entry>
   <entry>
