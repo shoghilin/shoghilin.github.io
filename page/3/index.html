@@ -263,6 +263,769 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/10/%E6%99%82%E9%96%93%E5%9E%8B%E7%89%B9%E5%BE%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/10/%E6%99%82%E9%96%93%E5%9E%8B%E7%89%B9%E5%BE%B5/" itemprop="url">時間型特徵</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-10T12:31:09+08:00">
+                2020-06-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
+                    <span itemprop="name">程式筆記</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="時間特徵分解"><a href="#時間特徵分解" class="headerlink" title="時間特徵分解"></a>時間特徵分解</h1><p>時間型特徵最常用的是特徵分解 - 拆解成年/月/日/時/分/秒的分類值</p>
+<h2 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h2><p>某些欄(例 : 分、秒)與目標值的關係很低</p>
+<h2 id="週期循環特徵"><a href="#週期循環特徵" class="headerlink" title="週期循環特徵"></a>週期循環特徵</h2><p>若要改善上述缺點可以利用時間的週期性來合成特徵，也就是 <strong>週期循環特徵</strong></p>
+<h3 id="什麼是週期循環特徵"><a href="#什麼是週期循環特徵" class="headerlink" title="什麼是週期循環特徵"></a>什麼是週期循環特徵</h3><p>週期循環特徵是將時間 <strong>循環</strong> 特性改成特徵方式<br>設計關鍵在於首尾相接, 因此我們需要使⽤用 sin /cos 等週期函數轉換</p>
+<p>例如 :<br>年週期 (正 : 冷 / 負 : 熱) = cos((月/6 + 日/180 )π)<br>周週期 (正 : 精神飽滿 / 負 : 疲倦) =  sin((星期幾/3.5 + ⼩時/84 )π)<br>⽇週期 (正 : 精神飽滿 / 負 : 疲倦) = sin((⼩時/12 + 分/720 + 秒/43200 )π)</p>
+<h3 id="常見的週期循環特徵"><a href="#常見的週期循環特徵" class="headerlink" title="常見的週期循環特徵"></a>常見的週期循環特徵</h3><p>常見的週期循環特徵有 - 年週期(季節) / 周期(例假日) /日週期(日夜與生活作息),<br>要注意的是最高與最低點的設置</p>
+<h2 id="延伸："><a href="#延伸：" class="headerlink" title="延伸："></a>延伸：</h2><p>Python-基础-时间日期处理小结<br><a href="http://www.wklken.me/posts/2015/03/03/python-base-datetime.html" target="_blank" rel="noopener">http://www.wklken.me/posts/2015/03/03/python-base-datetime.html</a><br>python document<br><a href="https://docs.python.org/3/library/datetime.html" target="_blank" rel="noopener">https://docs.python.org/3/library/datetime.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/09/%E5%9D%87%E5%80%BC%E7%B7%A8%E7%A2%BC%E5%92%8C%E5%B9%B3%E6%BB%91%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/09/%E5%9D%87%E5%80%BC%E7%B7%A8%E7%A2%BC%E5%92%8C%E5%B9%B3%E6%BB%91%E5%8C%96/" itemprop="url">均值編碼和平滑化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-09T12:05:10+08:00">
+                2020-06-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
+                    <span itemprop="name">程式筆記</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="均值編碼和平滑化"><a href="#均值編碼和平滑化" class="headerlink" title="均值編碼和平滑化"></a>均值編碼和平滑化</h1><h2 id="均值編碼-Mean-Encoding"><a href="#均值編碼-Mean-Encoding" class="headerlink" title="均值編碼 (Mean Encoding)"></a>均值編碼 (Mean Encoding)</h2><h3 id="什麼是均值編碼？"><a href="#什麼是均值編碼？" class="headerlink" title="什麼是均值編碼？"></a>什麼是均值編碼？</h3><p>使用目標值的平均值，取代原本的類別型特徵</p>
+<h3 id="甚麼時候使用"><a href="#甚麼時候使用" class="headerlink" title="甚麼時候使用"></a>甚麼時候使用</h3><p>如果類別特徵看起來與目標值有顯著相關，那麼均值編碼便是一個不錯的選擇</p>
+<h3 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h3><p>然而均值編碼的缺點是如果交易樣本非常少, 且剛好抽到極端值, 平均結果可能會有誤差很大。<br>如：<br>各籃球隊中鋒身高有{180,175,220,200,210}，然而若是抽到175，並以此作均值編碼，便會產生極大誤差</p>
+<h4 id="怎麼解決呢"><a href="#怎麼解決呢" class="headerlink" title="怎麼解決呢"></a>怎麼解決呢</h4><p>若要解決這個缺點均值編碼還需要考慮紀錄筆數, 以當作可靠度的參考，也就是<strong>平滑化 (Smoothing)</strong></p>
+<p>其中一種方式如下：<br>$$新類別均值 = \frac{原類別平均 * 類別樣本數 + 全部的總平均 * 調整因子}{類別樣本數 + 調整因⼦子}$$<br>調整因子用來調整平滑化的程度，依總樣本數調整</p>
+<p>當平均值的可靠度低時, 我們會傾向相信全部的總平均<br>當平均值的可靠度⾼時, 我們會傾向相信類別的平均<br>依照紀錄筆數, 在這兩者間取折衷</p>
+<h3 id="需要注意"><a href="#需要注意" class="headerlink" title="需要注意"></a>需要注意</h3><p>當使用均值編碼時，非常容易造成overfitting，即便使用平滑化能夠修正，但實際效果有限。<br>因此仍須 <strong>經過檢驗</strong> 後再決定是否該使用均值編碼</p>
+<p>延伸：<br>平均数编码：针对高基数定性特征（类别特征）的数据预处理/特征工程<br><a href="https://zhuanlan.zhihu.com/p/26308272" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/26308272</a></p>
+<h1 id="計數編碼-雜湊編碼"><a href="#計數編碼-雜湊編碼" class="headerlink" title="計數編碼/雜湊編碼"></a>計數編碼/雜湊編碼</h1><h2 id="計數編碼-Counting"><a href="#計數編碼-Counting" class="headerlink" title="計數編碼 (Counting)"></a>計數編碼 (Counting)</h2><h3 id="什麼是記數編碼"><a href="#什麼是記數編碼" class="headerlink" title="什麼是記數編碼"></a>什麼是記數編碼</h3><p>如果類別的 <strong>目標平均值</strong> 與 <strong>類別筆數</strong> 呈正相關(或負相關)，也可以將筆數本⾝身當成特徵<br>例如 : 購物網站的消費金額預測</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   		平均 		記錄筆數				記數編碼 </span><br><span class="line">美金		300		x3000				3000</span><br><span class="line">台幣		100		x500		&#x3D;&gt;		500</span><br><span class="line">日圓		50		x10				10</span><br></pre></td></tr></table></figure>
+<p>p.s. 自然語言處理時，字詞的計數編碼又稱詞頻，本身就是一個很重要的特徵</p>
+<h3 id="實作方式"><a href="#實作方式" class="headerlink" title="實作方式"></a>實作方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">count_df &#x3D; df.groupby([&#39;Cabin&#39;])[&#39;Name&#39;].agg(&#123;&#39;Cabin_Count&#39;:&#39;size&#39;&#125;).reset_index()</span><br><span class="line">df &#x3D; pd.merge(df, count_df, on&#x3D;[&#39;Cabin&#39;], how&#x3D;&#39;left&#39;)</span><br><span class="line">--------------------------</span><br><span class="line">df_temp[&#39;Cabin_Count&#39;] &#x3D; df[&#39;Cabin_Count&#39;]</span><br></pre></td></tr></table></figure>
+
+<h2 id="特徵雜湊-Feature-Hash-wiki"><a href="#特徵雜湊-Feature-Hash-wiki" class="headerlink" title="特徵雜湊 ( Feature Hash ) wiki"></a>特徵雜湊 ( Feature Hash ) <a href="https://en.wikipedia.org/wiki/Feature_hashing" target="_blank" rel="noopener">wiki</a></h2><p>當類別型特徵最麻煩的問題 : 相異異類別的數量非常龐大, 該如何編碼?<br>然而這個問題並沒有通用的解決方法，只能通過折衷的方式達成<br>也就是 <strong>特徵雜湊</strong></p>
+<h3 id="什麼是特徵雜湊"><a href="#什麼是特徵雜湊" class="headerlink" title="什麼是特徵雜湊"></a>什麼是特徵雜湊</h3><p>特徵雜湊是一種折衷方案，將類別由雜湊函數定應到一組數字，調整雜湊函數對應值的數量，<br>在計算空間/時間與鑑別度間取折衷，也提高了訊息密度, 減少無用的標籤</p>
+<h3 id="什麼時候使用"><a href="#什麼時候使用" class="headerlink" title="什麼時候使用"></a>什麼時候使用</h3><p>當相異類別數量相當大且其他編碼方式效果更差時，可以考慮雜湊編碼以節省時間</p>
+<h3 id="實作方式-1"><a href="#實作方式-1" class="headerlink" title="實作方式"></a>實作方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_temp[&#39;Cabin_Hash&#39;] &#x3D; df[&#39;Cabin&#39;].map(lambda x: hash(x) % 10)</span><br></pre></td></tr></table></figure>
+
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>Feature hashing(特征哈希)<br><a href="https://blog.csdn.net/laolu1573/article/details/79410187" target="_blank" rel="noopener">https://blog.csdn.net/laolu1573/article/details/79410187</a><br>基于sklearn的文本特征抽取<br><a href="https://www.jianshu.com/p/063840752151" target="_blank" rel="noopener">https://www.jianshu.com/p/063840752151</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/07/%E5%8E%BB%E9%99%A4%E5%81%8F%E6%85%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/07/%E5%8E%BB%E9%99%A4%E5%81%8F%E6%85%8B/" itemprop="url">去除偏態</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-07T10:09:14+08:00">
+                2020-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
+                    <span itemprop="name">程式筆記</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="特徵工程-數值型特徵-去除偏態"><a href="#特徵工程-數值型特徵-去除偏態" class="headerlink" title="特徵工程 數值型特徵 - 去除偏態"></a>特徵工程 數值型特徵 - 去除偏態</h1><p>去除偏態的目標在於讓數值更接近常態分布(左右對稱，集中點在中央)，讓平均值更具有代表性。<br>當離群資料比例太高，或者平均值沒有代表性時，皆可以考慮去除偏態。</p>
+<h2 id="去偏方式"><a href="#去偏方式" class="headerlink" title="去偏方式"></a>去偏方式</h2><ul>
+<li><p><strong>對數去偏 log1p</strong><br>對數去偏就是使用自然對數(log)去除偏態，常見用於非負值且可能為0的值<br>為了使對數0為0，需要在後面加上1(plus 1 -&gt; 1p)後，再取對數<br>還原時用expm1(exp + minus 1)</p>
+</li>
+<li><p><strong>方根去偏(sqrt)</strong><br>方根去偏就是將數值減去最⼩值後開根號，最大值有限的時候適用 (例 : 成績轉換)</p>
+</li>
+<li><p><strong>分布去偏(boxcox)</strong><br>分布去偏是採用boxcox轉換函數(詳情如下表)，函數的 lambda(λ) 參參數為 0 時<br>等於 log 函數，lambda(λ) 為 0.5 時等於開根號 (即sqrt)，因此可藉由參數的調整更靈<br>活地轉換數值，但要特別注意Y的輸入數值必須要為正 (不可為0)<br><img src="https://i1.kknews.cc/SIG=2pc2rsg/5nn00039sp58s81ss8o.jpg" alt="boxcox"></p>
+</li>
+</ul>
+<p>相關延伸：<br>偏度与峰度及其python实现<br><a href="https://blog.csdn.net/u013555719/article/details/78530879" target="_blank" rel="noopener">https://blog.csdn.net/u013555719/article/details/78530879</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/06/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/06/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/" itemprop="url">特徵工程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-06T15:49:39+08:00">
+                2020-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
+                    <span itemprop="name">程式筆記</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="特徵工程"><a href="#特徵工程" class="headerlink" title="特徵工程"></a>特徵工程</h1><h2 id="特徵工程是事實對應到後續評估分數的轉換"><a href="#特徵工程是事實對應到後續評估分數的轉換" class="headerlink" title="特徵工程是事實對應到後續評估分數的轉換"></a>特徵工程是事實對應到後續評估分數的轉換</h2><p>特徵工程的 <strong>目的</strong> 就是最大限度地從原始數據中提取特徵以供算法和模型使用。<br>以鐵達尼號中的生存為例，若從性別提取特徵，為男性評估點數為-2，女性評估為1<br>假設有一資料組性別為男則給予他-2的點數，當然此點數本身未必會直接對應到機率，但會是後續評估的依據</p>
+<p>通常來說特徵工程會在資料彙整後，擬和模型前。</p>
+<p>由於資料包含類別型(文字型)特徵以及數值型特徵，<br>所以通常特徵工程⾄少要包含一種類別編碼(LabelEncoder/OneHotEncoder)，以及一種特徵縮放方法(標準化或歸一化)</p>
+<h3 id="延伸："><a href="#延伸：" class="headerlink" title="延伸："></a>延伸：</h3><p>特征工程到底是什么？<br><a href="https://www.zhihu.com/question/29316149" target="_blank" rel="noopener">https://www.zhihu.com/question/29316149</a><br>為什麼特徵工程很重要<br><a href="https://ithelp.ithome.com.tw/articles/10200041?sc=iThelpR" target="_blank" rel="noopener">https://ithelp.ithome.com.tw/articles/10200041?sc=iThelpR</a></p>
+<h2 id="特徵工程的核心概念-領域知識"><a href="#特徵工程的核心概念-領域知識" class="headerlink" title="特徵工程的核心概念 : 領域知識"></a>特徵工程的核心概念 : 領域知識</h2><p><strong>機器學習</strong> 的關鍵在特徵工程<br><strong>特徵工程</strong> 的關鍵在領域知識，<br>機器學習有效提升模型預測力的部分就是特徵工程</p>
+<h3 id="延伸：-1"><a href="#延伸：-1" class="headerlink" title="延伸："></a>延伸：</h3><p>特征组合&amp;特征交叉 (Feature Crosses)<br><a href="https://segmentfault.com/a/1190000014799038" target="_blank" rel="noopener">https://segmentfault.com/a/1190000014799038</a><br>簡單高效的組合特徵自動挖掘框架<br><a href="https://read01.com/zh-tw/jj8em6E.html#.XuGfMUUzZPZ" target="_blank" rel="noopener">https://read01.com/zh-tw/jj8em6E.html#.XuGfMUUzZPZ</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/01/%E9%9B%A2%E6%95%A3%E5%8C%96%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/01/%E9%9B%A2%E6%95%A3%E5%8C%96%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC/" itemprop="url">離散化連續數值</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-01T16:22:26+08:00">
+                2020-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
+                    <span itemprop="name">程式筆記</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="離散化連續數值的意義以及方法"><a href="#離散化連續數值的意義以及方法" class="headerlink" title="離散化連續數值的意義以及方法"></a>離散化連續數值的意義以及方法</h1><h2 id="離散化的目的"><a href="#離散化的目的" class="headerlink" title="離散化的目的"></a>離散化的目的</h2><ul>
+<li>簡化model(減少可能性)<br>原年齡有0～100歲的可能，若以十歲間距離散，就剩下10種可能</li>
+<li>變數較穩定<br>若有異常值(如年齡=300)可直接設超過60為1，其他為0，降低他的影響力</li>
+</ul>
+<h3 id="關鍵點"><a href="#關鍵點" class="headerlink" title="關鍵點"></a>關鍵點</h3><ul>
+<li>組的數量<br>以年齡為例，並設10歲為間距，即可分成10組</li>
+<li>組的寬度<br>一組的寬度是 10 歲</li>
+</ul>
+<h2 id="離散化的方法"><a href="#離散化的方法" class="headerlink" title="離散化的方法"></a>離散化的方法</h2><p>主要的方法</p>
+<ul>
+<li>等寬劃分(pd.cut())：按照相同寬度將資料分成幾等份。缺點是受到異異常值的影響比較⼤大。</li>
+<li>等頻劃分(pd.qcut())：將資料分成幾等份，每等份資料裡面的個數是一樣的。</li>
+<li>聚類劃分：使⽤用<a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/400018/" target="_blank" rel="noopener">聚類演算法</a>將資料聚成幾類，每一個類為一個劃分。</li>
+</ul>
+<p><a href="https://medium.com/@morris_tai/pandas%E7%9A%84cut-qcut%E5%87%BD%E6%95%B8-93c244e34cfc" target="_blank" rel="noopener">cut &amp; qcut</a></p>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>在什么情况下将连续的特征离散化之后可以获得更好的效果？<br><a href="https://www.zhihu.com/question/31989952" target="_blank" rel="noopener">https://www.zhihu.com/question/31989952</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/05/31/Kernel-Density-Estimation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1038,755 +1801,11 @@ MinMaxScaler()</code></pre></li>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/" itemprop="url">離群值outliers</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-26T17:24:13+08:00">
-                2020-05-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
-                    <span itemprop="name">程式筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="離群值-Outlier-及其處理"><a href="#離群值-Outlier-及其處理" class="headerlink" title="離群值(Outlier)及其處理"></a>離群值(Outlier)及其處理</h1><h2 id="何謂離群值-Outlier"><a href="#何謂離群值-Outlier" class="headerlink" title="何謂離群值(Outlier)"></a>何謂離群值(Outlier)</h2><p>離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 / 最小最大化)就會出現很大的問題</p>
-<h2 id="檢查異異常值的⽅方法"><a href="#檢查異異常值的⽅方法" class="headerlink" title="檢查異異常值的⽅方法"></a>檢查異異常值的⽅方法</h2><ul>
-<li>統計值：如平均數、標準差、中位數、分位數 (dataframe.describe)</li>
-<li>畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(<a href="/2020/05/26/ECDF">ECDF</a>)</li>
-</ul>
-<h3 id="延伸資料："><a href="#延伸資料：" class="headerlink" title="延伸資料："></a>延伸資料：</h3><p>Ways to Detect and Remove the Outliers<br><a href="https://towardsdatascience.com/ways-to-detect-and-remove-the-outliers-404d16608dba" target="_blank" rel="noopener">https://towardsdatascience.com/ways-to-detect-and-remove-the-outliers-404d16608dba</a></p>
-<h2 id="處理理異異常值"><a href="#處理理異異常值" class="headerlink" title="處理理異異常值"></a>處理理異異常值</h2><ul>
-<li>取代補值：中位數、平均數等</li>
-<li>另建欄位</li>
-<li>整欄不用</li>
-<li>對數轉換<br>對存在離群值的變量作對數轉換可以克服其離群值問題，且對數轉換並不影響各觀察值之間在此變量上的相對大小<br><img src="https://pic4.zhimg.com/80/v2-275cf87efb56d50fe65a6850c0c8828b_720w.jpg" alt="對數轉換"><br>10 與 1000 相差百倍，但二者的對數值卻僅相差 3 倍，由此可知資料在經過對數轉換後變得更加集中</li>
-<li>縮尾<br>將超出變量特定百分位範圍的數值替換為其特定百分位數值的方法。</li>
-<li>截尾<br>將超出變量特定百分位範圍的數值予以刪除的方法。</li>
-<li>插值</li>
-</ul>
-<h3 id="處理完後的好處-壞處"><a href="#處理完後的好處-壞處" class="headerlink" title="處理完後的好處/壞處"></a>處理完後的好處/壞處</h3><p>好處是剩餘資料中模型較為單純且準確，壞處是有可能刪除掉重要資訊</p>
-<h3 id="相關貼文"><a href="#相關貼文" class="headerlink" title="相關貼文"></a>相關貼文</h3><p><a href="/2020/05/27/數值填補與連續數值標準化">數值填補與連續數值標準化</a></p>
-<h3 id="延伸資料：-1"><a href="#延伸資料：-1" class="headerlink" title="延伸資料："></a>延伸資料：</h3><p>How to Remove Outliers for Machine Learning<br><a href="https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/" target="_blank" rel="noopener">https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/</a><br>离群值！离群值？离群值！<br><a href="https://zhuanlan.zhihu.com/p/33468998" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/33468998</a></p>
-<p></br></br></p>
-<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a><br><a href="/2020/05/26/「探索式資料分析」-Exploratory-Data-Analysis-04-outliers">「探索式資料分析」(EDA) 04: outlier</a></p>
-<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/05/24/%E9%AB%98%E6%96%AF%E5%88%86%E4%BD%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/24/%E9%AB%98%E6%96%AF%E5%88%86%E4%BD%88/" itemprop="url">高斯分佈</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-24T18:12:40+08:00">
-                2020-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
-                    <span itemprop="name">程式筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="高斯分佈-Gaussian-distribution"><a href="#高斯分佈-Gaussian-distribution" class="headerlink" title="高斯分佈(Gaussian distribution)"></a>高斯分佈(Gaussian distribution)</h1><p>又稱為常態分布(normal distribution)，描述連續型資料呈現對稱型分布，具鐘型特性<br><img src="https://www.healthknowledge.org.uk/sites/default/files/documents/publichealthtextbook/statistics/1b3b.jpg" alt="gaussian figure"></p>
-<p>常態分佈完美由 $\mu$ 和 $\sigma$ 所代表，並且以平均為中心做對稱分佈<br>其中$\mu$代表平均或分布的中心，$\sigma$代表標準差</p>
-<p><strong>看更多 :</strong><br>Standard Statistical Distributions (e.g. Normal, Poisson, Binomial) and their uses<br><a href="https://www.healthknowledge.org.uk/public-health-textbook/research-methods/1b-statistical-methods/statistical-distributions" target="_blank" rel="noopener">https://www.healthknowledge.org.uk/public-health-textbook/research-methods/1b-statistical-methods/statistical-distributions</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03/" itemprop="url">「探索式資料分析」(Exploratory Data Analysis) 03</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-24T11:31:18+08:00">
-                2020-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
-                    <span itemprop="name">程式筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="統計量化的方式"><a href="#統計量化的方式" class="headerlink" title="統計量化的方式"></a>統計量化的方式</h1><p>以單變量分析來來說，量化的分析方式可包含</p>
-<h2 id="計算集中趨勢"><a href="#計算集中趨勢" class="headerlink" title="計算集中趨勢"></a>計算集中趨勢</h2><ul>
-<li><strong>平均值 Mean</strong></li>
-<li><strong>中位數 Median</strong><br>一組資料的中位數是指將資料從小到大排序後，最中間的數</li>
-<li><strong>眾數 Mode</strong><br>眾數指一組數據中出現次數最多的變數值</li>
-</ul>
-<h2 id="計算資料分散程度"><a href="#計算資料分散程度" class="headerlink" title="計算資料分散程度"></a>計算資料分散程度</h2><ul>
-<li><strong>最小值 Min</strong> </li>
-<li><strong>最大值 Max</strong></li>
-<li><strong>範圍 Range</strong> </li>
-<li><strong>四分位差 Quartiles</strong> </li>
-<li><strong>變異數 Variance</strong> </li>
-<li><strong>標準差 $\sigma$ Standard deviation</strong></li>
-</ul>
-<h3 id="補充"><a href="#補充" class="headerlink" title="補充"></a>補充</h3><p>Descriptive Statistics For pandas Dataframe<br><a href="https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/" target="_blank" rel="noopener">https://chrisalbon.com/python/data_wrangling/pandas_dataframe_descriptive_stats/</a></p>
-<h1 id="EDA視覺化"><a href="#EDA視覺化" class="headerlink" title="EDA視覺化"></a>EDA視覺化</h1><p>除了數字，視覺化也是一種很好觀察資料分佈的方式</p>
-<h2 id="常用的視覺化套件-內有許多範例，沒靈感可用-有"><a href="#常用的視覺化套件-內有許多範例，沒靈感可用-有" class="headerlink" title="常用的視覺化套件(內有許多範例，沒靈感可用)有"></a>常用的視覺化套件(內有許多範例，沒靈感可用)有</h2><ul>
-<li><a href="https://matplotlib.org/gallery/index.html" target="_blank" rel="noopener">matplotlib</a></li>
-<li><a href="https://seaborn.pydata.org/examples/index.html" target="_blank" rel="noopener">seaborn</a></li>
-</ul>
-<p></br></br></p>
-<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/「探索式資料分析」-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/「探索式資料分析」-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/「探索式資料分析」-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a></p>
-<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/05/24/%E8%B3%87%E6%96%99%E5%B9%B3%E6%BB%91%E8%99%95%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/24/%E8%B3%87%E6%96%99%E5%B9%B3%E6%BB%91%E8%99%95%E7%90%86/" itemprop="url">資料平滑處理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-24T10:11:34+08:00">
-                2020-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
-                    <span itemprop="name">程式筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="資料平滑處理-—-log1p-和exmp1"><a href="#資料平滑處理-—-log1p-和exmp1" class="headerlink" title="資料平滑處理 —- log1p()和exmp1()"></a>資料平滑處理 —- log1p()和exmp1()</h1><p><a href="https://numpy.org/doc/1.18/reference/generated/numpy.log1p.html" target="_blank" rel="noopener">log1p() document</a><br><a href="https://numpy.org/doc/1.18/reference/generated/numpy.expm1.html#numpy.expm1" target="_blank" rel="noopener">exmp1() document</a></p>
-<ol>
-<li>資料預處理時首先可以對偏度比較大的資料用log1p函式進行轉化，使其更加服從高斯分佈，此步處理可能會使我們後續的分類結果得到一個好的結果。</li>
-<li>平滑問題很容易處理掉，導致模型的結果達不到一定的標準，log1p( )能夠避免復值得問題 — 復值指一個自變數對應多個因變數</li>
-</ol>
-<p>log1p( ) 的使用就像是一個數據壓縮到了一個區間，與資料的標準類似。其逆運算就是expm1的函式</p>
-<p>由於使用的log1p（）對資料進行了壓縮，最後需要將預測出的平滑資料進行一個還原，而還原過程就是log1p的逆運算expm1.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">log1p :&#x3D; log(x+1)      即ln(x+1)</span><br><span class="line">expm1 :&#x3D; exp(x)-1</span><br></pre></td></tr></table></figure>
-
-<p>當x較大時直接計算，當x較小時用泰勒展開式計算</p>
-<h2 id="補充："><a href="#補充：" class="headerlink" title="補充："></a>補充：</h2><p>偏度：<a href="https://zh.wikipedia.org/wiki/%E5%81%8F%E5%BA%A6" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%81%8F%E5%BA%A6</a><br>高斯分布：<a href="https://zh.wikipedia.org/wiki/%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83</a><br>平滑問題：<a href="https://zh.wikipedia.org/wiki/%E5%B9%B3%E6%BB%91" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%B9%B3%E6%BB%91</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/05/23/Markdown%E7%9B%B8%E9%97%9C%E6%96%87%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/23/Markdown%E7%9B%B8%E9%97%9C%E6%96%87%E4%BB%B6/" itemprop="url">Markdown相關文件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-23T22:10:05+08:00">
-                2020-05-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>markdown教程連結<br><a href="https://markdown.tw/#precode" target="_blank" rel="noopener">https://markdown.tw/#precode</a></p>
-<p>hexo next mathjax數學公式設定<br><a href="https://dtes8617.github.io/2018/01/24/%E5%9C%A8Hexo%E9%A1%AF%E7%A4%BA%E6%95%B8%E5%AD%B8%E5%85%AC%E5%BC%8F/" target="_blank" rel="noopener">https://dtes8617.github.io/2018/01/24/%E5%9C%A8Hexo%E9%A1%AF%E7%A4%BA%E6%95%B8%E5%AD%B8%E5%85%AC%E5%BC%8F/</a></p>
-<p>如何在 Markdown 輸入數學公式及符號<br><a href="http://blog.maxkit.com.tw/2020/02/markdown.html" target="_blank" rel="noopener">http://blog.maxkit.com.tw/2020/02/markdown.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1832,7 +1851,7 @@ MinMaxScaler()</code></pre></li>
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1843,7 +1862,7 @@ MinMaxScaler()</code></pre></li>
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1854,7 +1873,7 @@ MinMaxScaler()</code></pre></li>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

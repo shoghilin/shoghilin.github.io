@@ -263,6 +263,792 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/07/02/%E5%8F%AF%E8%83%BD%E7%94%A8%E5%88%B0%E5%AF%AB%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/07/02/%E5%8F%AF%E8%83%BD%E7%94%A8%E5%88%B0%E5%AF%AB%E6%B3%95/" itemprop="url">可能用到寫法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-07-02T12:02:02+08:00">
+                2020-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="單純記錄下未來可能用到的寫法"><a href="#單純記錄下未來可能用到的寫法" class="headerlink" title="單純記錄下未來可能用到的寫法"></a>單純記錄下未來可能用到的寫法</h1><h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><h3 id="載入要用的libary"><a href="#載入要用的libary" class="headerlink" title="載入要用的libary"></a>載入要用的libary</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import copy, time</span><br><span class="line">from IPython.display import display</span><br><span class="line">from sklearn.preprocessing import MinMaxScaler</span><br><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor</span><br><span class="line">from sklearn.preprocessing import LabelEncoder</span><br></pre></td></tr></table></figure>
+
+<h3 id="載入資料"><a href="#載入資料" class="headerlink" title="載入資料"></a>載入資料</h3><p>再載入資料後，對目標值做平滑化。接著拿掉id和目標值，並合併測試集及訓練集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data_path &#x3D; &#39;..&#x2F;data&#x2F;&#39;</span><br><span class="line">df_train &#x3D; pd.read_csv(data_path + &#39;house_train.csv.gz&#39;)</span><br><span class="line">df_test &#x3D; pd.read_csv(data_path + &#39;house_test.csv.gz&#39;)</span><br><span class="line"></span><br><span class="line">train_Y &#x3D; np.log1p(df_train[&#39;SalePrice&#39;])</span><br><span class="line">ids &#x3D; df_test[&#39;Id&#39;]</span><br><span class="line">df_train &#x3D; df_train.drop([&#39;Id&#39;, &#39;SalePrice&#39;] , axis&#x3D;1)</span><br><span class="line">df_test &#x3D; df_test.drop([&#39;Id&#39;] , axis&#x3D;1)</span><br><span class="line">df &#x3D; pd.concat([df_train, df_test])</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+<h3 id="特徵工程"><a href="#特徵工程" class="headerlink" title="特徵工程"></a>特徵工程</h3><h4 id="檢查-DataFrame-空缺值的狀態"><a href="#檢查-DataFrame-空缺值的狀態" class="headerlink" title="檢查 DataFrame 空缺值的狀態"></a>檢查 DataFrame 空缺值的狀態</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 檢查 DataFrame 空缺值的狀態</span><br><span class="line">def na_check(df_data):</span><br><span class="line">    data_na &#x3D; (df_data.isnull().sum() &#x2F; len(df_data)) * 100</span><br><span class="line">    data_na &#x3D; data_na.drop(data_na[data_na &#x3D;&#x3D; 0].index).sort_values(ascending&#x3D;False)</span><br><span class="line">    missing_data &#x3D; pd.DataFrame(&#123;&#39;Missing Ratio&#39; :data_na&#125;)</span><br><span class="line">    display(missing_data.head(10))</span><br><span class="line">na_check(df)</span><br></pre></td></tr></table></figure>
+
+<h4 id="將各column依不同類型分類"><a href="#將各column依不同類型分類" class="headerlink" title="將各column依不同類型分類"></a>將各column依不同類型分類</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#確定只有 int64, float64, object 三種類型後, 分別將欄位名稱存於三個 list 中</span><br><span class="line">int_features &#x3D; []</span><br><span class="line">float_features &#x3D; []</span><br><span class="line">object_features &#x3D; []</span><br><span class="line">for dtype, feature in zip(df.dtypes, df.columns):</span><br><span class="line">    if dtype &#x3D;&#x3D; &#39;float64&#39;:</span><br><span class="line">        float_features.append(feature)</span><br><span class="line">    elif dtype &#x3D;&#x3D; &#39;int64&#39;:</span><br><span class="line">        int_features.append(feature)</span><br><span class="line">    else:</span><br><span class="line">        object_features.append(feature)</span><br><span class="line">print(f&#39;&#123;len(int_features)&#125; Integer Features : &#123;int_features&#125;\n&#39;)</span><br><span class="line">print(f&#39;&#123;len(float_features)&#125; Float Features : &#123;float_features&#125;\n&#39;)</span><br><span class="line">print(f&#39;&#123;len(object_features)&#125; Object Features : &#123;object_features&#125;&#39;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="補空缺值"><a href="#補空缺值" class="headerlink" title="補空缺值"></a>補空缺值</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 部分欄位缺值補 &#39;None&#39;</span><br><span class="line">none_cols &#x3D; [&#39;PoolQC&#39;, &#39;MiscFeature&#39;, &#39;Alley&#39;, &#39;Fence&#39;, &#39;FireplaceQu&#39;, &#39;FireplaceQu&#39;, &#39;FireplaceQu&#39;, &#39;FireplaceQu&#39;, </span><br><span class="line">            &#39;GarageType&#39;, &#39;GarageFinish&#39;, &#39;GarageQual&#39;, &#39;GarageCond&#39;, &#39;BsmtQual&#39;, &#39;BsmtCond&#39;, &#39;BsmtExposure&#39;, </span><br><span class="line">             &#39;BsmtFinType1&#39;, &#39;BsmtFinType2&#39;, &#39;MasVnrType&#39;, &#39;Functional&#39;, &#39;MSSubClass&#39;]</span><br><span class="line">for col in none_cols:</span><br><span class="line">    df[col] &#x3D; df[col].fillna(&quot;None&quot;)</span><br><span class="line">    </span><br><span class="line"># 部分欄位缺值填補 0</span><br><span class="line">zero_cols &#x3D; [&#39;GarageYrBlt&#39;, &#39;GarageArea&#39;, &#39;GarageCars&#39;, &#39;BsmtFinSF1&#39;, &#39;BsmtFinSF2&#39;, &#39;BsmtUnfSF&#39;,&#39;TotalBsmtSF&#39;, </span><br><span class="line">             &#39;BsmtFullBath&#39;, &#39;BsmtHalfBath&#39;, &#39;MasVnrArea&#39;]</span><br><span class="line">for col in zero_cols:</span><br><span class="line">    df[col] &#x3D; df[col].fillna(0)</span><br><span class="line"></span><br><span class="line"># 部分欄位缺值補眾數</span><br><span class="line">mode_cols &#x3D; [&#39;MSZoning&#39;, &#39;Electrical&#39;, &#39;KitchenQual&#39;, &#39;Exterior1st&#39;, &#39;Exterior2nd&#39;, &#39;SaleType&#39;]</span><br><span class="line">for col in mode_cols:</span><br><span class="line">    df[col] &#x3D; df[col].fillna(df[col].mode()[0])</span><br><span class="line">    </span><br><span class="line"># &#39;LotFrontage&#39; 有空缺時, 以同一區 (Neighborhood) 的 LotFrontage 中位數填補 (可以視為填補一種群聚編碼 )</span><br><span class="line">df[&quot;LotFrontage&quot;] &#x3D; df.groupby(&quot;Neighborhood&quot;)[&quot;LotFrontage&quot;].transform(lambda x: x.fillna(x.median()))</span><br><span class="line"></span><br><span class="line"># Utilities 參考資訊很少, 所以直接捨棄</span><br><span class="line">df &#x3D; df.drop([&#39;Utilities&#39;], axis&#x3D;1)</span><br><span class="line"></span><br><span class="line"># 做完各種補缺值, 確認一下有沒有遺漏</span><br><span class="line">na_check(df)</span><br></pre></td></tr></table></figure>
+
+<h4 id="做類別轉換-類別做LabelEncoding、數值轉類別"><a href="#做類別轉換-類別做LabelEncoding、數值轉類別" class="headerlink" title="做類別轉換(類別做LabelEncoding、數值轉類別)"></a>做類別轉換(類別做LabelEncoding、數值轉類別)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 四個數值欄位, 因為相異值有限, 轉成文字</span><br><span class="line">label_cols &#x3D; [&#39;MSSubClass&#39;, &#39;OverallCond&#39;, &#39;YrSold&#39;, &#39;MoSold&#39;]</span><br><span class="line">for col in mode_cols:</span><br><span class="line">    df[col] &#x3D; df[col].astype(str)</span><br><span class="line">    </span><br><span class="line"># 相異值不太具有代表性的, 做標籤編碼</span><br><span class="line">cols &#x3D; (&#39;FireplaceQu&#39;, &#39;BsmtQual&#39;, &#39;BsmtCond&#39;, &#39;GarageQual&#39;, &#39;GarageCond&#39;, </span><br><span class="line">        &#39;ExterQual&#39;, &#39;ExterCond&#39;,&#39;HeatingQC&#39;, &#39;PoolQC&#39;, &#39;KitchenQual&#39;, &#39;BsmtFinType1&#39;, </span><br><span class="line">        &#39;BsmtFinType2&#39;, &#39;Functional&#39;, &#39;Fence&#39;, &#39;BsmtExposure&#39;, &#39;GarageFinish&#39;, &#39;LandSlope&#39;,</span><br><span class="line">        &#39;LotShape&#39;, &#39;PavedDrive&#39;, &#39;Street&#39;, &#39;Alley&#39;, &#39;CentralAir&#39;, &#39;MSSubClass&#39;, &#39;OverallCond&#39;, </span><br><span class="line">        &#39;YrSold&#39;, &#39;MoSold&#39;)</span><br><span class="line">for c in cols:</span><br><span class="line">    lbl &#x3D; LabelEncoder() </span><br><span class="line">    lbl.fit(list(df[c].values)) </span><br><span class="line">    df[c] &#x3D; lbl.transform(list(df[c].values))</span><br></pre></td></tr></table></figure>
+
+<h4 id="確定關聯性"><a href="#確定關聯性" class="headerlink" title="確定關聯性"></a>確定關聯性</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">correlations &#x3D; app_train.corr()[&#39;TARGET&#39;].sort_values()</span><br><span class="line"></span><br><span class="line"># 顯示相關係數最大 &#x2F; 最小的各15個欄位名稱</span><br><span class="line">print(&#39;Most Positive Correlations:\n&#39;, correlations.tail(15))</span><br><span class="line">print(&#39;\nMost Negative Correlations:\n&#39;, correlations.head(15))</span><br></pre></td></tr></table></figure>
+
+<h4 id="特徵組合"><a href="#特徵組合" class="headerlink" title="特徵組合"></a>特徵組合</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 由地下室面積 + 1樓面積 + 2樓面積, 計算總坪數特徵   </span><br><span class="line">df[&#39;TotalSF&#39;] &#x3D; df[&#39;TotalBsmtSF&#39;] + df[&#39;1stFlrSF&#39;] + df[&#39;2ndFlrSF&#39;]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 看看目前特徵工程的結果</span><br><span class="line">print(&#39;Shape df: &#123;&#125;&#39;.format(df.shape))</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+
+<h4 id="將剩下的類別型欄位做one-hot-encoding"><a href="#將剩下的類別型欄位做one-hot-encoding" class="headerlink" title="將剩下的類別型欄位做one hot encoding"></a>將剩下的類別型欄位做one hot encoding</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 把剩下少數重要的類別型欄位, 做獨熱編碼 (已變成數字的欄位, 會自動跳過)</span><br><span class="line">df &#x3D; pd.get_dummies(df)</span><br><span class="line">print(df.shape)</span><br></pre></td></tr></table></figure>
+
+<h3 id="建立模型"><a href="#建立模型" class="headerlink" title="建立模型"></a>建立模型</h3><h4 id="將做完特徵工程的資料轉回train-x-test-x"><a href="#將做完特徵工程的資料轉回train-x-test-x" class="headerlink" title="將做完特徵工程的資料轉回train_x, test_x"></a>將做完特徵工程的資料轉回train_x, test_x</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 將前述轉換完畢資料 df , 重新切成 train_X, test_X</span><br><span class="line">train_num &#x3D; train_Y.shape[0]</span><br><span class="line">train_X &#x3D; df[:train_num]</span><br><span class="line">test_X &#x3D; df[train_num:]</span><br></pre></td></tr></table></figure>
+
+<h4 id="載入模型"><a href="#載入模型" class="headerlink" title="載入模型"></a>載入模型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 使用三種模型 : 線性迴歸 &#x2F; 梯度提升機 &#x2F; 隨機森林, 參數使用 Random Search 尋找</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor</span><br><span class="line">linear &#x3D; LinearRegression(normalize&#x3D;False, fit_intercept&#x3D;True, copy_X&#x3D;True)</span><br><span class="line">gdbt &#x3D; GradientBoostingRegressor(tol&#x3D;0.1, subsample&#x3D;0.37, n_estimators&#x3D;200, max_features&#x3D;20, </span><br><span class="line">                                 max_depth&#x3D;6, learning_rate&#x3D;0.03)</span><br><span class="line">rf &#x3D; RandomForestRegressor(n_estimators&#x3D;300, min_samples_split&#x3D;9, min_samples_leaf&#x3D;10, </span><br><span class="line">                           max_features&#x3D;&#39;sqrt&#39;, max_depth&#x3D;8, bootstrap&#x3D;False)</span><br></pre></td></tr></table></figure>
+
+<h4 id="開始預測，並存為csv檔"><a href="#開始預測，並存為csv檔" class="headerlink" title="開始預測，並存為csv檔"></a>開始預測，並存為csv檔</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 線性迴歸預測檔</span><br><span class="line">linear.fit(train_X, train_Y)</span><br><span class="line">linear_pred &#x3D; linear.predict(test_X)</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(linear_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_linear.csv&#39;, index&#x3D;False) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 梯度提升機預測檔 </span><br><span class="line">gdbt.fit(train_X, train_Y)</span><br><span class="line">gdbt_pred &#x3D; gdbt.predict(test_X)</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(gdbt_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_gdbt.csv&#39;, index&#x3D;False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 隨機森林預測檔</span><br><span class="line">rf.fit(train_X, train_Y)</span><br><span class="line">rf_pred &#x3D; rf.predict(test_X)</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(rf_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_rf.csv&#39;, index&#x3D;False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 混合泛化預測檔 (依 Kaggle 傳回分數調整比重, 越準確者比重越高, 依資料性質有所不同)</span><br><span class="line">blending_pred &#x3D; linear_pred*0.30 + gdbt_pred*0.67 + rf_pred*0.03</span><br><span class="line">sub &#x3D; pd.DataFrame(&#123;&#39;Id&#39;: ids, &#39;SalePrice&#39;: np.expm1(blending_pred)&#125;)</span><br><span class="line">sub.to_csv(&#39;house_blending.csv&#39;, index&#x3D;False)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/30/%E8%B6%85%EF%A5%AB%E6%95%B8%E8%AA%BF%E6%95%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/30/%E8%B6%85%EF%A5%AB%E6%95%B8%E8%AA%BF%E6%95%B4/" itemprop="url">超參數調整</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-30T20:11:07+08:00">
+                2020-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
+                    <span itemprop="name">程式筆記</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="超參數調整-hyper-parameter-optimization"><a href="#超參數調整-hyper-parameter-optimization" class="headerlink" title="超參數調整(hyper-parameter optimization)"></a>超參數調整(hyper-parameter optimization)</h1><p>之前接觸到的所有模型都有 超參數 需要設置，諸如</p>
+<ul>
+<li>LASSO，Ridge: α 的大小</li>
+<li>決策樹：樹的深度、節點最小樣本數</li>
+<li>隨機森林：樹的數量  </li>
+</ul>
+<p>然而，雖然 超參數 會影響結果，但提升的效果有限，<br>將注意力放在資料清理與特徵工程才能最有效的提升準確率，而調整參數只是一個加分的工具而已</p>
+<h2 id="超參數調整方法"><a href="#超參數調整方法" class="headerlink" title="超參數調整方法"></a>超參數調整方法</h2><ul>
+<li>窮舉法 (Grid Search)：直接指定超參數的組合範圍，每一組參數都訓練完成，再根據驗證集 (validation) 的結果選擇最佳參數</li>
+<li>隨機搜尋 (Random Search)：指定超參數的範圍，用均勻分布進行參數抽樣，用抽到的參數進行訓練，再根據驗證集的結果選擇最佳參數</li>
+</ul>
+<h3 id="隨機搜尋通常都能獲得更佳的結果-更多"><a href="#隨機搜尋通常都能獲得更佳的結果-更多" class="headerlink" title="隨機搜尋通常都能獲得更佳的結果 (更多)"></a>隨機搜尋通常都能獲得更佳的結果 (<a href="https://medium.com/rants-on-machine-learning/smarter-parameter-sweeps-or-why-grid-search-is-plain-stupid-c17d97a0e881" target="_blank" rel="noopener">更多</a>)</h3><p>在大多數情況下，目標函數的顛簸表面在所有維度上都不會那麼顛簸。有些參數對cost function的影響要比其他參數小得多，<strong>如果每個參數的重要性已知，則可以使用在grid seach每個參數選取值的數量中</strong>  但通常來說不是這樣的狀況。無論如何，<strong>只要嘗試相同的次數，僅使用random search可以探索每個參數更多的值</strong>， 進而帶來更好的結果。</p>
+<h2 id="超參數調整步驟"><a href="#超參數調整步驟" class="headerlink" title="超參數調整步驟"></a>超參數調整步驟</h2><ol>
+<li>先將資料切分為訓練/測試集，測試集保留不使用</li>
+<li>將剛切分好的訓練集，再使用Cross-validation 切分 K 份訓練/驗證集</li>
+<li>用 grid/random search 的超參數進行訓練與評估</li>
+<li>選出最佳的參數，用該參數與全部訓練集建模</li>
+<li>最後使用測試集評估結果</li>
+</ol>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>Scanning hyperspace: how to tune machine learning models<br><a href="https://cambridgecoding.wordpress.com/2016/04/03/scanning-hyperspace-how-to-tune-machine-learning-models/" target="_blank" rel="noopener">https://cambridgecoding.wordpress.com/2016/04/03/scanning-hyperspace-how-to-tune-machine-learning-models/</a><br>Hyperparameter Tuning the Random Forest in Python<br><a href="https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74" target="_blank" rel="noopener">https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/23/%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99%E9%81%B8%E5%AE%9A-Evaluation-metrics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/23/%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99%E9%81%B8%E5%AE%9A-Evaluation-metrics/" itemprop="url">評估指標選定(Evaluation metrics)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-23T11:43:35+08:00">
+                2020-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
+                    <span itemprop="name">程式筆記</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="評估指標"><a href="#評估指標" class="headerlink" title="評估指標"></a>評估指標</h1><p>設定各項指標來評估模型預測的準確性，最常見的是<br>$$ 準確率(Accuracy) = \frac{正確分類樣本數}{總樣本數} = \frac{TP + TN}{P + N} $$<br>(TP:True positive, TN: True negative, P: Positive, N: Negative)</p>
+<p><strong>sklearn 有相關lib</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from sklearn import metrics</span><br></pre></td></tr></table></figure>
+
+<h2 id="回歸"><a href="#回歸" class="headerlink" title="回歸"></a>回歸</h2><p>觀察「預測值」 (Prediction) 與「實際值」 (Ground truth) 的 <strong>差距</strong></p>
+<ul>
+<li>MAE, Mean Absolute Error, 範圍: [0, ∞]<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mae &#x3D; metrics.mean_absolute_error(prediction, y) # 使用 MAE 評估</span><br></pre></td></tr></table></figure></li>
+<li>MSE, Mean Square Error, 範圍: [0, ∞]<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mse &#x3D; metrics.mean_squared_error(prediction, y) # 使用 MSE 評估</span><br></pre></td></tr></table></figure></li>
+<li>R-square, 範圍: [0, 1] <strong>(常用)</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r2 &#x3D; metrics.r2_score(prediction, y) # 使用 r-square 評估</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="分類"><a href="#分類" class="headerlink" title="分類"></a>分類</h2><p>觀察「預測值」 (prediction) 與「實際值」 (Ground truth) 的 <strong>正確程度</strong></p>
+<ul>
+<li>AUC, Area Under Curve, 範圍: [0, 1]</li>
+<li>F1 - Score (Precision, Recall), 範圍: [0, 1]</li>
+</ul>
+<h3 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h3><p>AUC 指摽是分類問題常⽤的指標，通常分類問題都需要定⼀個閾值(threshold) 來決定分類的類別<br>(通常為機率 &gt; 0.5 判定為 1, 機率 &lt; 0.5 判定為 0)<br>而 AUC 是 <strong>衡量曲線下的⾯積</strong> ，因此可考量所有閾值下的準確性，在分類型比賽中常用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auc &#x3D; metrics.roc_auc_score(y_test, y_pred) # 使用 roc_auc_score 來評估。 </span><br><span class="line">## **這邊特別注意 y_pred 必須要放機率值進去!**</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="F1-Score"><a href="#F1-Score" class="headerlink" title="F1-Score"></a>F1-Score</h3><p>分類問題中，我們有時會對某⼀類別的準確率特別有興趣。例如瑕疵/正常樣本分類，我們希望任何瑕疵樣本都不能被漏掉。<br>(如判斷一個人是否有得病)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">threshold &#x3D; 0.5 </span><br><span class="line">y_pred_binarized &#x3D; np.where(y_pred&gt;threshold, 1, 0) # 使用 np.where 函數, 將 y_pred &gt; 0.5 的值變為 1，小於 0.5 的為 0</span><br></pre></td></tr></table></figure>
+
+<p>Precision，Recall 則是針對某類別進⾏評估</p>
+<ul>
+<li><p>Precision: 模型判定瑕疵，樣本確實為瑕疵的比例<br>$$ Precision = \frac{TP}{TP+FP} $$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">precision &#x3D; metrics.precision_score(y_test, y_pred_binarized) # 使用 Precision 評估</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Recall: 模型判定的瑕疵，佔樣本所有瑕疵的比例<br>$$ Recall = \frac{TP}{TP+FN} $$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">recall  &#x3D; metrics.recall_score(y_test, y_pred_binarized) # 使用 recall 評估</span><br></pre></td></tr></table></figure>
+<p>(以瑕疵檢測為例，若為 recall=1 則代表所有瑕疵都被找到)</p>
+</li>
+</ul>
+<p>F1-Score 則是 Precision, Recall 的調和平均數<br>$$ F1Score = \frac{2 * Precision * Recall} {Precision + Recall} $$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f1 &#x3D; metrics.f1_score(y_test, y_pred_binarized) # 使用 F1-Score 評估</span><br></pre></td></tr></table></figure>
+
+<p>PS,<br>F1-Score 其實是 F-Score 中的 β 值為 1 的特例，代表 Precision 與 Recall 的權重相同<br>標準公式如下<br>$$ F_\beta = (1 + \beta^2) * \frac{Precision * Recall} {(\beta^2 * Precision) + Recall}$$</p>
+<h3 id="混淆矩陣-Confusion-Matrix"><a href="#混淆矩陣-Confusion-Matrix" class="headerlink" title="混淆矩陣 (Confusion Matrix)"></a>混淆矩陣 (Confusion Matrix)</h3><p>縱軸為模型預測，橫軸為正確答案<br>可以清楚看出每個 Class 間預測的準確率，完美的模型就會在對⾓線上呈現 100 % 的準確率<br><img src="https://www.mathworks.com/help/examples/nnet/win64/PlotConfusionMatrixUsingCategoricalLabelsExample_02.png" width="50%" height="50%"><center><a href="https://www.mathworks.com/help/deeplearning/ref/plotconfusion.html" target="_blank" rel="noopener">mathwork</a></center></p>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>深入了解超常⽤的指標 AUC<br><a href="https://www.dataschool.io/roc-curves-and-auc-explained/" target="_blank" rel="noopener">https://www.dataschool.io/roc-curves-and-auc-explained/</a><br>學習更多評估指標，來衡量機器學習模型的準確度<br><a href="https://zhuanlan.zhihu.com/p/30721429" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/30721429</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/22/Regression-vs-Classification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/22/Regression-vs-Classification/" itemprop="url">Regression vs. Classification</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-22T13:39:45+08:00">
+                2020-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
+                    <span itemprop="name">程式筆記</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="機器學習的監督式學習中主要分為"><a href="#機器學習的監督式學習中主要分為" class="headerlink" title="機器學習的監督式學習中主要分為"></a>機器學習的監督式學習中主要分為</h1><ul>
+<li><p>回歸問題<br>回歸代表預測的⽬標值為實數 (-∞ ⾄ ∞)</p>
+</li>
+<li><p>分類問題。<br>分類代表預測的⽬標值為類別 (0 或 1)</p>
+</li>
+</ul>
+<h2 id="目的差異"><a href="#目的差異" class="headerlink" title="目的差異"></a>目的差異</h2><p><strong>Supervised classification</strong> 的目的是要找出decision boundary, 也就是新得到的一筆 <strong>資料</strong> 是在decision boundary(邊界)的哪一邊來決定賦予哪一種class label.<br>而 <strong>Regression</strong> 的目的, 則是找出那條最能夠區分所有資料的那條 <strong>“線”</strong> ，再找所求的點對應的線上位置<br>(一個找點的分類，一個找分類線本身)</p>
+<p><a href="http://zylix666.blogspot.com/2016/06/supervised-classificationregression.html" target="_blank" rel="noopener">更多</a></p>
+<h1 id="⼆元分類-binary-class-vs-多元分類-Multi-class"><a href="#⼆元分類-binary-class-vs-多元分類-Multi-class" class="headerlink" title="⼆元分類 (binary-class) vs. 多元分類 (Multi-class)"></a>⼆元分類 (binary-class) vs. 多元分類 (Multi-class)</h1><ul>
+<li><strong>二元分類</strong> ，顧名思義就是目標的類別僅有兩個(0 或 1)。<br>如垃圾郵件(垃圾郵件 vs. 非垃圾郵件)、瑕疵偵測 (瑕疵 vs. 正常)</li>
+</ul>
+<ul>
+<li><strong>多元分類</strong> ，則是目標類別有兩種以上。<br>如手寫數字辨識有 10 個類別(0 ~ 9)</li>
+</ul>
+<h1 id="Multi-class-vs-Multi-label"><a href="#Multi-class-vs-Multi-label" class="headerlink" title="Multi-class vs. Multi-label"></a>Multi-class vs. Multi-label</h1><p>當每個樣本都只能歸在⼀個類別，我們稱之為 <strong>多分類 (Multi-class)</strong> 問題</p>
+<p>而一個樣本如果可以同時有多個類別，則稱為 <strong>多標籤 (Multi-label)</strong> 問題</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/20/%E8%A8%93%E7%B7%B4-%E6%B8%AC%E8%A9%A6%E9%9B%86%E5%88%87%E5%88%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/20/%E8%A8%93%E7%B7%B4-%E6%B8%AC%E8%A9%A6%E9%9B%86%E5%88%87%E5%88%86/" itemprop="url">訓練/測試集切分</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-20T18:39:26+08:00">
+                2020-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
+                    <span itemprop="name">程式筆記</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="為何需要切分訓練集跟測試集"><a href="#為何需要切分訓練集跟測試集" class="headerlink" title="為何需要切分訓練集跟測試集"></a>為何需要切分訓練集跟測試集</h1><p>若將手上所有資料都送進模型訓練，這樣就沒有額外資料來評估模型訓練情形！<br>且為了避免過擬合，需透過驗證/測試集進行評估</p>
+<h2 id="方式"><a href="#方式" class="headerlink" title="方式"></a>方式</h2><h3 id="Scikit-learn-train-test-split-函數-document"><a href="#Scikit-learn-train-test-split-函數-document" class="headerlink" title="Scikit-learn train-test split 函數(document)"></a>Scikit-learn train-test split 函數(<a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html" target="_blank" rel="noopener">document</a>)</h3><p>Python 中的機器學習套件 Scikit-learn 提供了了一個 train-test split 函數，可以幫助快速對資料進行切分</p>
+<h3 id="K-fold-Cross-validation-document"><a href="#K-fold-Cross-validation-document" class="headerlink" title="K-fold Cross-validation(document)"></a>K-fold Cross-validation(<a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html" target="_blank" rel="noopener">document</a>)</h3><p>若僅做一次訓練/測試集切分，有些資料會沒有被拿來訓練過，因此後續就有 cross-validation 的方法，可以讓結果更為穩定(Ｋ為 fold 數量)。在k-fold中，每筆資料都曾經當過一次驗證集，再取平均得到最終結果。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/19/%E6%A9%9F%E5%99%A8%E5%A6%82%E4%BD%95%E5%AD%B8%E7%BF%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1045,774 +1831,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/10/%E6%99%82%E9%96%93%E5%9E%8B%E7%89%B9%E5%BE%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/10/%E6%99%82%E9%96%93%E5%9E%8B%E7%89%B9%E5%BE%B5/" itemprop="url">時間型特徵</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-10T12:31:09+08:00">
-                2020-06-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
-                    <span itemprop="name">程式筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="時間特徵分解"><a href="#時間特徵分解" class="headerlink" title="時間特徵分解"></a>時間特徵分解</h1><p>時間型特徵最常用的是特徵分解 - 拆解成年/月/日/時/分/秒的分類值</p>
-<h2 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h2><p>某些欄(例 : 分、秒)與目標值的關係很低</p>
-<h2 id="週期循環特徵"><a href="#週期循環特徵" class="headerlink" title="週期循環特徵"></a>週期循環特徵</h2><p>若要改善上述缺點可以利用時間的週期性來合成特徵，也就是 <strong>週期循環特徵</strong></p>
-<h3 id="什麼是週期循環特徵"><a href="#什麼是週期循環特徵" class="headerlink" title="什麼是週期循環特徵"></a>什麼是週期循環特徵</h3><p>週期循環特徵是將時間 <strong>循環</strong> 特性改成特徵方式<br>設計關鍵在於首尾相接, 因此我們需要使⽤用 sin /cos 等週期函數轉換</p>
-<p>例如 :<br>年週期 (正 : 冷 / 負 : 熱) = cos((月/6 + 日/180 )π)<br>周週期 (正 : 精神飽滿 / 負 : 疲倦) =  sin((星期幾/3.5 + ⼩時/84 )π)<br>⽇週期 (正 : 精神飽滿 / 負 : 疲倦) = sin((⼩時/12 + 分/720 + 秒/43200 )π)</p>
-<h3 id="常見的週期循環特徵"><a href="#常見的週期循環特徵" class="headerlink" title="常見的週期循環特徵"></a>常見的週期循環特徵</h3><p>常見的週期循環特徵有 - 年週期(季節) / 周期(例假日) /日週期(日夜與生活作息),<br>要注意的是最高與最低點的設置</p>
-<h2 id="延伸："><a href="#延伸：" class="headerlink" title="延伸："></a>延伸：</h2><p>Python-基础-时间日期处理小结<br><a href="http://www.wklken.me/posts/2015/03/03/python-base-datetime.html" target="_blank" rel="noopener">http://www.wklken.me/posts/2015/03/03/python-base-datetime.html</a><br>python document<br><a href="https://docs.python.org/3/library/datetime.html" target="_blank" rel="noopener">https://docs.python.org/3/library/datetime.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/09/%E5%9D%87%E5%80%BC%E7%B7%A8%E7%A2%BC%E5%92%8C%E5%B9%B3%E6%BB%91%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/09/%E5%9D%87%E5%80%BC%E7%B7%A8%E7%A2%BC%E5%92%8C%E5%B9%B3%E6%BB%91%E5%8C%96/" itemprop="url">均值編碼和平滑化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-09T12:05:10+08:00">
-                2020-06-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
-                    <span itemprop="name">程式筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="均值編碼和平滑化"><a href="#均值編碼和平滑化" class="headerlink" title="均值編碼和平滑化"></a>均值編碼和平滑化</h1><h2 id="均值編碼-Mean-Encoding"><a href="#均值編碼-Mean-Encoding" class="headerlink" title="均值編碼 (Mean Encoding)"></a>均值編碼 (Mean Encoding)</h2><h3 id="什麼是均值編碼？"><a href="#什麼是均值編碼？" class="headerlink" title="什麼是均值編碼？"></a>什麼是均值編碼？</h3><p>使用目標值的平均值，取代原本的類別型特徵</p>
-<h3 id="甚麼時候使用"><a href="#甚麼時候使用" class="headerlink" title="甚麼時候使用"></a>甚麼時候使用</h3><p>如果類別特徵看起來與目標值有顯著相關，那麼均值編碼便是一個不錯的選擇</p>
-<h3 id="缺點"><a href="#缺點" class="headerlink" title="缺點"></a>缺點</h3><p>然而均值編碼的缺點是如果交易樣本非常少, 且剛好抽到極端值, 平均結果可能會有誤差很大。<br>如：<br>各籃球隊中鋒身高有{180,175,220,200,210}，然而若是抽到175，並以此作均值編碼，便會產生極大誤差</p>
-<h4 id="怎麼解決呢"><a href="#怎麼解決呢" class="headerlink" title="怎麼解決呢"></a>怎麼解決呢</h4><p>若要解決這個缺點均值編碼還需要考慮紀錄筆數, 以當作可靠度的參考，也就是<strong>平滑化 (Smoothing)</strong></p>
-<p>其中一種方式如下：<br>$$新類別均值 = \frac{原類別平均 * 類別樣本數 + 全部的總平均 * 調整因子}{類別樣本數 + 調整因⼦子}$$<br>調整因子用來調整平滑化的程度，依總樣本數調整</p>
-<p>當平均值的可靠度低時, 我們會傾向相信全部的總平均<br>當平均值的可靠度⾼時, 我們會傾向相信類別的平均<br>依照紀錄筆數, 在這兩者間取折衷</p>
-<h3 id="需要注意"><a href="#需要注意" class="headerlink" title="需要注意"></a>需要注意</h3><p>當使用均值編碼時，非常容易造成overfitting，即便使用平滑化能夠修正，但實際效果有限。<br>因此仍須 <strong>經過檢驗</strong> 後再決定是否該使用均值編碼</p>
-<p>延伸：<br>平均数编码：针对高基数定性特征（类别特征）的数据预处理/特征工程<br><a href="https://zhuanlan.zhihu.com/p/26308272" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/26308272</a></p>
-<h1 id="計數編碼-雜湊編碼"><a href="#計數編碼-雜湊編碼" class="headerlink" title="計數編碼/雜湊編碼"></a>計數編碼/雜湊編碼</h1><h2 id="計數編碼-Counting"><a href="#計數編碼-Counting" class="headerlink" title="計數編碼 (Counting)"></a>計數編碼 (Counting)</h2><h3 id="什麼是記數編碼"><a href="#什麼是記數編碼" class="headerlink" title="什麼是記數編碼"></a>什麼是記數編碼</h3><p>如果類別的 <strong>目標平均值</strong> 與 <strong>類別筆數</strong> 呈正相關(或負相關)，也可以將筆數本⾝身當成特徵<br>例如 : 購物網站的消費金額預測</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   		平均 		記錄筆數				記數編碼 </span><br><span class="line">美金		300		x3000				3000</span><br><span class="line">台幣		100		x500		&#x3D;&gt;		500</span><br><span class="line">日圓		50		x10				10</span><br></pre></td></tr></table></figure>
-<p>p.s. 自然語言處理時，字詞的計數編碼又稱詞頻，本身就是一個很重要的特徵</p>
-<h3 id="實作方式"><a href="#實作方式" class="headerlink" title="實作方式"></a>實作方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">count_df &#x3D; df.groupby([&#39;Cabin&#39;])[&#39;Name&#39;].agg(&#123;&#39;Cabin_Count&#39;:&#39;size&#39;&#125;).reset_index()</span><br><span class="line">df &#x3D; pd.merge(df, count_df, on&#x3D;[&#39;Cabin&#39;], how&#x3D;&#39;left&#39;)</span><br><span class="line">--------------------------</span><br><span class="line">df_temp[&#39;Cabin_Count&#39;] &#x3D; df[&#39;Cabin_Count&#39;]</span><br></pre></td></tr></table></figure>
-
-<h2 id="特徵雜湊-Feature-Hash-wiki"><a href="#特徵雜湊-Feature-Hash-wiki" class="headerlink" title="特徵雜湊 ( Feature Hash ) wiki"></a>特徵雜湊 ( Feature Hash ) <a href="https://en.wikipedia.org/wiki/Feature_hashing" target="_blank" rel="noopener">wiki</a></h2><p>當類別型特徵最麻煩的問題 : 相異異類別的數量非常龐大, 該如何編碼?<br>然而這個問題並沒有通用的解決方法，只能通過折衷的方式達成<br>也就是 <strong>特徵雜湊</strong></p>
-<h3 id="什麼是特徵雜湊"><a href="#什麼是特徵雜湊" class="headerlink" title="什麼是特徵雜湊"></a>什麼是特徵雜湊</h3><p>特徵雜湊是一種折衷方案，將類別由雜湊函數定應到一組數字，調整雜湊函數對應值的數量，<br>在計算空間/時間與鑑別度間取折衷，也提高了訊息密度, 減少無用的標籤</p>
-<h3 id="什麼時候使用"><a href="#什麼時候使用" class="headerlink" title="什麼時候使用"></a>什麼時候使用</h3><p>當相異類別數量相當大且其他編碼方式效果更差時，可以考慮雜湊編碼以節省時間</p>
-<h3 id="實作方式-1"><a href="#實作方式-1" class="headerlink" title="實作方式"></a>實作方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_temp[&#39;Cabin_Hash&#39;] &#x3D; df[&#39;Cabin&#39;].map(lambda x: hash(x) % 10)</span><br></pre></td></tr></table></figure>
-
-<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>Feature hashing(特征哈希)<br><a href="https://blog.csdn.net/laolu1573/article/details/79410187" target="_blank" rel="noopener">https://blog.csdn.net/laolu1573/article/details/79410187</a><br>基于sklearn的文本特征抽取<br><a href="https://www.jianshu.com/p/063840752151" target="_blank" rel="noopener">https://www.jianshu.com/p/063840752151</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/07/%E5%8E%BB%E9%99%A4%E5%81%8F%E6%85%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/07/%E5%8E%BB%E9%99%A4%E5%81%8F%E6%85%8B/" itemprop="url">去除偏態</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-07T10:09:14+08:00">
-                2020-06-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
-                    <span itemprop="name">程式筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="特徵工程-數值型特徵-去除偏態"><a href="#特徵工程-數值型特徵-去除偏態" class="headerlink" title="特徵工程 數值型特徵 - 去除偏態"></a>特徵工程 數值型特徵 - 去除偏態</h1><p>去除偏態的目標在於讓數值更接近常態分布(左右對稱，集中點在中央)，讓平均值更具有代表性。<br>當離群資料比例太高，或者平均值沒有代表性時，皆可以考慮去除偏態。</p>
-<h2 id="去偏方式"><a href="#去偏方式" class="headerlink" title="去偏方式"></a>去偏方式</h2><ul>
-<li><p><strong>對數去偏 log1p</strong><br>對數去偏就是使用自然對數(log)去除偏態，常見用於非負值且可能為0的值<br>為了使對數0為0，需要在後面加上1(plus 1 -&gt; 1p)後，再取對數<br>還原時用expm1(exp + minus 1)</p>
-</li>
-<li><p><strong>方根去偏(sqrt)</strong><br>方根去偏就是將數值減去最⼩值後開根號，最大值有限的時候適用 (例 : 成績轉換)</p>
-</li>
-<li><p><strong>分布去偏(boxcox)</strong><br>分布去偏是採用boxcox轉換函數(詳情如下表)，函數的 lambda(λ) 參參數為 0 時<br>等於 log 函數，lambda(λ) 為 0.5 時等於開根號 (即sqrt)，因此可藉由參數的調整更靈<br>活地轉換數值，但要特別注意Y的輸入數值必須要為正 (不可為0)<br><img src="https://i1.kknews.cc/SIG=2pc2rsg/5nn00039sp58s81ss8o.jpg" alt="boxcox"></p>
-</li>
-</ul>
-<p>相關延伸：<br>偏度与峰度及其python实现<br><a href="https://blog.csdn.net/u013555719/article/details/78530879" target="_blank" rel="noopener">https://blog.csdn.net/u013555719/article/details/78530879</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/06/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/06/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/" itemprop="url">特徵工程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-06T15:49:39+08:00">
-                2020-06-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
-                    <span itemprop="name">程式筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="特徵工程"><a href="#特徵工程" class="headerlink" title="特徵工程"></a>特徵工程</h1><h2 id="特徵工程是事實對應到後續評估分數的轉換"><a href="#特徵工程是事實對應到後續評估分數的轉換" class="headerlink" title="特徵工程是事實對應到後續評估分數的轉換"></a>特徵工程是事實對應到後續評估分數的轉換</h2><p>特徵工程的 <strong>目的</strong> 就是最大限度地從原始數據中提取特徵以供算法和模型使用。<br>以鐵達尼號中的生存為例，若從性別提取特徵，為男性評估點數為-2，女性評估為1<br>假設有一資料組性別為男則給予他-2的點數，當然此點數本身未必會直接對應到機率，但會是後續評估的依據</p>
-<p>通常來說特徵工程會在資料彙整後，擬和模型前。</p>
-<p>由於資料包含類別型(文字型)特徵以及數值型特徵，<br>所以通常特徵工程⾄少要包含一種類別編碼(LabelEncoder/OneHotEncoder)，以及一種特徵縮放方法(標準化或歸一化)</p>
-<h3 id="延伸："><a href="#延伸：" class="headerlink" title="延伸："></a>延伸：</h3><p>特征工程到底是什么？<br><a href="https://www.zhihu.com/question/29316149" target="_blank" rel="noopener">https://www.zhihu.com/question/29316149</a><br>為什麼特徵工程很重要<br><a href="https://ithelp.ithome.com.tw/articles/10200041?sc=iThelpR" target="_blank" rel="noopener">https://ithelp.ithome.com.tw/articles/10200041?sc=iThelpR</a></p>
-<h2 id="特徵工程的核心概念-領域知識"><a href="#特徵工程的核心概念-領域知識" class="headerlink" title="特徵工程的核心概念 : 領域知識"></a>特徵工程的核心概念 : 領域知識</h2><p><strong>機器學習</strong> 的關鍵在特徵工程<br><strong>特徵工程</strong> 的關鍵在領域知識，<br>機器學習有效提升模型預測力的部分就是特徵工程</p>
-<h3 id="延伸：-1"><a href="#延伸：-1" class="headerlink" title="延伸："></a>延伸：</h3><p>特征组合&amp;特征交叉 (Feature Crosses)<br><a href="https://segmentfault.com/a/1190000014799038" target="_blank" rel="noopener">https://segmentfault.com/a/1190000014799038</a><br>簡單高效的組合特徵自動挖掘框架<br><a href="https://read01.com/zh-tw/jj8em6E.html#.XuGfMUUzZPZ" target="_blank" rel="noopener">https://read01.com/zh-tw/jj8em6E.html#.XuGfMUUzZPZ</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://shoghilin.github.io/2020/06/01/%E9%9B%A2%E6%95%A3%E5%8C%96%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/06/01/%E9%9B%A2%E6%95%A3%E5%8C%96%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC/" itemprop="url">離散化連續數值</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-01T16:22:26+08:00">
-                2020-06-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index">
-                    <span itemprop="name">程式筆記</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="離散化連續數值的意義以及方法"><a href="#離散化連續數值的意義以及方法" class="headerlink" title="離散化連續數值的意義以及方法"></a>離散化連續數值的意義以及方法</h1><h2 id="離散化的目的"><a href="#離散化的目的" class="headerlink" title="離散化的目的"></a>離散化的目的</h2><ul>
-<li>簡化model(減少可能性)<br>原年齡有0～100歲的可能，若以十歲間距離散，就剩下10種可能</li>
-<li>變數較穩定<br>若有異常值(如年齡=300)可直接設超過60為1，其他為0，降低他的影響力</li>
-</ul>
-<h3 id="關鍵點"><a href="#關鍵點" class="headerlink" title="關鍵點"></a>關鍵點</h3><ul>
-<li>組的數量<br>以年齡為例，並設10歲為間距，即可分成10組</li>
-<li>組的寬度<br>一組的寬度是 10 歲</li>
-</ul>
-<h2 id="離散化的方法"><a href="#離散化的方法" class="headerlink" title="離散化的方法"></a>離散化的方法</h2><p>主要的方法</p>
-<ul>
-<li>等寬劃分(pd.cut())：按照相同寬度將資料分成幾等份。缺點是受到異異常值的影響比較⼤大。</li>
-<li>等頻劃分(pd.qcut())：將資料分成幾等份，每等份資料裡面的個數是一樣的。</li>
-<li>聚類劃分：使⽤用<a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/400018/" target="_blank" rel="noopener">聚類演算法</a>將資料聚成幾類，每一個類為一個劃分。</li>
-</ul>
-<p><a href="https://medium.com/@morris_tai/pandas%E7%9A%84cut-qcut%E5%87%BD%E6%95%B8-93c244e34cfc" target="_blank" rel="noopener">cut &amp; qcut</a></p>
-<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>在什么情况下将连续的特征离散化之后可以获得更好的效果？<br><a href="https://www.zhihu.com/question/31989952" target="_blank" rel="noopener">https://www.zhihu.com/question/31989952</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1858,7 +1881,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1869,7 +1892,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1880,7 +1903,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
