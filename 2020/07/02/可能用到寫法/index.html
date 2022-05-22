@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="單純記錄下未來可能用到的寫法基本流程載入要用的libary123456789import pandas as pdimport numpy as npimport copy, timefrom IPython.display import displayfrom sklearn.preprocessing import MinMaxScalerfrom sklearn.model_selectio">
@@ -28,7 +28,7 @@
 <meta property="og:description" content="單純記錄下未來可能用到的寫法基本流程載入要用的libary123456789import pandas as pdimport numpy as npimport copy, timefrom IPython.display import displayfrom sklearn.preprocessing import MinMaxScalerfrom sklearn.model_selectio">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-07-02T04:02:02.000Z">
-<meta property="article:modified_time" content="2020-07-06T10:14:03.000Z">
+<meta property="article:modified_time" content="2022-05-22T12:02:40.514Z">
 <meta property="article:author" content="Shoghi">
 <meta name="twitter:card" content="summary">
 
@@ -76,7 +76,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -180,7 +184,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2020-07-06 18:14:03" itemprop="dateModified" datetime="2020-07-06T18:14:03+08:00">2020-07-06</time>
+                <time title="修改時間：2022-05-22 20:02:40" itemprop="dateModified" datetime="2022-05-22T20:02:40+08:00">2022-05-22</time>
               </span>
 
           
@@ -195,6 +199,8 @@
 
       
         <h1 id="單純記錄下未來可能用到的寫法"><a href="#單純記錄下未來可能用到的寫法" class="headerlink" title="單純記錄下未來可能用到的寫法"></a>單純記錄下未來可能用到的寫法</h1><h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><h3 id="載入要用的libary"><a href="#載入要用的libary" class="headerlink" title="載入要用的libary"></a>載入要用的libary</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import copy, time</span><br><span class="line">from IPython.display import display</span><br><span class="line">from sklearn.preprocessing import MinMaxScaler</span><br><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor</span><br><span class="line">from sklearn.preprocessing import LabelEncoder</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
 
 <h3 id="載入資料"><a href="#載入資料" class="headerlink" title="載入資料"></a>載入資料</h3><p>再載入資料後，對目標值做平滑化。接著拿掉id和目標值，並合併測試集及訓練集</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data_path = &#x27;../data/&#x27;</span><br><span class="line">df_train = pd.read_csv(data_path + &#x27;house_train.csv.gz&#x27;)</span><br><span class="line">df_test = pd.read_csv(data_path + &#x27;house_test.csv.gz&#x27;)</span><br><span class="line"></span><br><span class="line">train_Y = np.log1p(df_train[&#x27;SalePrice&#x27;])</span><br><span class="line">ids = df_test[&#x27;Id&#x27;]</span><br><span class="line">df_train = df_train.drop([&#x27;Id&#x27;, &#x27;SalePrice&#x27;] , axis=1)</span><br><span class="line">df_test = df_test.drop([&#x27;Id&#x27;] , axis=1)</span><br><span class="line">df = pd.concat([df_train, df_test])</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
@@ -323,11 +329,22 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/shoghilin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;shoghilin" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:shoghiLin22@gmail.com" title="E-Mail → mailto:shoghiLin22@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/%E6%9F%8F%E5%AE%87-%E6%9E%97-03995a1a0" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;柏宇-林-03995a1a0" rel="noopener" target="_blank"><i class="linkedin-square fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
 
 
 
@@ -405,6 +422,8 @@
 
 
 
+
+  
 
   
 

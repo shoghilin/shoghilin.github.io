@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="website">
@@ -72,7 +72,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -788,7 +792,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2020-07-06 18:14:03" itemprop="dateModified" datetime="2020-07-06T18:14:03+08:00">2020-07-06</time>
+                <time title="修改時間：2022-05-22 20:02:40" itemprop="dateModified" datetime="2022-05-22T20:02:40+08:00">2022-05-22</time>
               </span>
 
           
@@ -803,30 +807,14 @@
 
       
           <h1 id="單純記錄下未來可能用到的寫法"><a href="#單純記錄下未來可能用到的寫法" class="headerlink" title="單純記錄下未來可能用到的寫法"></a>單純記錄下未來可能用到的寫法</h1><h2 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h2><h3 id="載入要用的libary"><a href="#載入要用的libary" class="headerlink" title="載入要用的libary"></a>載入要用的libary</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import copy, time</span><br><span class="line">from IPython.display import display</span><br><span class="line">from sklearn.preprocessing import MinMaxScaler</span><br><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor</span><br><span class="line">from sklearn.preprocessing import LabelEncoder</span><br></pre></td></tr></table></figure>
-
-<h3 id="載入資料"><a href="#載入資料" class="headerlink" title="載入資料"></a>載入資料</h3><p>再載入資料後，對目標值做平滑化。接著拿掉id和目標值，並合併測試集及訓練集</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data_path = &#x27;../data/&#x27;</span><br><span class="line">df_train = pd.read_csv(data_path + &#x27;house_train.csv.gz&#x27;)</span><br><span class="line">df_test = pd.read_csv(data_path + &#x27;house_test.csv.gz&#x27;)</span><br><span class="line"></span><br><span class="line">train_Y = np.log1p(df_train[&#x27;SalePrice&#x27;])</span><br><span class="line">ids = df_test[&#x27;Id&#x27;]</span><br><span class="line">df_train = df_train.drop([&#x27;Id&#x27;, &#x27;SalePrice&#x27;] , axis=1)</span><br><span class="line">df_test = df_test.drop([&#x27;Id&#x27;] , axis=1)</span><br><span class="line">df = pd.concat([df_train, df_test])</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
-<h3 id="特徵工程"><a href="#特徵工程" class="headerlink" title="特徵工程"></a>特徵工程</h3><h4 id="檢查-DataFrame-空缺值的狀態"><a href="#檢查-DataFrame-空缺值的狀態" class="headerlink" title="檢查 DataFrame 空缺值的狀態"></a>檢查 DataFrame 空缺值的狀態</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 檢查 DataFrame 空缺值的狀態</span><br><span class="line">def na_check(df_data):</span><br><span class="line">    data_na = (df_data.isnull().sum() / len(df_data)) * 100</span><br><span class="line">    data_na = data_na.drop(data_na[data_na == 0].index).sort_values(ascending=False)</span><br><span class="line">    missing_data = pd.DataFrame(&#123;&#x27;Missing Ratio&#x27; :data_na&#125;)</span><br><span class="line">    display(missing_data.head(10))</span><br><span class="line">na_check(df)</span><br></pre></td></tr></table></figure>
-
-<h4 id="將各column依不同類型分類"><a href="#將各column依不同類型分類" class="headerlink" title="將各column依不同類型分類"></a>將各column依不同類型分類</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#確定只有 int64, float64, object 三種類型後, 分別將欄位名稱存於三個 list 中</span><br><span class="line">int_features = []</span><br><span class="line">float_features = []</span><br><span class="line">object_features = []</span><br><span class="line">for dtype, feature in zip(df.dtypes, df.columns):</span><br><span class="line">    if dtype == &#x27;float64&#x27;:</span><br><span class="line">        float_features.append(feature)</span><br><span class="line">    elif dtype == &#x27;int64&#x27;:</span><br><span class="line">        int_features.append(feature)</span><br><span class="line">    else:</span><br><span class="line">        object_features.append(feature)</span><br><span class="line">print(f&#x27;&#123;len(int_features)&#125; Integer Features : &#123;int_features&#125;\n&#x27;)</span><br><span class="line">print(f&#x27;&#123;len(float_features)&#125; Float Features : &#123;float_features&#125;\n&#x27;)</span><br><span class="line">print(f&#x27;&#123;len(object_features)&#125; Object Features : &#123;object_features&#125;&#x27;)</span><br></pre></td></tr></table></figure>
-
-<h4 id="補空缺值"><a href="#補空缺值" class="headerlink" title="補空缺值"></a>補空缺值</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 部分欄位缺值補 &#x27;None&#x27;</span><br><span class="line">none_cols = [&#x27;PoolQC&#x27;, &#x27;MiscFeature&#x27;, &#x27;Alley&#x27;, &#x27;Fence&#x27;, &#x27;FireplaceQu&#x27;, &#x27;FireplaceQu&#x27;, &#x27;FireplaceQu&#x27;, &#x27;FireplaceQu&#x27;, </span><br><span class="line">            &#x27;GarageType&#x27;, &#x27;GarageFinish&#x27;, &#x27;GarageQual&#x27;, &#x27;GarageCond&#x27;, &#x27;BsmtQual&#x27;, &#x27;BsmtCond&#x27;, &#x27;BsmtExposure&#x27;, </span><br><span class="line">             &#x27;BsmtFinType1&#x27;, &#x27;BsmtFinType2&#x27;, &#x27;MasVnrType&#x27;, &#x27;Functional&#x27;, &#x27;MSSubClass&#x27;]</span><br><span class="line">for col in none_cols:</span><br><span class="line">    df[col] = df[col].fillna(&quot;None&quot;)</span><br><span class="line">    </span><br><span class="line"># 部分欄位缺值填補 0</span><br><span class="line">zero_cols = [&#x27;GarageYrBlt&#x27;, &#x27;GarageArea&#x27;, &#x27;GarageCars&#x27;, &#x27;BsmtFinSF1&#x27;, &#x27;BsmtFinSF2&#x27;, &#x27;BsmtUnfSF&#x27;,&#x27;TotalBsmtSF&#x27;, </span><br><span class="line">             &#x27;BsmtFullBath&#x27;, &#x27;BsmtHalfBath&#x27;, &#x27;MasVnrArea&#x27;]</span><br><span class="line">for col in zero_cols:</span><br><span class="line">    df[col] = df[col].fillna(0)</span><br><span class="line"></span><br><span class="line"># 部分欄位缺值補眾數</span><br><span class="line">mode_cols = [&#x27;MSZoning&#x27;, &#x27;Electrical&#x27;, &#x27;KitchenQual&#x27;, &#x27;Exterior1st&#x27;, &#x27;Exterior2nd&#x27;, &#x27;SaleType&#x27;]</span><br><span class="line">for col in mode_cols:</span><br><span class="line">    df[col] = df[col].fillna(df[col].mode()[0])</span><br><span class="line">    </span><br><span class="line"># &#x27;LotFrontage&#x27; 有空缺時, 以同一區 (Neighborhood) 的 LotFrontage 中位數填補 (可以視為填補一種群聚編碼 )</span><br><span class="line">df[&quot;LotFrontage&quot;] = df.groupby(&quot;Neighborhood&quot;)[&quot;LotFrontage&quot;].transform(lambda x: x.fillna(x.median()))</span><br><span class="line"></span><br><span class="line"># Utilities 參考資訊很少, 所以直接捨棄</span><br><span class="line">df = df.drop([&#x27;Utilities&#x27;], axis=1)</span><br><span class="line"></span><br><span class="line"># 做完各種補缺值, 確認一下有沒有遺漏</span><br><span class="line">na_check(df)</span><br></pre></td></tr></table></figure>
-
-<h4 id="做類別轉換-類別做LabelEncoding、數值轉類別"><a href="#做類別轉換-類別做LabelEncoding、數值轉類別" class="headerlink" title="做類別轉換(類別做LabelEncoding、數值轉類別)"></a>做類別轉換(類別做LabelEncoding、數值轉類別)</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 四個數值欄位, 因為相異值有限, 轉成文字</span><br><span class="line">label_cols = [&#x27;MSSubClass&#x27;, &#x27;OverallCond&#x27;, &#x27;YrSold&#x27;, &#x27;MoSold&#x27;]</span><br><span class="line">for col in mode_cols:</span><br><span class="line">    df[col] = df[col].astype(str)</span><br><span class="line">    </span><br><span class="line"># 相異值不太具有代表性的, 做標籤編碼</span><br><span class="line">cols = (&#x27;FireplaceQu&#x27;, &#x27;BsmtQual&#x27;, &#x27;BsmtCond&#x27;, &#x27;GarageQual&#x27;, &#x27;GarageCond&#x27;, </span><br><span class="line">        &#x27;ExterQual&#x27;, &#x27;ExterCond&#x27;,&#x27;HeatingQC&#x27;, &#x27;PoolQC&#x27;, &#x27;KitchenQual&#x27;, &#x27;BsmtFinType1&#x27;, </span><br><span class="line">        &#x27;BsmtFinType2&#x27;, &#x27;Functional&#x27;, &#x27;Fence&#x27;, &#x27;BsmtExposure&#x27;, &#x27;GarageFinish&#x27;, &#x27;LandSlope&#x27;,</span><br><span class="line">        &#x27;LotShape&#x27;, &#x27;PavedDrive&#x27;, &#x27;Street&#x27;, &#x27;Alley&#x27;, &#x27;CentralAir&#x27;, &#x27;MSSubClass&#x27;, &#x27;OverallCond&#x27;, </span><br><span class="line">        &#x27;YrSold&#x27;, &#x27;MoSold&#x27;)</span><br><span class="line">for c in cols:</span><br><span class="line">    lbl = LabelEncoder() </span><br><span class="line">    lbl.fit(list(df[c].values)) </span><br><span class="line">    df[c] = lbl.transform(list(df[c].values))</span><br></pre></td></tr></table></figure>
-
-<h4 id="確定關聯性"><a href="#確定關聯性" class="headerlink" title="確定關聯性"></a>確定關聯性</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">correlations = app_train.corr()[&#x27;TARGET&#x27;].sort_values()</span><br><span class="line"></span><br><span class="line"># 顯示相關係數最大 / 最小的各15個欄位名稱</span><br><span class="line">print(&#x27;Most Positive Correlations:\n&#x27;, correlations.tail(15))</span><br><span class="line">print(&#x27;\nMost Negative Correlations:\n&#x27;, correlations.head(15))</span><br></pre></td></tr></table></figure>
-
-<h4 id="特徵組合"><a href="#特徵組合" class="headerlink" title="特徵組合"></a>特徵組合</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 由地下室面積 + 1樓面積 + 2樓面積, 計算總坪數特徵   </span><br><span class="line">df[&#x27;TotalSF&#x27;] = df[&#x27;TotalBsmtSF&#x27;] + df[&#x27;1stFlrSF&#x27;] + df[&#x27;2ndFlrSF&#x27;]    </span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 看看目前特徵工程的結果</span><br><span class="line">print(&#x27;Shape df: &#123;&#125;&#x27;.format(df.shape))</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
-
-<h4 id="將剩下的類別型欄位做one-hot-encoding"><a href="#將剩下的類別型欄位做one-hot-encoding" class="headerlink" title="將剩下的類別型欄位做one hot encoding"></a>將剩下的類別型欄位做one hot encoding</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 把剩下少數重要的類別型欄位, 做獨熱編碼 (已變成數字的欄位, 會自動跳過)</span><br><span class="line">df = pd.get_dummies(df)</span><br><span class="line">print(df.shape)</span><br></pre></td></tr></table></figure>
-
-<h3 id="建立模型"><a href="#建立模型" class="headerlink" title="建立模型"></a>建立模型</h3><h4 id="將做完特徵工程的資料轉回train-x-test-x"><a href="#將做完特徵工程的資料轉回train-x-test-x" class="headerlink" title="將做完特徵工程的資料轉回train_x, test_x"></a>將做完特徵工程的資料轉回train_x, test_x</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 將前述轉換完畢資料 df , 重新切成 train_X, test_X</span><br><span class="line">train_num = train_Y.shape[0]</span><br><span class="line">train_X = df[:train_num]</span><br><span class="line">test_X = df[train_num:]</span><br></pre></td></tr></table></figure>
-
-<h4 id="載入模型"><a href="#載入模型" class="headerlink" title="載入模型"></a>載入模型</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 使用三種模型 : 線性迴歸 / 梯度提升機 / 隨機森林, 參數使用 Random Search 尋找</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor</span><br><span class="line">linear = LinearRegression(normalize=False, fit_intercept=True, copy_X=True)</span><br><span class="line">gdbt = GradientBoostingRegressor(tol=0.1, subsample=0.37, n_estimators=200, max_features=20, </span><br><span class="line">                                 max_depth=6, learning_rate=0.03)</span><br><span class="line">rf = RandomForestRegressor(n_estimators=300, min_samples_split=9, min_samples_leaf=10, </span><br><span class="line">                           max_features=&#x27;sqrt&#x27;, max_depth=8, bootstrap=False)</span><br></pre></td></tr></table></figure>
-
-<h4 id="開始預測，並存為csv檔"><a href="#開始預測，並存為csv檔" class="headerlink" title="開始預測，並存為csv檔"></a>開始預測，並存為csv檔</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 線性迴歸預測檔</span><br><span class="line">linear.fit(train_X, train_Y)</span><br><span class="line">linear_pred = linear.predict(test_X)</span><br><span class="line">sub = pd.DataFrame(&#123;&#x27;Id&#x27;: ids, &#x27;SalePrice&#x27;: np.expm1(linear_pred)&#125;)</span><br><span class="line">sub.to_csv(&#x27;house_linear.csv&#x27;, index=False) </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 梯度提升機預測檔 </span><br><span class="line">gdbt.fit(train_X, train_Y)</span><br><span class="line">gdbt_pred = gdbt.predict(test_X)</span><br><span class="line">sub = pd.DataFrame(&#123;&#x27;Id&#x27;: ids, &#x27;SalePrice&#x27;: np.expm1(gdbt_pred)&#125;)</span><br><span class="line">sub.to_csv(&#x27;house_gdbt.csv&#x27;, index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 隨機森林預測檔</span><br><span class="line">rf.fit(train_X, train_Y)</span><br><span class="line">rf_pred = rf.predict(test_X)</span><br><span class="line">sub = pd.DataFrame(&#123;&#x27;Id&#x27;: ids, &#x27;SalePrice&#x27;: np.expm1(rf_pred)&#125;)</span><br><span class="line">sub.to_csv(&#x27;house_rf.csv&#x27;, index=False)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 混合泛化預測檔 (依 Kaggle 傳回分數調整比重, 越準確者比重越高, 依資料性質有所不同)</span><br><span class="line">blending_pred = linear_pred*0.30 + gdbt_pred*0.67 + rf_pred*0.03</span><br><span class="line">sub = pd.DataFrame(&#123;&#x27;Id&#x27;: ids, &#x27;SalePrice&#x27;: np.expm1(blending_pred)&#125;)</span><br><span class="line">sub.to_csv(&#x27;house_blending.csv&#x27;, index=False)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/02/%E5%8F%AF%E8%83%BD%E7%94%A8%E5%88%B0%E5%AF%AB%E6%B3%95/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1208,11 +1196,22 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/shoghilin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;shoghilin" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:shoghiLin22@gmail.com" title="E-Mail → mailto:shoghiLin22@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/%E6%9F%8F%E5%AE%87-%E6%9E%97-03995a1a0" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;柏宇-林-03995a1a0" rel="noopener" target="_blank"><i class="linkedin-square fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
 
 
 
@@ -1292,6 +1291,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
