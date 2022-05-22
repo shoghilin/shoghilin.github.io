@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="超參數調整(hyper-parameter optimization)之前接觸到的所有模型都有 超參數 需要設置，諸如  LASSO，Ridge: α 的大小 決策樹：樹的深度、節點最小樣本數 隨機森林：樹的數量  然而，雖然 超參數 會影響結果，但提升的效果有限，將注意力放在資料清理與特徵工程才能最有效的提升準確率，而調整參數只是一個加分的工具而已 超參數調整方法 窮舉法 (Grid Searc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="超參數調整">
+<meta property="og:url" content="http://example.com/2020/06/30/%E8%B6%85%E5%8F%83%E6%95%B8%E8%AA%BF%E6%95%B4/index.html">
+<meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="超參數調整(hyper-parameter optimization)之前接觸到的所有模型都有 超參數 需要設置，諸如  LASSO，Ridge: α 的大小 決策樹：樹的深度、節點最小樣本數 隨機森林：樹的數量  然而，雖然 超參數 會影響結果，但提升的效果有限，將注意力放在資料清理與特徵工程才能最有效的提升準確率，而調整參數只是一個加分的工具而已 超參數調整方法 窮舉法 (Grid Searc">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-06-30T12:11:07.000Z">
+<meta property="article:modified_time" content="2020-07-02T14:21:53.000Z">
+<meta property="article:author" content="Shoghi">
+<meta property="article:tag" content="機器學習馬拉松筆記">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/06/30/%E8%B6%85%E5%8F%83%E6%95%B8%E8%AA%BF%E6%95%B4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>超參數調整 | Shoghi的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Shoghi的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/30/%E8%B6%85%E5%8F%83%E6%95%B8%E8%AA%BF%E6%95%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          超參數調整
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-06-30 20:11:07" itemprop="dateCreated datePublished" datetime="2020-06-30T20:11:07+08:00">2020-06-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-07-02 22:21:53" itemprop="dateModified" datetime="2020-07-02T22:21:53+08:00">2020-07-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="超參數調整-hyper-parameter-optimization"><a href="#超參數調整-hyper-parameter-optimization" class="headerlink" title="超參數調整(hyper-parameter optimization)"></a>超參數調整(hyper-parameter optimization)</h1><p>之前接觸到的所有模型都有 超參數 需要設置，諸如</p>
+<ul>
+<li>LASSO，Ridge: α 的大小</li>
+<li>決策樹：樹的深度、節點最小樣本數</li>
+<li>隨機森林：樹的數量</li>
+</ul>
+<p>然而，雖然 超參數 會影響結果，但提升的效果有限，<br>將注意力放在資料清理與特徵工程才能最有效的提升準確率，而調整參數只是一個加分的工具而已</p>
+<h2 id="超參數調整方法"><a href="#超參數調整方法" class="headerlink" title="超參數調整方法"></a>超參數調整方法</h2><ul>
+<li>窮舉法 (Grid Search)：直接指定超參數的組合範圍，每一組參數都訓練完成，再根據驗證集 (validation) 的結果選擇最佳參數</li>
+<li>隨機搜尋 (Random Search)：指定超參數的範圍，用均勻分布進行參數抽樣，用抽到的參數進行訓練，再根據驗證集的結果選擇最佳參數</li>
+</ul>
+<h3 id="隨機搜尋通常都能獲得更佳的結果-更多"><a href="#隨機搜尋通常都能獲得更佳的結果-更多" class="headerlink" title="隨機搜尋通常都能獲得更佳的結果 (更多)"></a>隨機搜尋通常都能獲得更佳的結果 (<a target="_blank" rel="noopener" href="https://medium.com/rants-on-machine-learning/smarter-parameter-sweeps-or-why-grid-search-is-plain-stupid-c17d97a0e881">更多</a>)</h3><p>在大多數情況下，目標函數的顛簸表面在所有維度上都不會那麼顛簸。有些參數對cost function的影響要比其他參數小得多，<strong>如果每個參數的重要性已知，則可以使用在grid seach每個參數選取值的數量中</strong>  但通常來說不是這樣的狀況。無論如何，__只要嘗試相同的次數，僅使用random search可以探索每個參數更多的值__， 進而帶來更好的結果。</p>
+<h2 id="超參數調整步驟"><a href="#超參數調整步驟" class="headerlink" title="超參數調整步驟"></a>超參數調整步驟</h2><ol>
+<li>先將資料切分為訓練&#x2F;測試集，測試集保留不使用</li>
+<li>將剛切分好的訓練集，再使用Cross-validation 切分 K 份訓練&#x2F;驗證集</li>
+<li>用 grid&#x2F;random search 的超參數進行訓練與評估</li>
+<li>選出最佳的參數，用該參數與全部訓練集建模</li>
+<li>最後使用測試集評估結果</li>
+</ol>
+<h2 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h2><p>Scanning hyperspace: how to tune machine learning models<br><a target="_blank" rel="noopener" href="https://cambridgecoding.wordpress.com/2016/04/03/scanning-hyperspace-how-to-tune-machine-learning-models/">https://cambridgecoding.wordpress.com/2016/04/03/scanning-hyperspace-how-to-tune-machine-learning-models/</a><br>Hyperparameter Tuning the Random Forest in Python<br><a target="_blank" rel="noopener" href="https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74">https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E9%A6%AC%E6%8B%89%E6%9D%BE%E7%AD%86%E8%A8%98/" rel="tag"># 機器學習馬拉松筆記</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/23/%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99%E9%81%B8%E5%AE%9A-Evaluation-metrics/" rel="prev" title="評估指標選定(Evaluation metrics)">
+      <i class="fa fa-chevron-left"></i> 評估指標選定(Evaluation metrics)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/02/%E5%8F%AF%E8%83%BD%E7%94%A8%E5%88%B0%E5%AF%AB%E6%B3%95/" rel="next" title="可能用到寫法">
+      可能用到寫法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B6%85%EF%A5%AB%E6%95%B8%E8%AA%BF%E6%95%B4-hyper-parameter-optimization"><span class="nav-number">1.</span> <span class="nav-text">超參數調整(hyper-parameter optimization)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%EF%A5%AB%E6%95%B8%E8%AA%BF%E6%95%B4%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">超參數調整方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%A8%E6%A9%9F%E6%90%9C%E5%B0%8B%E9%80%9A%E5%B8%B8%E9%83%BD%E8%83%BD%E7%8D%B2%E5%BE%97%EF%A4%81%E4%BD%B3%E7%9A%84%E7%B5%90%E6%9E%9C-%E6%9B%B4%E5%A4%9A"><span class="nav-number">1.1.1.</span> <span class="nav-text">隨機搜尋通常都能獲得更佳的結果 (更多)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%E5%8F%83%E6%95%B8%E8%AA%BF%E6%95%B4%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.2.</span> <span class="nav-text">超參數調整步驟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E4%BC%B8"><span class="nav-number">1.3.</span> <span class="nav-text">延伸</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shoghi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shoghi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

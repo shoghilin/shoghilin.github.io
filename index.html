@@ -110,12 +110,12 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+    <a href="/" rel="section"><i class="home fa-fw"></i>首頁</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>歸檔</a>
 
   </li>
   </ul>
@@ -168,8 +168,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">發表於</span>
+              
 
-              <time title="創建時間：2022-05-22 14:52:34" itemprop="dateCreated datePublished" datetime="2022-05-22T14:52:34+08:00">2022-05-22</time>
+              <time title="創建時間：2022-05-22 14:52:34 / 修改時間：15:17:24" itemprop="dateCreated datePublished" datetime="2022-05-22T14:52:34+08:00">2022-05-22</time>
             </span>
 
           
@@ -196,6 +197,932 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h3 id="Read-more"><a href="#Read-more" class="headerlink" title="Read more"></a>Read more</h3><p>在問文章中顯示 “閱讀更多”，以避免占版面。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/18/%E6%B1%A0%E5%8C%96-Pooling-%E5%B1%A4%E8%88%87%E5%8F%83%E6%95%B8%E8%AA%BF%E6%95%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/18/%E6%B1%A0%E5%8C%96-Pooling-%E5%B1%A4%E8%88%87%E5%8F%83%E6%95%B8%E8%AA%BF%E6%95%B4/" class="post-title-link" itemprop="url">池化(Pooling)層與參數調整</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2020-08-18 17:40:03 / 修改時間：18:41:45" itemprop="dateCreated datePublished" datetime="2020-08-18T17:40:03+08:00">2020-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="池化-Pooling-層與參數調整"><a href="#池化-Pooling-層與參數調整" class="headerlink" title="池化(Pooling)層與參數調整"></a>池化(Pooling)層與參數調整</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.layers.MaxPooling2D(pool_size=(2, 2), strides=None, padding=&#x27;valid&#x27;, data_format=None)</span><br></pre></td></tr></table></figure>
+
+<p>常用參數：</p>
+<ul>
+<li><strong>pool_size：整數，沿（垂直，水平）方向縮小比例的因數</strong><br>(2，2)會把輸入張量的兩個維度都縮小一半</li>
+<li><strong>strides：整數，2 個整數表示的元組，或者是”None”。表示步長值。</strong><br>如果是 None，那麼默認值是 pool_size</li>
+<li><strong>padding：”valid”或者”same”（區分大小寫)</strong></li>
+<li><strong>data_format：channels_last(默認)或 channels_first 之一。表示輸入各維度的順序</strong><br>channels_last 代表尺寸是(batch, height, width, channels)的輸入張量<br>channels_first 代表尺寸是(batch, channels, height, width)的輸入張量</li>
+</ul>
+<h2 id="池化層-Pooling-Layer-超參數"><a href="#池化層-Pooling-Layer-超參數" class="headerlink" title="池化層(Pooling Layer) 超參數"></a>池化層(Pooling Layer) 超參數</h2><p>前端輸入feature map 維度：W1×H1×D1<br>有兩個hyperparameters：</p>
+<ul>
+<li>Pooling filter 的維度-  F,</li>
+<li>移動的步數 S,</li>
+</ul>
+<p>所以預計生成的輸出是 W2×H2×D2:<br>W2&#x3D;(W1−F)&#x2F;S+1W2&#x3D;(W1−F)&#x2F;S+1<br>H2&#x3D;(H1−F)&#x2F;S+1H2&#x3D;(H1−F)&#x2F;S+1<br>D2&#x3D;D1</p>
+<h2 id="Pooling-Layer-池化層-適用的場景"><a href="#Pooling-Layer-池化層-適用的場景" class="headerlink" title="Pooling Layer (池化層) 適用的場景"></a>Pooling Layer (池化層) 適用的場景</h2><p>特徵提取的誤差主要來自兩個方面</p>
+<ol>
+<li>鄰域大小受限造成的估計值方差增大</li>
+<li>卷積層超參數與內核造成估計均值的偏移</li>
+</ol>
+<p>一般來說：</p>
+<ul>
+<li>average-pooling 能減小第一種誤差，更多的保留圖像的背景信息</li>
+<li>max-pooling 能減小第二種誤差，更多的保留紋理信息</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/17/%E5%8D%B7%E7%A9%8D-Convolution-%E5%B1%A4%E8%88%87%E5%8F%83%E6%95%B8%E8%AA%BF%E6%95%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/17/%E5%8D%B7%E7%A9%8D-Convolution-%E5%B1%A4%E8%88%87%E5%8F%83%E6%95%B8%E8%AA%BF%E6%95%B4/" class="post-title-link" itemprop="url">卷積(Convolution)層與參數調整</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-08-17 17:45:35" itemprop="dateCreated datePublished" datetime="2020-08-17T17:45:35+08:00">2020-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-08-19 15:34:18" itemprop="dateModified" datetime="2020-08-19T15:34:18+08:00">2020-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="卷積-Convolution-的-超參數-Hyper-parameter"><a href="#卷積-Convolution-的-超參數-Hyper-parameter" class="headerlink" title="卷積 (Convolution) 的 超參數(Hyper parameter )"></a>卷積 (Convolution) 的 超參數(Hyper parameter )</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.layers.Conv2D(filters, kernel_size, strides=(1, 1), padding=&#x27;valid&#x27;, data_format=None, dilation_rate=(1, 1), activation=None, use_bias=True, kernel_initializer=&#x27;glorot_uniform&#x27;, bias_initializer=&#x27;zeros&#x27;, kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)</span><br></pre></td></tr></table></figure>
+<p>常用超參數</p>
+<ul>
+<li>filters: 濾波器的數量。此數字會等於做完卷積後特徵圖的通道數，通常設定為 2 的 n 次方</li>
+<li>kernel_size: 濾波器的大小。通常都是使用 3x3 或是 5x5</li>
+<li>input_shape: 只有對影像做第一次卷積時要指定，之後 Keras 會自動計算 input_shape</li>
+<li>strides: 做卷積時，濾波器移動的步長。</li>
+<li>padding: 是否要對輸入影像的邊緣補值。</li>
+</ul>
+<h2 id="填充或移動步數-Padding-x2F-Stride-的用途"><a href="#填充或移動步數-Padding-x2F-Stride-的用途" class="headerlink" title="填充或移動步數(Padding&#x2F;Stride )的用途"></a>填充或移動步數(Padding&#x2F;Stride )的用途</h2><h3 id="padding-x3D-‘VALID’-代表不用填補。也就是等於最一開始敘述的卷積計算，圖根據-filter-大小和-stride大小而變小"><a href="#padding-x3D-‘VALID’-代表不用填補。也就是等於最一開始敘述的卷積計算，圖根據-filter-大小和-stride大小而變小" class="headerlink" title="padding &#x3D; ‘VALID’ 代表不用填補。也就是等於最一開始敘述的卷積計算，圖根據 filter 大小和 stride大小而變小"></a>padding &#x3D; ‘VALID’ 代表不用填補。也就是等於最一開始敘述的卷積計算，圖根據 filter 大小和 stride大小而變小</h3><p>$$new_{height} &#x3D; new_{width} &#x3D; (W - F + 1) &#x2F; S$$</p>
+<p>也就是<br>10x10的資料<br>filter 3x3, stride&#x3D;1, 卷積後的大小: (10–3+1)&#x2F;1&#x3D;8<br>filter 3x3, stride&#x3D;2, 卷積後的大小: (10–3+1)&#x2F;2&#x3D;4</p>
+<h3 id="padding-x3D-‘Same’-表示使用填補方式使輸出和輸入具有相同的寬度和高度。"><a href="#padding-x3D-‘Same’-表示使用填補方式使輸出和輸入具有相同的寬度和高度。" class="headerlink" title="padding &#x3D; ‘Same’ 表示使用填補方式使輸出和輸入具有相同的寬度和高度。"></a>padding &#x3D; ‘Same’ 表示使用填補方式使輸出和輸入具有相同的寬度和高度。</h3><p>pad&#x3D;1，表示圖外圈額外加 1 圈 0，假設 pad&#x3D;2，圖外圈額外加 2 圈 0，以此類推<br>(1) kernel size是 3 的時候，卷積後圖的寬高不要變，pad 就會設定為 1<br>(2) kernel size是 5 的時候，卷積後圖的寬高不要變，pad 就會設定為 2</p>
+<h3 id="加了padding後，如下"><a href="#加了padding後，如下" class="headerlink" title="加了padding後，如下"></a>加了padding後，如下</h3><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294321/1593486938716' width="600" height="500" align="center">
+
+<h2 id="卷積神經網路-CNN-特性"><a href="#卷積神經網路-CNN-特性" class="headerlink" title="卷積神經網路(CNN)特性"></a>卷積神經網路(CNN)特性</h2><p>適合用在影像上</p>
+<ul>
+<li>因為 fully-connected networking 如果用在影像辨識上，會導致參數過多(因為像素很多)，導致 over-fitting</li>
+<li>CNN 針對影像辨識的特性，特別設計過，來減少參數</li>
+<li>Convolution：學出 filter 比對原始圖片，產生出 feature map (也當成image)</li>
+<li>Max Pooling：將 feature map 縮小</li>
+<li>Flatten：將每個像素的 channels (有多少個 filters) 展開成 fully connected feedforward network</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/17/CNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/17/CNN/" class="post-title-link" itemprop="url">CNN</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-08-17 10:54:55" itemprop="dateCreated datePublished" datetime="2020-08-17T10:54:55+08:00">2020-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-08-18 18:43:47" itemprop="dateModified" datetime="2020-08-18T18:43:47+08:00">2020-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="卷積神經網路跟深度網路"><a href="#卷積神經網路跟深度網路" class="headerlink" title="卷積神經網路跟深度網路"></a>卷積神經網路跟深度網路</h2><p>傳統的DNN（即Deep neural network）最大問題在於它會忽略資料的形狀<br>例如，輸入影像的資料時，該 data 通常包含了水平、垂直、color channel 等三維資訊，但傳統 DNN 的輸入處理必須是平面的、也就是須一維的資料。<br>一些重要的空間資料，只有在三維形狀中才能保留下來。</p>
+<p>然而，RGB 不同的 channel 之間也可能具有某些關連性、而遠近不同的像素彼此也應具有不同的關聯性</p>
+<p>而深度學習(Deep learning)中的 CNN 較傳統的 DNN 多了 <strong>Convolutional（卷積）及池化（Pooling)</strong> 兩層layer，用以維持形狀資訊並且避免參數大幅增加。</p>
+<p>Convolution原理是透過一個指定尺寸的window，由上而下依序滑動取得圖像中各局部特徵作為下一層的輸入，這個sliding window在CNN中稱為稱為Convolution kernel<br>利用此方式來取得圖像中各局部的區域加總計算後，透過 ReLU activation function輸出為特徵值後再提供給下一層使用</p>
+<h2 id="卷積網路的組成"><a href="#卷積網路的組成" class="headerlink" title="卷積網路的組成"></a>卷積網路的組成</h2><p>一個CNN主要是由</p>
+<ol>
+<li>Convolution Layer 卷積層</li>
+<li>Pooling Layer 池化層</li>
+<li>Flatten Layer 平坦層</li>
+<li>Fully connection Layer 全連接層</li>
+</ol>
+<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294319/1593486319054' height="600" width="500" align="center">
+
+<h3 id="Convolution-卷積-更多"><a href="#Convolution-卷積-更多" class="headerlink" title="Convolution - 卷積 (更多)"></a>Convolution - 卷積 (<a href="/2020/08/17/%E5%8D%B7%E7%A9%8D-Convolution-%E5%B1%A4%E8%88%87%E5%8F%83%E6%95%B8%E8%AA%BF%E6%95%B4">更多</a>)</h3><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294319/1593486120718' width="600" height="500" align="center">
+<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294319/1593486186625' width="600" height="500" align="center">
+<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294319/1593486192687' width="600" height="500" align="center">
+
+
+<h4 id="keras-實作"><a href="#keras-實作" class="headerlink" title="keras 實作"></a>keras 實作</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#建立一個序列模型</span><br><span class="line">model = models.Sequential()</span><br><span class="line">#建立一個卷績層, 32 個內核, 內核大小 3x3, </span><br><span class="line">#輸入影像大小 28x28x1</span><br><span class="line">model.add(layers.Conv2D(32, (3, 3), input_shape=(28, 28, 1)))</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Pooling-池化層-更多"><a href="#Pooling-池化層-更多" class="headerlink" title="Pooling - 池化層(更多)"></a>Pooling - 池化層(<a href="/2020/08/18/%E6%B1%A0%E5%8C%96-Pooling-%E5%B1%A4%E8%88%87%E5%8F%83%E6%95%B8%E8%AA%BF%E6%95%B4">更多</a>)</h3><p>Pooling layer 稱為池化層，它的功能很單純，就是將輸入的圖片尺寸縮小（大部份為縮小一半）以減少每張 feature map 維度並保留重要的特徵，<br>其好處有：</p>
+<ul>
+<li>特徵降維，減少後續 layer 需要參數</li>
+<li>具有抗干擾的作用：圖像中某些像素在鄰近區域有微小偏移或差異時，對 Pooling layer 的輸出影響不大，結果仍是不變的</li>
+<li>減少過度擬合 over-fitting 的情況</li>
+</ul>
+<p>與卷積層相同，池化層會使用kernel來取出各區域的值並運算，但最後的輸出並不透過Activate function（卷積層使用的function是ReLU）</p>
+<h4 id="keras-實作-1"><a href="#keras-實作-1" class="headerlink" title="keras 實作"></a>keras 實作</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#新增一池化層, 採用maxpooling</span><br><span class="line">model.add(MaxPooling2D(2,2))</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Flatten-平坦層"><a href="#Flatten-平坦層" class="headerlink" title="Flatten - 平坦層"></a>Flatten - 平坦層</h3><p>Flatten：將特徵資訊丟到 Full connected layer 來進行分類，其神經元只與上一層 kernel 的像素連結，而且各連結的權重在同層中是相同且共享的</p>
+<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294319/1593486350288' height="600" width="500" align="center">
+
+<h4 id="keras-實作-2"><a href="#keras-實作-2" class="headerlink" title="keras 實作"></a>keras 實作</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#新增平坦層</span><br><span class="line">model.add(Flatten())</span><br></pre></td></tr></table></figure>
+
+<h3 id="Fully-connection-全連接層"><a href="#Fully-connection-全連接層" class="headerlink" title="Fully connection - 全連接層"></a>Fully connection - 全連接層</h3><p>卷積(convolution)和池化層(pooling)，其最主要的目的分別是 <strong>提取特徵及減少圖像參數</strong> ，然後將特徵資訊丟到 Full connected layer 來進行分類，其神經元只與上一層 kernel的像素連結，而且各連結的權重在同層中是相同且共享的</p>
+<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294319/1593486408952' height="800" width="600" align="center">
+
+<h4 id="keras-實作-3"><a href="#keras-實作-3" class="headerlink" title="keras 實作"></a>keras 實作</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#建立一個全連接層</span><br><span class="line">model.add(Dense(units=100))</span><br><span class="line">model.add(Activation(&#x27;relu&#x27;))</span><br><span class="line"></span><br><span class="line">#建立一個輸出層, 並採用softmax</span><br><span class="line">model.add(Dense(units=10))</span><br><span class="line">model.add(Activation(&#x27;softmax&#x27;))</span><br></pre></td></tr></table></figure>
+<img src='' height="600" width="500" align="center">
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/16/%E5%82%B3%E7%B5%B1%E9%9B%BB%E8%85%A6%E8%A6%96%E8%A6%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/16/%E5%82%B3%E7%B5%B1%E9%9B%BB%E8%85%A6%E8%A6%96%E8%A6%BA/" class="post-title-link" itemprop="url">傳統電腦視覺</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2020-08-16 10:03:43 / 修改時間：10:17:36" itemprop="dateCreated datePublished" datetime="2020-08-16T10:03:43+08:00">2020-08-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="影像辨識的傳統方法"><a href="#影像辨識的傳統方法" class="headerlink" title="影像辨識的傳統方法"></a>影像辨識的傳統方法</h1><p>影像辨識的傳統方法是特徵描述及檢測，需要辦法把影像像素量化為特徵（特徵工程），然後把特徵丟給我們之前學過的機器學習算法來做分類或回歸<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294313/1592910196896' width="400" height="300" align="center"></p>
+<h2 id="傳統電腦視覺提取特徵的方法有"><a href="#傳統電腦視覺提取特徵的方法有" class="headerlink" title="傳統電腦視覺提取特徵的方法有"></a>傳統電腦視覺提取特徵的方法有</h2><h3 id="1-顏色直方圖"><a href="#1-顏色直方圖" class="headerlink" title="1. 顏色直方圖"></a>1. 顏色直方圖</h3><p>顏色直方圖是將顏色信息轉化為特徵一種方法，將顏色值 RGB 轉為直方圖值，來描述色彩和強度的分佈情況。舉例來說，一張彩色圖有 3 個 channel， RGB，顏色值都介於 0-255 之間，最小可以去統計每個像素值出現在圖片的數量，也可以是一個區間如 (0 - 15)、(16 - 31)、…、(240 - 255)。可表示如右圖</p>
+<h4 id="直方圖"><a href="#直方圖" class="headerlink" title="直方圖"></a>直方圖</h4><p>通過調用 cv2.calcHist(images, channels, mask, histSize, ranges) 函數來得到統計後的直方圖值</p>
+<p>images (list of array)：要分析的圖片<br>channels：產生的直方圖類型。例：[0]→灰度圖，[0, 1, 2]→RGB三色。<br>mask：optional，若有提供則僅計算 mask 部份的直方圖。<br>histSize：要切分的像素強度值範圍，預設為256。每個channel皆可指定一個範圍。例如，[32,32,32] 表示RGB三個channels皆切分為32區段。<br>ranges：像素的範圍，預設為[0,256]，表示&lt;256</p>
+<h4 id="顏色直方圖實作"><a href="#顏色直方圖實作" class="headerlink" title="顏色直方圖實作"></a>顏色直方圖實作</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">chans = cv2.split(image) # 把圖像的 3 個 channel 切分出來</span><br><span class="line">colors = (&quot;r&quot;, &quot;g&quot;, &quot;b&quot;)</span><br><span class="line">plt.figure()</span><br><span class="line">plt.title(&quot;&#x27;Flattened&#x27; Color Histogram&quot;)</span><br><span class="line">plt.xlabel(&quot;Bins&quot;)</span><br><span class="line">plt.ylabel(&quot;# of Pixels&quot;)</span><br><span class="line"></span><br><span class="line"># 對於所有 channel</span><br><span class="line">for (chan, color) in zip(chans, colors):</span><br><span class="line">    # 計算該 channel 的直方圖</span><br><span class="line">    hist = cv2.calcHist([chan], [0], None, [256], [0, 256])</span><br><span class="line">    print(&#x27;%s在[16~32]間有%s個pixels&#x27; %(color, hist[1]))</span><br><span class="line"> </span><br><span class="line">    # 畫出該 channel 的直方圖</span><br><span class="line">    plt.plot(hist, color = color)</span><br><span class="line">    plt.xlim([0, 255])</span><br><span class="line"></span><br><span class="line">plt.yticks(list(range(0,300,5)))</span><br><span class="line">plt.grid(True)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="方向梯度直方图HOG-Histogram-of-Oriented-Gradient-更多"><a href="#方向梯度直方图HOG-Histogram-of-Oriented-Gradient-更多" class="headerlink" title="方向梯度直方图HOG(Histogram of Oriented Gradient)   (更多)"></a>方向梯度直方图HOG(Histogram of Oriented Gradient)   (<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zyly/p/9651261.html">更多</a>)</h3><p>HOG特徵是一種在計算機視覺和圖像處理中用來進行物體檢測的特徵描述子。<br>HOG不是基於顏色值而是基於梯度來計算直方圖的，它通過計算和統計圖像局部區域的梯度方向直方圖來構建特徵。<br>HOG特徵結合SVM分類器已經被廣泛應用到圖像識別中，尤其在行人檢測中獲得了極大的成功。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/11/callbacks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/11/callbacks/" class="post-title-link" itemprop="url">callbacks</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-08-11 12:55:38" itemprop="dateCreated datePublished" datetime="2020-08-11T12:55:38+08:00">2020-08-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-08-13 09:42:36" itemprop="dateModified" datetime="2020-08-13T09:42:36+08:00">2020-08-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Callbacks-function："><a href="#Callbacks-function：" class="headerlink" title="Callbacks function："></a>Callbacks function：</h1><p>在訓練過程中，我們可以透過一些函式來監控&#x2F;介入訓練</p>
+<h2 id="Earlystopping："><a href="#Earlystopping：" class="headerlink" title="Earlystopping："></a>Earlystopping：</h2><p>如果一個模型會 overfitting，那 training 與 validation 的表現只會越差越遠，不如在開始變糟之前就先停下<br>注意：Earlystop 不會使模型得到更好的結果，僅是避免更糟<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294303/1592909020061' width="400" height="300" align="center"></p>
+<h3 id="keras-實作"><a href="#keras-實作" class="headerlink" title="keras 實作"></a>keras 實作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from keras.callbacks import EarlyStopping</span><br><span class="line"></span><br><span class="line">earlystop = EarlyStopping(monitor=&quot;val_loss&quot;, </span><br><span class="line">                          patience=5, </span><br><span class="line">                          verbose=1</span><br><span class="line">                          )</span><br><span class="line"></span><br><span class="line">model.fit(x_train, y_train, </span><br><span class="line">          epochs=EPOCHS, </span><br><span class="line">          batch_size=BATCH_SIZE, </span><br><span class="line">          validation_data=(x_test, y_test), </span><br><span class="line">          shuffle=True,</span><br><span class="line">          callbacks=[earlystop]</span><br><span class="line">         )</span><br></pre></td></tr></table></figure>
+
+<h2 id="Model-checkpoint"><a href="#Model-checkpoint" class="headerlink" title="Model checkpoint"></a>Model checkpoint</h2><p>根據狀況隨時將模型存下來，如此可以保證：</p>
+<ul>
+<li>假如不幸訓練意外中斷，前面的功夫不會白費。我們可以從最近的一次的權重繼續重新開始。</li>
+<li>我們可以透過監控 validation loss 來保證所存下來的模型是在 validation set 表現最好的一個。</li>
+<li>假如要做 Inference :可以保證使用的是對 monitor metric 最佳的權重</li>
+</ul>
+<h3 id="keras-實作-1"><a href="#keras-實作-1" class="headerlink" title="keras 實作"></a>keras 實作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from keras.callbacks import ModelCheckpoint</span><br><span class="line"></span><br><span class="line">model_ckpt = ModelCheckpoint(filepath=&quot;./tmp.h5&quot;, </span><br><span class="line">                             monitor=&quot;val_loss&quot;, </span><br><span class="line">                             save_best_only=True)</span><br><span class="line"></span><br><span class="line"># 若save_best_only=True則會儲存最好的那組權重，若為False則為最新的那組權重。</span><br><span class="line"></span><br><span class="line">model.fit(x_train, y_train, </span><br><span class="line">          epochs=EPOCHS, </span><br><span class="line">          batch_size=BATCH_SIZE, </span><br><span class="line">          validation_data=(x_test, y_test), </span><br><span class="line">          shuffle=True,</span><br><span class="line">          callbacks=[model_ckpt]</span><br><span class="line">         )</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reduce-Learning-Rate"><a href="#Reduce-Learning-Rate" class="headerlink" title="Reduce Learning Rate"></a>Reduce Learning Rate</h2><p>隨訓練更新次數，將 Learning rate 逐步減小</p>
+<ul>
+<li>因為通常損失函數越接近谷底的位置，開口越小 – 需要較小的 Learning rate 才可以再次下降</li>
+</ul>
+<p>可行的調降方式</p>
+<ul>
+<li>每更新 n 次後，將 Learning rate 做一次調降 – schedule decay</li>
+<li>當經過幾個 epoch 後，發現 performance 沒有進步 – Reduce on plateau<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294307/1592909403189' width="400" height="300" align="center"></li>
+</ul>
+<h3 id="keras實作"><a href="#keras實作" class="headerlink" title="keras實作"></a>keras實作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from keras.callbacks import ReduceLROnPlateau</span><br><span class="line">reduce_lr = ReduceLROnPlateau(factor=reduce_factor, </span><br><span class="line">                              min_lr = 1e-12,</span><br><span class="line">                              monitor=&#x27;val_loss&#x27;,</span><br><span class="line">                              patient=reduce_patient,</span><br><span class="line">                              verbose=1)</span><br><span class="line"></span><br><span class="line">model.fit(x_train, y_train, </span><br><span class="line">          epochs=EPOCHS, </span><br><span class="line">          batch_size=BATCH_SIZE, </span><br><span class="line">          validation_data=(x_test, y_test), </span><br><span class="line">          shuffle=True,</span><br><span class="line">          callbacks=[reduce_lr]</span><br><span class="line">         )</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="客製化callback"><a href="#客製化callback" class="headerlink" title="客製化callback"></a>客製化callback</h2><p>Callbacks 可以在模型訓練的過程中，進行監控或介入。Callbacks 的時機包含：</p>
+<ul>
+<li>on_training_begin</li>
+<li>on_epoch_begin</li>
+<li>on_batch_begin</li>
+<li>on_batch_end</li>
+<li>on_epoch_end</li>
+<li>on_training_end</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/04/%E8%A8%93%E7%B7%B4%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%89%8D%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/04/%E8%A8%93%E7%B7%B4%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%89%8D%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85/" class="post-title-link" itemprop="url">訓練神經網路前的注意事項</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-08-04 23:23:58" itemprop="dateCreated datePublished" datetime="2020-08-04T23:23:58+08:00">2020-08-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-08-05 12:44:32" itemprop="dateModified" datetime="2020-08-05T12:44:32+08:00">2020-08-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="訓練模型前的檢查"><a href="#訓練模型前的檢查" class="headerlink" title="訓練模型前的檢查"></a>訓練模型前的檢查</h1><h2 id="為何要做事前檢查"><a href="#為何要做事前檢查" class="headerlink" title="為何要做事前檢查"></a>為何要做事前檢查</h2><p>訓練模型的時間跟成本都很大 (如 GPU quota &amp; 你&#x2F;妳的人生)</p>
+<p>要做的檢查有：<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294289/1592907100338' width="400" height="300" align="center"><br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294289/1592907164307?t=1593494020922&t=1593494039669' width="400" height="300" align="center"><br><a target="_blank" rel="noopener" href="https://github.com/shoghilin/ML100Days/blob/master/homework/Day_078_HW.ipynb">看更多</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/03/%E5%84%AA%E5%8C%96%E5%99%A8optimizers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/03/%E5%84%AA%E5%8C%96%E5%99%A8optimizers/" class="post-title-link" itemprop="url">優化器optimizers</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-08-03 16:44:37" itemprop="dateCreated datePublished" datetime="2020-08-03T16:44:37+08:00">2020-08-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-08-10 16:55:57" itemprop="dateModified" datetime="2020-08-10T16:55:57+08:00">2020-08-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="優化器optimizers"><a href="#優化器optimizers" class="headerlink" title="優化器optimizers"></a>優化器optimizers</h1><ul>
+<li>機器學習算法當中，大部分算法的本質就是建立優化模型，通過最優化方法對目標函數進行優化從而訓練出最好的模型</li>
+<li>優化算法的功能，是通過改善訓練方式，來最小化(或最大化)損失函數 E(x)</li>
+<li>優化策略和算法，是用來更新和計算影響模型訓練和模型輸出的網絡參數，使其逼近或達到最優值</li>
+</ul>
+<h2 id="最常用的優化算法-Gradient-Descent"><a href="#最常用的優化算法-Gradient-Descent" class="headerlink" title="最常用的優化算法-Gradient Descent"></a><a href="/2020/07/29/Gradient-Descent">最常用的優化算法-Gradient Descent</a></h2><p>通過尋找最小值，控制方差，更新模型參數，最終使模型收斂</p>
+<p>$$ w_{i+1} &#x3D; w_i - d_i·\eta_i,  i&#x3D;0,1,…$$<br>參數 $\eta$ 是學習率。這個參數既可以設置為固定值，也可以用一維優化方法沿著訓練的方向逐步更新計算<br>參數的更新分為兩步：第一步計算梯度下降的方向，第二步計算合適的學習</p>
+<h2 id="動量Momentum-GD篇中有提到"><a href="#動量Momentum-GD篇中有提到" class="headerlink" title="動量Momentum(GD篇中有提到)"></a>動量Momentum(<a href="/2020/07/29/Gradient-Descent">GD篇中有提到</a>)</h2><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1593492829914' width="400" height="300" align="center">
+
+<h2 id="SGD-隨機梯度下降法-stochastic-gradient-decent"><a href="#SGD-隨機梯度下降法-stochastic-gradient-decent" class="headerlink" title="SGD-隨機梯度下降法(stochastic gradient decent)"></a>SGD-隨機梯度下降法(stochastic gradient decent)</h2><p>找出參數的梯度(利用微分的方法)，往梯度的方向去更新參數(weight)<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904314143' width='400' height='300' align="center"></p>
+<p>優點： SGD 每次更新時對每個樣本進行梯度更新， 對於很大的數據集來說，可能會有相似的樣本，而 SGD 一次只進行一次更新，就沒有冗餘，而且比較快<br>缺點： 但是 SGD 因為更新比較頻繁，會造成 cost function 有嚴重的震盪</p>
+<h3 id="keras調用SGD"><a href="#keras調用SGD" class="headerlink" title="keras調用SGD"></a>keras調用SGD</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.optimizers.SGD(lr=0.01, momentum=0.0, decay=0.0, nesterov=False)</span><br></pre></td></tr></table></figure>
+<p>lr：<float> 學習率<br>Momentum 動量：<float> 參數，用於加速 SGD 在相關方向上前進，並抑制震盪<br>Decay(衰變)：<float> 每次參數更新後學習率衰減值<br>nesterov：布爾值。是否使用 Nesterov 動量</p>
+<p>Momentum：動量 – 在更新方向以外，加上一個固定向量，使得真實移動方向會介於算出來的 gradient step 與 momentum 間。</p>
+<ul>
+<li>Actual step &#x3D; momentum step + gradient step</li>
+</ul>
+<p>Nesterov Momentum：拔草測風向<br>將 momentum 納入 gradient 的計算</p>
+<ul>
+<li>Gradient step computation is based on x + momentum</li>
+</ul>
+<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904351118' width='400' height="300" align="center">
+
+<h4 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from keras import optimizers </span><br><span class="line">model = Sequential() </span><br><span class="line">model.add(Dense(64, kernel_initializer=&#x27;uniform&#x27;, input_shape=(10,)))</span><br><span class="line">model.add(Activation(&#x27;softmax’)) </span><br><span class="line"></span><br><span class="line">#實例化一個優化器對象，然後將它傳入model.compile()，可以修改參數</span><br><span class="line">sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True) model.compile(loss=&#x27;mean_squared_error&#x27;, optimizer=sgd) </span><br><span class="line"></span><br><span class="line"># 通過名稱來調用優化器，將使用優化器的默認參數</span><br><span class="line">model.compile(loss=&#x27;mean_squared_error&#x27;, optimizer=&#x27;sgd&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="SGD-mini-batch-gradient-descent"><a href="#SGD-mini-batch-gradient-descent" class="headerlink" title="SGD, mini-batch gradient descent"></a>SGD, mini-batch gradient descent</h3><p>batch-gradient，其實就是普通的梯度下降算法但是採用 <strong>批量處理</strong></p>
+<p>當數據集很大（比如有100000個左右時），每次 iteration 都要將1000000 個數據跑一遍，機器帶不動。於是有了 mini-batch-gradient ——將 1000000 個樣本分成 1000 份，每份 1000 個，都看成一組獨立的數據集，進行 forward_propagation 和 backward_propagation</p>
+<p>在整個算法的流程中，cost function 是局部的，但是W和b是全局的</p>
+<ul>
+<li>SGD對訓練集上每一個數據都計算誤差，但只在所有訓練數據計算完成後才更新模型</li>
+<li>對訓練集上的一次訓練過程稱為一代（epoch）。因此，SGD是在每一個訓練 epoch 之後更新模型</li>
+</ul>
+<p>batchsize：批量大小，即每次訓練在訓練集中取batchsize個樣本訓練</p>
+<ol>
+<li>batchsize&#x3D;1</li>
+<li>batchsize &#x3D; mini-batch; </li>
+<li>batchsize &#x3D; whole training set</li>
+</ol>
+<p>iteration：1個 iteration 等於使用 batchsize 個樣本訓練一次<br>epoch：1個 epoch 等於使用訓練集中的全部樣本訓練一次</p>
+<h4 id="怎麼配置mini-batch梯度下降？"><a href="#怎麼配置mini-batch梯度下降？" class="headerlink" title="怎麼配置mini-batch梯度下降？"></a>怎麼配置mini-batch梯度下降？</h4><p>Mini-batch sizes，簡稱為「batch sizes」，是算法設計中需要調節的參數</p>
+<ul>
+<li>較小的值讓學習過程收斂更快，但是會產生更多噪聲</li>
+<li>較大的值讓學習過程收斂較慢，但是準確的估計誤差梯度</li>
+<li>batch size 的默認值最好是 32 盡量選擇 2 的冪次方，有利於 GPU 的加速</li>
+<li>調節 batch size 時，最好觀察模型在不同 batch size 下的訓練時間和驗證誤差的學習曲線</li>
+<li>調整其他所有超參數之後再調整 batch size 和學習率</li>
+</ul>
+<h2 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h2><p>對於常見的數據給予比較小的學習率去調整參數，對於不常見的數據給予比較大的學習率調整參數<br>每個參數都有不同的 learning rate,<br>根據之前所有 gradient 的 root mean square 修改<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904760249' width="400" height="300" align="center"><br>優點： Adagrad 的是減少了學習率的手動調節<br>缺點：它的缺點是分母會不斷積累，這樣學習率就會收縮並最終會變得非常小。</p>
+<h3 id="Adagrad-調用"><a href="#Adagrad-調用" class="headerlink" title="Adagrad 調用"></a>Adagrad 調用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.optimizers.Adagrad(lr=0.01, epsilon=None, decay=0.0)</span><br></pre></td></tr></table></figure>
+<p>lr：float &gt;&#x3D; 0. 學習率.一般 η 就取 0.01<br>epsilon： float &gt;&#x3D; 0. 若為 None，默認為 K.epsilon().<br>decay：float &gt;&#x3D; 0. 每次參數更新後學習率衰減值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from keras import optimizers </span><br><span class="line"></span><br><span class="line">model = Sequential() </span><br><span class="line">model.add(Dense(64, kernel_initializer=&#x27;uniform&#x27;, input_shape=(10,)))</span><br><span class="line">model.add(Activation(&#x27;softmax’)) </span><br><span class="line"></span><br><span class="line">#實例化一個優化器對象，然後將它傳入model.compile() , 可以修改參數</span><br><span class="line">opt = optimizers.Adagrad(lr=0.01, epsilon=None, decay=0.0) </span><br><span class="line"></span><br><span class="line">model.compile(loss=&#x27;mean_squared_error&#x27;, optimizer=opt)</span><br></pre></td></tr></table></figure>
+
+<h2 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h2><p>RMSProp 算法也旨在 __抑制梯度的鋸齒下降__，但與動量相比， RMSProp __不需要手動配置學習率超參數__，由算法自動完成。更重要的是，RMSProp 可以為每個參數選擇不同的學習率，通常是RNN優化器的好選擇。(也可以想成momentum和adagrad部分相結合)</p>
+<p>RMSprop 是為了解決 Adagrad 學習率急劇下降問題的，所以比對梯度更新規則：<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904904451' width="400" height="300" align="center"></p>
+<h3 id="RMSprop-調用"><a href="#RMSprop-調用" class="headerlink" title="RMSprop 調用"></a>RMSprop 調用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0) </span><br></pre></td></tr></table></figure>
+<p>lr：float &gt;&#x3D; 0. Learning rate.<br>rho：float &gt;&#x3D; 0.<br>epsilon：float &gt;&#x3D; 0. Fuzz factor. If None, defaults to K.epsilon().<br>decay：float &gt;&#x3D; 0. Learning rate decay over each update.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from keras import optimizers </span><br><span class="line"></span><br><span class="line">model = Sequential() </span><br><span class="line">model.add(Dense(64, kernel_initializer=&#x27;uniform&#x27;, input_shape=(10,)))</span><br><span class="line">model.add(Activation(&#x27;softmax’)) </span><br><span class="line"></span><br><span class="line">#實例化一個優化器對象，然後將它傳入model.compile() , 可以修改參數</span><br><span class="line">opt = optimizers.RMSprop(lr=0.001, epsilon=None, decay=0.0) </span><br><span class="line"></span><br><span class="line">model.compile(loss=&#x27;mean_squared_error&#x27;, optimizer=opt) </span><br></pre></td></tr></table></figure>
+
+<h2 id="Adam-說明"><a href="#Adam-說明" class="headerlink" title="Adam 說明"></a>Adam 說明</h2><p>除了像 RMSprop 一樣存儲了過去梯度的平方 $v_t$ 的指數衰減平均值，也像momentum 一樣保持了過去梯度 $m_t$ 的指數衰減平均值, 「 t 」：<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592905046802' width="400" height="300" align="center"><br>計算梯度的指數移動平均數，$m_0$ 初始化為 0。綜合考慮之前時間步的梯度動量<br>β1 係數為指數衰減率，控制權重分配（動量與當前梯度），通常取接近於1的值。默認為 0.9<br>其次，計算梯度平方的指數移動平均數，$v_0$ 初始化為 0。β2 係數為指數衰減率，控制之前的梯度平方的影響情況。<br>類似於 RMSProp 算法，對梯度平方進行加權均值。默認為 0.999<br>由於 $m_0$ 初始化為 0，會導致 $m_t$ 偏向於 0，尤其在訓練初期階段。所以，此處需要對梯度均值 $m_t$ 進行偏差糾正，降低偏差對訓練初期的影響<br>與 $m_0$ 類似，因為 v0 初始化為 0 導致訓練初始階段 $v_t$ 偏向 0，對其進行糾正</p>
+<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1593493474813' width="400" height="300" align="center">
+
+<p>更新參數，初始的學習率 lr 乘以梯度均值與梯度方差的平方根之比。其中默認學習率lr &#x3D;0.001, eplison (ε&#x3D;10^-8)，避免除數變為 0<br>對更新的步長計算，能夠從梯度均值及梯度平方兩個角度進行自適應地調節，而不是直接由當前梯度決定</p>
+<h3 id="Adam-調用"><a href="#Adam-調用" class="headerlink" title="Adam 調用"></a>Adam 調用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)</span><br></pre></td></tr></table></figure>
+<p>lr：float &gt;&#x3D; 0. 學習率。<br>beta_1：float, 0 &lt; beta &lt; 1. 通常接近於 1。<br>beta_2：float, 0 &lt; beta &lt; 1. 通常接近於 1。<br>epsilon：float &gt;&#x3D; 0. 模糊因數. 若為 None, 默認為 K.epsilon()。<br>amsgrad：boolean. 是否應用此演算法的 AMSGrad 變種，來自論文 「On the Convergence of Adam and Beyond」<br>decay：float &gt;&#x3D; 0. 每次參數更新後學習率衰減值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from keras import optimizers </span><br><span class="line"></span><br><span class="line">model = Sequential() </span><br><span class="line">model.add(Dense(64, kernel_initializer=&#x27;uniform&#x27;, input_shape=(10,)))</span><br><span class="line">model.add(Activation(&#x27;softmax’)) </span><br><span class="line"></span><br><span class="line">#實例化一個優化器對象，然後將它傳入 model.compile() , 可以修改參數</span><br><span class="line">opt = optimizers. Adam(lr=0.001, epsilon=None, decay=0.0) </span><br><span class="line"></span><br><span class="line">model.compile(loss=&#x27;mean_squared_error&#x27;, optimizer=opt)</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何選擇優化器"><a href="#如何選擇優化器" class="headerlink" title="如何選擇優化器"></a>如何選擇優化器</h2><ol>
+<li><p>隨機梯度下降（SGD）：SGD 指的是 mini batch gradient descent<br>優點：針對大數據集，訓練速度很快從訓練集樣本中隨機選取一個 batch 計算一次梯度，更新一次模型參數<br>缺點：<br>對所有參數使用相同的學習率。對於稀疏數據或特徵，希望盡快更新一些不經常出現的特徵，慢一些更新常出現的特徵。所以選擇合適的學習率比較困難</p>
+</li>
+<li><p>容易收斂到局部最優 Adam：利用梯度的一階矩估計和二階矩估計動態調節每個參數的學習率<br>優點：<br>(1) 經過偏置校正後，每一次迭代都有確定的範圍，使得參數比較平穩。善於處理稀疏梯度和非平穩目標<br>(2) 對內存需求小<br>(3) 對不同內存計算不同的學習率</p>
+</li>
+<li><p>RMSProp：自適應調節學習率。對學習率進行了約束，適合處理非平穩目標和 RNN</p>
+</li>
+<li><p>如果輸入數據集比較稀疏，SGD、NAG和動量項等方法可能效果不好。因此對於稀疏數據集，應該使用某種自適應學習率的方法，且另一好處為不需要人為調整學習率，使用默認參數就可能獲得最優值：Adagrad, RMSprop, Adam</p>
+</li>
+<li><p>如果想使訓練深層網絡模型快速收斂或所構建的神經網絡較為複雜，則應該使用Adam或其他自適應學習速率的方法，因為這些方法的實際效果更優<br>(1) Adam 就是在 RMSprop 的基礎上加了 bias-correction 和 momentum<br>(2) 隨著梯度變的稀疏，Adam 比 RMSprop 效果會好</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/03/%E6%B7%B1%E9%80%A0%E6%BC%94%E8%AC%9B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/03/%E6%B7%B1%E9%80%A0%E6%BC%94%E8%AC%9B/" class="post-title-link" itemprop="url">深造演講</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-08-03 16:25:53" itemprop="dateCreated datePublished" datetime="2020-08-03T16:25:53+08:00">2020-08-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-08-08 09:14:53" itemprop="dateModified" datetime="2020-08-08T09:14:53+08:00">2020-08-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%B4%E5%93%88%E4%BC%8A/" itemprop="url" rel="index"><span itemprop="name">巴哈伊</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Day-1"><a href="#Day-1" class="headerlink" title="Day 1"></a>Day 1</h1><h2 id="上帝的目的"><a href="#上帝的目的" class="headerlink" title="上帝的目的"></a>上帝的目的</h2><p>上帝的目的在於創生萬物，在每個時期祂都會為人間帶來新的訊息。也就是顯聖者和他們所啟示的經書。<br>就像你在購買手機時會一併附給你的說明書一樣，你可以通過說明書快速了解到產品的意義，及他當中所潛藏的能力。<br>經書就是我們的說明書，為我們闡明了生命的意義，及我們的潛能。</p>
+<h2 id="Bahaullah-is-he-who-says-he-is"><a href="#Bahaullah-is-he-who-says-he-is" class="headerlink" title="Bahaullah is he who says he is"></a>Bahaullah is he who says he is</h2><p>巴哈歐拉就是他自身所描述的那位。閱讀他的經典與他建立連結不是他人的責任，而是你自身的責任。 </p>
+<h2 id="什麼是intelligent"><a href="#什麼是intelligent" class="headerlink" title="什麼是intelligent"></a>什麼是intelligent</h2><p>intelligent代表能夠讓蓄意的使事情發生，而非意外。<br>也就是他理解事物的本質，知曉如何將事務引導到他所渴望的結果中。</p>
+<h2 id="何為personal-god"><a href="#何為personal-god" class="headerlink" title="何為personal god?"></a>何為personal god?</h2><blockquote>
+<p>God is a god with conscious of his creation, who has a mind, a will, a purpose.<br>Not like most scientists think that god is unconscious and determined forces.<br>上帝是擁有意識、有思考、意志和目標的，而不是像大多科學家所想，無意識且堅決的力量。</p>
+</blockquote>
+<h2 id="若精神不存在於你的大腦或心臟，那精神究竟在哪裡呢？"><a href="#若精神不存在於你的大腦或心臟，那精神究竟在哪裡呢？" class="headerlink" title="若精神不存在於你的大腦或心臟，那精神究竟在哪裡呢？"></a>若精神不存在於你的大腦或心臟，那精神究竟在哪裡呢？</h2><p>精神存在於精神世界中，透過類似投影的方式在操作著肉體。</p>
+<h2 id="靈魂"><a href="#靈魂" class="headerlink" title="靈魂"></a>靈魂</h2><p>在這個世界上除了人類為還有許多不同的靈魂種類，分別有礦物靈、植物靈、動物靈、人靈、信仰靈、跟聖靈</p>
+<h3 id="各自的特性"><a href="#各自的特性" class="headerlink" title="各自的特性"></a>各自的特性</h3><p>下方靈魂同時擁有上方靈魂的特性</p>
+<table>
+<thead>
+<tr>
+<th><strong>靈魂種類</strong></th>
+<th><strong>特性</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>礦物靈</td>
+<td>凝聚力</td>
+</tr>
+<tr>
+<td>植物靈</td>
+<td>成長</td>
+</tr>
+<tr>
+<td>動物靈</td>
+<td>感官</td>
+</tr>
+<tr>
+<td>人靈</td>
+<td>思想</td>
+</tr>
+<tr>
+<td>信仰靈</td>
+<td>承認</td>
+</tr>
+<tr>
+<td>聖靈</td>
+<td>顯示</td>
+</tr>
+</tbody></table>
+<h2 id="何謂思考呢？"><a href="#何謂思考呢？" class="headerlink" title="何謂思考呢？"></a>何謂思考呢？</h2><p>思考是個由未知到已知的過程。有趣的是人們唯有在擁有選擇的狀況下才有辦法思考。<br>因此面對常見的問題「若真的萬物皆為神所造，那為何神要創造那些不好的事情呢？」<br>答案就變得很明顯了，若人的一生中沒有了傷痛，那又怎麼能領悟健康的美好。<br>而毫無疑問的在人的一生最重要的便是死亡，若人不會死世間的一切便失去了意義。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/30/BackPropagation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/30/BackPropagation/" class="post-title-link" itemprop="url">BackPropagation</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-07-30 10:55:44" itemprop="dateCreated datePublished" datetime="2020-07-30T10:55:44+08:00">2020-07-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-08-03 16:43:30" itemprop="dateModified" datetime="2020-08-03T16:43:30+08:00">2020-08-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="反向傳播（BP：Backpropagation）"><a href="#反向傳播（BP：Backpropagation）" class="headerlink" title="反向傳播（BP：Backpropagation）"></a>反向傳播（BP：Backpropagation）</h1><p>反向傳播（BP：Backpropagation）是「誤差反向傳播」的簡稱，是一種與最優化方法（如梯度下降法）結合使用的該方法對網路中所有權重計算損失函數的梯度。這個梯度會反饋給最優化方法，用來更新權值以最小化損失函數</p>
+<h2 id="執行方式"><a href="#執行方式" class="headerlink" title="執行方式"></a>執行方式</h2><h3 id="第-1-階段：解函數微分"><a href="#第-1-階段：解函數微分" class="headerlink" title="第 1 階段：解函數微分"></a>第 1 階段：解函數微分</h3><p>每次疊代中的傳播環節包含兩步： </p>
+<ul>
+<li>(前向傳播階段）將訓練輸入送入網路以獲得啟動響應</li>
+<li>(反向傳播階段）將啟動響應同訓練輸入對應的目標輸出求差，從而獲得輸出層和隱藏層的響應誤差</li>
+</ul>
+<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294283/1592903273524' width=400 height=300 alt='FP/BP' align="center">
+
+<h3 id="第-2-階段：權重更新"><a href="#第-2-階段：權重更新" class="headerlink" title="第 2 階段：權重更新"></a>第 2 階段：權重更新</h3><p>Follow Gradient Descent </p>
+<ul>
+<li>第 1 和第 2 階段可以反覆循環疊代，直到網路對輸入的響應達到滿意的預定的目標範圍為止</li>
+</ul>
+<h3 id="演算法"><a href="#演算法" class="headerlink" title="演算法"></a>演算法</h3><img src='https://miro.medium.com/max/700/1*nevYe3P-US1Ipj2PmRKQ5A.png' width=400 height=300 alt='BP algorithm' align="center">
+
+<h2 id="優缺點"><a href="#優缺點" class="headerlink" title="優缺點"></a>優缺點</h2><h3 id="優點："><a href="#優點：" class="headerlink" title="優點："></a>優點：</h3><ul>
+<li>具有任意複雜的模式分類能力和優良的多維函數映射能力，解決了簡單感知器不能解決的異或或者一些其他的問題</li>
+<li>從結構上講，BP 神經網路具有輸入層、隱含層和輸出層</li>
+<li>從本質上講，BP 算法就是以網路誤差平方目標函數、採用梯度下降法來計算目標函數的最小值</li>
+</ul>
+<h3 id="缺點："><a href="#缺點：" class="headerlink" title="缺點："></a>缺點：</h3><ul>
+<li>學習速度慢，即使是一個簡單的過程，也需要幾百次甚至上千次的學習才能收斂</li>
+<li>容易陷入局部極小值</li>
+<li>網路層數、神經元個數的選擇沒有相應的理論指導</li>
+<li>網路推廣能力有限</li>
+</ul>
+<h3 id="應用："><a href="#應用：" class="headerlink" title="應用："></a>應用：</h3><ul>
+<li>函數逼近</li>
+<li>模式識別 </li>
+<li>分類</li>
+<li>數據壓縮</li>
+</ul>
 
       
     </div>
@@ -213,6 +1140,9 @@
 
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一頁"></i></a>
+  </nav>
 
 
 
@@ -277,9 +1207,19 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">文章</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
 </div>

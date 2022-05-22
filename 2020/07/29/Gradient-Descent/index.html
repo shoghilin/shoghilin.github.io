@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="梯度下降 Gradient-Descent機器學習算法當中，優化算法的功能，是通過改善訓練方式，來最小化(或最大化)損失函數 最常用的優化算法是Gradient DescentGradient descent 是一個一階最佳化算法，通常也稱為最速下降法目的：沿著目標函數梯度下降的方向搜索極小值（也可以沿著梯度上升的方向搜索極大值）若要使用梯度下降法找到一個函數的局部極小值，必須向函數上當前點對應梯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gradient-Descent">
+<meta property="og:url" content="http://example.com/2020/07/29/Gradient-Descent/index.html">
+<meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="梯度下降 Gradient-Descent機器學習算法當中，優化算法的功能，是通過改善訓練方式，來最小化(或最大化)損失函數 最常用的優化算法是Gradient DescentGradient descent 是一個一階最佳化算法，通常也稱為最速下降法目的：沿著目標函數梯度下降的方向搜索極小值（也可以沿著梯度上升的方向搜索極大值）若要使用梯度下降法找到一個函數的局部極小值，必須向函數上當前點對應梯">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294279/1592900888254">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294279/1592900924087">
+<meta property="article:published_time" content="2020-07-29T04:23:42.000Z">
+<meta property="article:modified_time" content="2020-07-29T08:43:24.000Z">
+<meta property="article:author" content="Shoghi">
+<meta property="article:tag" content="機器學習馬拉松筆記">
+<meta property="article:tag" content="keras">
+<meta property="article:tag" content="deep learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294279/1592900888254">
+
+<link rel="canonical" href="http://example.com/2020/07/29/Gradient-Descent/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>Gradient-Descent | Shoghi的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Shoghi的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/29/Gradient-Descent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Gradient-Descent
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2020-07-29 12:23:42 / 修改時間：16:43:24" itemprop="dateCreated datePublished" datetime="2020-07-29T12:23:42+08:00">2020-07-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="梯度下降-Gradient-Descent"><a href="#梯度下降-Gradient-Descent" class="headerlink" title="梯度下降 Gradient-Descent"></a>梯度下降 Gradient-Descent</h1><p>機器學習算法當中，優化算法的功能，是通過改善訓練方式，來最小化(或最大化)損失函數</p>
+<h2 id="最常用的優化算法是Gradient-Descent"><a href="#最常用的優化算法是Gradient-Descent" class="headerlink" title="最常用的優化算法是Gradient Descent"></a>最常用的優化算法是Gradient Descent</h2><p>Gradient descent 是一個一階最佳化算法，通常也稱為最速下降法<br>目的：沿著目標函數梯度下降的方向搜索極小值（也可以沿著梯度上升的方向搜索極大值）<br>若要使用梯度下降法找到一個函數的局部極小值，必須向函數上當前點對應梯度（或者是近似梯度）的反方向的規定步長距離點進行疊代搜索。</p>
+<h2 id="梯度下降法的缺點包括："><a href="#梯度下降法的缺點包括：" class="headerlink" title="梯度下降法的缺點包括："></a>梯度下降法的缺點包括：</h2><ul>
+<li>靠近極小值時速度減慢</li>
+<li>直線搜索可能會產生一些問題</li>
+<li>可能會「之字型」地下降</li>
+</ul>
+<h2 id="學習率對梯度下降的影響"><a href="#學習率對梯度下降的影響" class="headerlink" title="學習率對梯度下降的影響"></a>學習率對梯度下降的影響</h2><p>學習率定義了每次疊代中應該更改的參數量。換句話說，它控制我們應該收斂到minimum的速度或速度<br>小學習率可以使迭代收斂，過大的學習率可能超過最小值<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294279/1592900888254" width = "400" height = "300" alt="learning rate" align=center /></p>
+<h2 id="梯度下降法的過程"><a href="#梯度下降法的過程" class="headerlink" title="梯度下降法的過程"></a>梯度下降法的過程</h2><ol>
+<li>首先需要設定一個初始參數值，通常情況下將初值設為零(w&#x3D;0)，</li>
+<li>接下來需要計算成本函數 cost</li>
+<li>然後計算函數的導數(某個點處的斜率值)，並設定學習效率參數(lr)的值</li>
+<li>重複執行上述過程，直到參數值收斂，這樣我們就能獲得函數的最優解<img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294279/1592900924087" width = "400" height = "300" alt="gd-1" align=center /></li>
+</ol>
+<h2 id="要計算-Gradient-Descent，考慮"><a href="#要計算-Gradient-Descent，考慮" class="headerlink" title="要計算 Gradient Descent，考慮"></a>要計算 Gradient Descent，考慮</h2><ul>
+<li>Loss &#x3D; 實際 ydata – 預測 ydata<br>Loss &#x3D;  w* 實際 xdata – w*預測 xdata (bias 為 init value，被消除)</li>
+<li>Gradient &#x3D; ▽f (θ) (Gradient &#x3D; ∂L&#x2F;∂w)</li>
+<li>調整後的權重 &#x3D; 原權重 – η(Learning rate) * Gradient</li>
+</ul>
+<h2 id="怎麼確定到極值點了呢？"><a href="#怎麼確定到極值點了呢？" class="headerlink" title="怎麼確定到極值點了呢？"></a>怎麼確定到極值點了呢？</h2><p>η又稱學習率，是一個挪動步長的基數，$\partial f(x)&#x2F;\partial x$是導函數，<br>當離極值很遠的時候導數大，移動的就快，當接近極值時，導數非常小，移動的就非常小</p>
+<p><strong>然而，gradient descent並不保證可以達到global minimum，不同的起始點可以到達的minimum是不同的</strong></p>
+<h2 id="梯度下降的算法調優"><a href="#梯度下降的算法調優" class="headerlink" title="梯度下降的算法調優"></a>梯度下降的算法調優</h2><p>Learning rate 選擇，實際上取值取決於數據樣本，如果損失函數在變小，說明取值有效，否則要增大 Learning rate</p>
+<h2 id="自動更新-Learning-rate-衰減因子-decay"><a href="#自動更新-Learning-rate-衰減因子-decay" class="headerlink" title="自動更新 Learning rate  - 衰減因子 decay"></a>自動更新 Learning rate  - 衰減因子 decay</h2><p>算法參數的初始值選擇。初始值不同，獲得的最小值也有可能不同，因此梯度下降求得的只是局部最小值；當然如果損失函數是凸函數則一定是最優解</p>
+<h3 id="學習率衰減公式"><a href="#學習率衰減公式" class="headerlink" title="學習率衰減公式"></a>學習率衰減公式</h3><p>$$ lr_i &#x3D; lr_{start} * 1.0 &#x2F; (1.0 + decay * i)$$<br>其中 $lr_i$ 為第一迭代 i 時的學習率，$lr_start$ 為初始值，decay 為一個介於[0.0, 1.0]的小數。從公式上可看出：<br>decay 越小，學習率衰減地越慢，當 decay &#x3D; 0時，學習率保持不變<br>decay 越大，學習率衰減地越快，當 decay &#x3D; 1時，學習率衰減最快</p>
+<h3 id="使用-momentum-是梯度下降法中一種常用的加速技術"><a href="#使用-momentum-是梯度下降法中一種常用的加速技術" class="headerlink" title="使用 momentum 是梯度下降法中一種常用的加速技術"></a>使用 momentum 是梯度下降法中一種常用的加速技術</h3><p>$x ← x − \alpha ∗ \partial x $(x沿負梯度方向下降)<br>$v &#x3D;  \beta ∗ v − a ∗ \partial x$<br>$x ← x + v$</p>
+<p>其中 $\beta$ 即 momentum 係數，通俗的理解上面式子就是，如果上一次的momentum（即$\beta$ ）與這一次的負梯度方向是相同的，那這次下降的幅度就會加大，所以這樣做能夠達到加速收斂的過程 </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E9%A6%AC%E6%8B%89%E6%9D%BE%E7%AD%86%E8%A8%98/" rel="tag"># 機器學習馬拉松筆記</a>
+              <a href="/tags/keras/" rel="tag"># keras</a>
+              <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/27/activation-function/" rel="prev" title="activation function">
+      <i class="fa fa-chevron-left"></i> activation function
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/30/BackPropagation/" rel="next" title="BackPropagation">
+      BackPropagation <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D-Gradient-Descent"><span class="nav-number">1.</span> <span class="nav-text">梯度下降 Gradient-Descent</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E5%84%AA%E5%8C%96%E7%AE%97%E6%B3%95%E6%98%AFGradient-Descent"><span class="nav-number">1.1.</span> <span class="nav-text">最常用的優化算法是Gradient Descent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E7%9A%84%E7%BC%BA%E9%BB%9E%E5%8C%85%E6%8B%AC%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">梯度下降法的缺點包括：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%B8%E7%BF%92%E7%8E%87%E5%B0%8D%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%BD%B1%E9%9F%BF"><span class="nav-number">1.3.</span> <span class="nav-text">學習率對梯度下降的影響</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E7%9A%84%E9%81%8E%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">梯度下降法的過程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A6%81%E8%A8%88%E7%AE%97-Gradient-Descent%EF%BC%8C%E8%80%83%E6%85%AE"><span class="nav-number">1.5.</span> <span class="nav-text">要計算 Gradient Descent，考慮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E9%BA%BC%E7%A2%BA%E5%AE%9A%E5%88%B0%E6%A5%B5%E5%80%BC%E9%BB%9E%E4%BA%86%E5%91%A2%EF%BC%9F"><span class="nav-number">1.6.</span> <span class="nav-text">怎麼確定到極值點了呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E7%AE%97%E6%B3%95%E8%AA%BF%E5%84%AA"><span class="nav-number">1.7.</span> <span class="nav-text">梯度下降的算法調優</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8B%95%E6%9B%B4%E6%96%B0-Learning-rate-%E8%A1%B0%E6%B8%9B%E5%9B%A0%E5%AD%90-decay"><span class="nav-number">1.8.</span> <span class="nav-text">自動更新 Learning rate  - 衰減因子 decay</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%B8%E7%BF%92%E7%8E%87%E8%A1%B0%E6%B8%9B%E5%85%AC%E5%BC%8F"><span class="nav-number">1.8.1.</span> <span class="nav-text">學習率衰減公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-momentum-%E6%98%AF%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95%E4%B8%AD%E4%B8%80%E7%A8%AE%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8A%A0%E9%80%9F%E6%8A%80%E8%A1%93"><span class="nav-number">1.8.2.</span> <span class="nav-text">使用 momentum 是梯度下降法中一種常用的加速技術</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shoghi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shoghi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

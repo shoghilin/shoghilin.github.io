@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="優化器optimizers 機器學習算法當中，大部分算法的本質就是建立優化模型，通過最優化方法對目標函數進行優化從而訓練出最好的模型 優化算法的功能，是通過改善訓練方式，來最小化(或最大化)損失函數 E(x) 優化策略和算法，是用來更新和計算影響模型訓練和模型輸出的網絡參數，使其逼近或達到最優值  最常用的優化算法-Gradient Descent通過尋找最小值，控制方差，更新模型參數，最終使模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="優化器optimizers">
+<meta property="og:url" content="http://example.com/2020/08/03/%E5%84%AA%E5%8C%96%E5%99%A8optimizers/index.html">
+<meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="優化器optimizers 機器學習算法當中，大部分算法的本質就是建立優化模型，通過最優化方法對目標函數進行優化從而訓練出最好的模型 優化算法的功能，是通過改善訓練方式，來最小化(或最大化)損失函數 E(x) 優化策略和算法，是用來更新和計算影響模型訓練和模型輸出的網絡參數，使其逼近或達到最優值  最常用的優化算法-Gradient Descent通過尋找最小值，控制方差，更新模型參數，最終使模型">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1593492829914">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904314143">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904351118">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904760249">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904904451">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592905046802">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1593493474813">
+<meta property="article:published_time" content="2020-08-03T08:44:37.000Z">
+<meta property="article:modified_time" content="2020-08-10T08:55:57.000Z">
+<meta property="article:author" content="Shoghi">
+<meta property="article:tag" content="機器學習馬拉松筆記">
+<meta property="article:tag" content="keras">
+<meta property="article:tag" content="deep learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1593492829914">
+
+<link rel="canonical" href="http://example.com/2020/08/03/%E5%84%AA%E5%8C%96%E5%99%A8optimizers/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>優化器optimizers | Shoghi的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Shoghi的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/03/%E5%84%AA%E5%8C%96%E5%99%A8optimizers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          優化器optimizers
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-08-03 16:44:37" itemprop="dateCreated datePublished" datetime="2020-08-03T16:44:37+08:00">2020-08-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-08-10 16:55:57" itemprop="dateModified" datetime="2020-08-10T16:55:57+08:00">2020-08-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="優化器optimizers"><a href="#優化器optimizers" class="headerlink" title="優化器optimizers"></a>優化器optimizers</h1><ul>
+<li>機器學習算法當中，大部分算法的本質就是建立優化模型，通過最優化方法對目標函數進行優化從而訓練出最好的模型</li>
+<li>優化算法的功能，是通過改善訓練方式，來最小化(或最大化)損失函數 E(x)</li>
+<li>優化策略和算法，是用來更新和計算影響模型訓練和模型輸出的網絡參數，使其逼近或達到最優值</li>
+</ul>
+<h2 id="最常用的優化算法-Gradient-Descent"><a href="#最常用的優化算法-Gradient-Descent" class="headerlink" title="最常用的優化算法-Gradient Descent"></a><a href="/2020/07/29/Gradient-Descent">最常用的優化算法-Gradient Descent</a></h2><p>通過尋找最小值，控制方差，更新模型參數，最終使模型收斂</p>
+<p>$$ w_{i+1} &#x3D; w_i - d_i·\eta_i,  i&#x3D;0,1,…$$<br>參數 $\eta$ 是學習率。這個參數既可以設置為固定值，也可以用一維優化方法沿著訓練的方向逐步更新計算<br>參數的更新分為兩步：第一步計算梯度下降的方向，第二步計算合適的學習</p>
+<h2 id="動量Momentum-GD篇中有提到"><a href="#動量Momentum-GD篇中有提到" class="headerlink" title="動量Momentum(GD篇中有提到)"></a>動量Momentum(<a href="/2020/07/29/Gradient-Descent">GD篇中有提到</a>)</h2><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1593492829914' width="400" height="300" align="center">
+
+<h2 id="SGD-隨機梯度下降法-stochastic-gradient-decent"><a href="#SGD-隨機梯度下降法-stochastic-gradient-decent" class="headerlink" title="SGD-隨機梯度下降法(stochastic gradient decent)"></a>SGD-隨機梯度下降法(stochastic gradient decent)</h2><p>找出參數的梯度(利用微分的方法)，往梯度的方向去更新參數(weight)<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904314143' width='400' height='300' align="center"></p>
+<p>優點： SGD 每次更新時對每個樣本進行梯度更新， 對於很大的數據集來說，可能會有相似的樣本，而 SGD 一次只進行一次更新，就沒有冗餘，而且比較快<br>缺點： 但是 SGD 因為更新比較頻繁，會造成 cost function 有嚴重的震盪</p>
+<h3 id="keras調用SGD"><a href="#keras調用SGD" class="headerlink" title="keras調用SGD"></a>keras調用SGD</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.optimizers.SGD(lr=0.01, momentum=0.0, decay=0.0, nesterov=False)</span><br></pre></td></tr></table></figure>
+<p>lr：<float> 學習率<br>Momentum 動量：<float> 參數，用於加速 SGD 在相關方向上前進，並抑制震盪<br>Decay(衰變)：<float> 每次參數更新後學習率衰減值<br>nesterov：布爾值。是否使用 Nesterov 動量</p>
+<p>Momentum：動量 – 在更新方向以外，加上一個固定向量，使得真實移動方向會介於算出來的 gradient step 與 momentum 間。</p>
+<ul>
+<li>Actual step &#x3D; momentum step + gradient step</li>
+</ul>
+<p>Nesterov Momentum：拔草測風向<br>將 momentum 納入 gradient 的計算</p>
+<ul>
+<li>Gradient step computation is based on x + momentum</li>
+</ul>
+<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904351118' width='400' height="300" align="center">
+
+<h4 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from keras import optimizers </span><br><span class="line">model = Sequential() </span><br><span class="line">model.add(Dense(64, kernel_initializer=&#x27;uniform&#x27;, input_shape=(10,)))</span><br><span class="line">model.add(Activation(&#x27;softmax’)) </span><br><span class="line"></span><br><span class="line">#實例化一個優化器對象，然後將它傳入model.compile()，可以修改參數</span><br><span class="line">sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True) model.compile(loss=&#x27;mean_squared_error&#x27;, optimizer=sgd) </span><br><span class="line"></span><br><span class="line"># 通過名稱來調用優化器，將使用優化器的默認參數</span><br><span class="line">model.compile(loss=&#x27;mean_squared_error&#x27;, optimizer=&#x27;sgd&#x27;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="SGD-mini-batch-gradient-descent"><a href="#SGD-mini-batch-gradient-descent" class="headerlink" title="SGD, mini-batch gradient descent"></a>SGD, mini-batch gradient descent</h3><p>batch-gradient，其實就是普通的梯度下降算法但是採用 <strong>批量處理</strong></p>
+<p>當數據集很大（比如有100000個左右時），每次 iteration 都要將1000000 個數據跑一遍，機器帶不動。於是有了 mini-batch-gradient ——將 1000000 個樣本分成 1000 份，每份 1000 個，都看成一組獨立的數據集，進行 forward_propagation 和 backward_propagation</p>
+<p>在整個算法的流程中，cost function 是局部的，但是W和b是全局的</p>
+<ul>
+<li>SGD對訓練集上每一個數據都計算誤差，但只在所有訓練數據計算完成後才更新模型</li>
+<li>對訓練集上的一次訓練過程稱為一代（epoch）。因此，SGD是在每一個訓練 epoch 之後更新模型</li>
+</ul>
+<p>batchsize：批量大小，即每次訓練在訓練集中取batchsize個樣本訓練</p>
+<ol>
+<li>batchsize&#x3D;1</li>
+<li>batchsize &#x3D; mini-batch; </li>
+<li>batchsize &#x3D; whole training set</li>
+</ol>
+<p>iteration：1個 iteration 等於使用 batchsize 個樣本訓練一次<br>epoch：1個 epoch 等於使用訓練集中的全部樣本訓練一次</p>
+<h4 id="怎麼配置mini-batch梯度下降？"><a href="#怎麼配置mini-batch梯度下降？" class="headerlink" title="怎麼配置mini-batch梯度下降？"></a>怎麼配置mini-batch梯度下降？</h4><p>Mini-batch sizes，簡稱為「batch sizes」，是算法設計中需要調節的參數</p>
+<ul>
+<li>較小的值讓學習過程收斂更快，但是會產生更多噪聲</li>
+<li>較大的值讓學習過程收斂較慢，但是準確的估計誤差梯度</li>
+<li>batch size 的默認值最好是 32 盡量選擇 2 的冪次方，有利於 GPU 的加速</li>
+<li>調節 batch size 時，最好觀察模型在不同 batch size 下的訓練時間和驗證誤差的學習曲線</li>
+<li>調整其他所有超參數之後再調整 batch size 和學習率</li>
+</ul>
+<h2 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h2><p>對於常見的數據給予比較小的學習率去調整參數，對於不常見的數據給予比較大的學習率調整參數<br>每個參數都有不同的 learning rate,<br>根據之前所有 gradient 的 root mean square 修改<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904760249' width="400" height="300" align="center"><br>優點： Adagrad 的是減少了學習率的手動調節<br>缺點：它的缺點是分母會不斷積累，這樣學習率就會收縮並最終會變得非常小。</p>
+<h3 id="Adagrad-調用"><a href="#Adagrad-調用" class="headerlink" title="Adagrad 調用"></a>Adagrad 調用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.optimizers.Adagrad(lr=0.01, epsilon=None, decay=0.0)</span><br></pre></td></tr></table></figure>
+<p>lr：float &gt;&#x3D; 0. 學習率.一般 η 就取 0.01<br>epsilon： float &gt;&#x3D; 0. 若為 None，默認為 K.epsilon().<br>decay：float &gt;&#x3D; 0. 每次參數更新後學習率衰減值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from keras import optimizers </span><br><span class="line"></span><br><span class="line">model = Sequential() </span><br><span class="line">model.add(Dense(64, kernel_initializer=&#x27;uniform&#x27;, input_shape=(10,)))</span><br><span class="line">model.add(Activation(&#x27;softmax’)) </span><br><span class="line"></span><br><span class="line">#實例化一個優化器對象，然後將它傳入model.compile() , 可以修改參數</span><br><span class="line">opt = optimizers.Adagrad(lr=0.01, epsilon=None, decay=0.0) </span><br><span class="line"></span><br><span class="line">model.compile(loss=&#x27;mean_squared_error&#x27;, optimizer=opt)</span><br></pre></td></tr></table></figure>
+
+<h2 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h2><p>RMSProp 算法也旨在 __抑制梯度的鋸齒下降__，但與動量相比， RMSProp __不需要手動配置學習率超參數__，由算法自動完成。更重要的是，RMSProp 可以為每個參數選擇不同的學習率，通常是RNN優化器的好選擇。(也可以想成momentum和adagrad部分相結合)</p>
+<p>RMSprop 是為了解決 Adagrad 學習率急劇下降問題的，所以比對梯度更新規則：<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592904904451' width="400" height="300" align="center"></p>
+<h3 id="RMSprop-調用"><a href="#RMSprop-調用" class="headerlink" title="RMSprop 調用"></a>RMSprop 調用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.optimizers.RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0) </span><br></pre></td></tr></table></figure>
+<p>lr：float &gt;&#x3D; 0. Learning rate.<br>rho：float &gt;&#x3D; 0.<br>epsilon：float &gt;&#x3D; 0. Fuzz factor. If None, defaults to K.epsilon().<br>decay：float &gt;&#x3D; 0. Learning rate decay over each update.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from keras import optimizers </span><br><span class="line"></span><br><span class="line">model = Sequential() </span><br><span class="line">model.add(Dense(64, kernel_initializer=&#x27;uniform&#x27;, input_shape=(10,)))</span><br><span class="line">model.add(Activation(&#x27;softmax’)) </span><br><span class="line"></span><br><span class="line">#實例化一個優化器對象，然後將它傳入model.compile() , 可以修改參數</span><br><span class="line">opt = optimizers.RMSprop(lr=0.001, epsilon=None, decay=0.0) </span><br><span class="line"></span><br><span class="line">model.compile(loss=&#x27;mean_squared_error&#x27;, optimizer=opt) </span><br></pre></td></tr></table></figure>
+
+<h2 id="Adam-說明"><a href="#Adam-說明" class="headerlink" title="Adam 說明"></a>Adam 說明</h2><p>除了像 RMSprop 一樣存儲了過去梯度的平方 $v_t$ 的指數衰減平均值，也像momentum 一樣保持了過去梯度 $m_t$ 的指數衰減平均值, 「 t 」：<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1592905046802' width="400" height="300" align="center"><br>計算梯度的指數移動平均數，$m_0$ 初始化為 0。綜合考慮之前時間步的梯度動量<br>β1 係數為指數衰減率，控制權重分配（動量與當前梯度），通常取接近於1的值。默認為 0.9<br>其次，計算梯度平方的指數移動平均數，$v_0$ 初始化為 0。β2 係數為指數衰減率，控制之前的梯度平方的影響情況。<br>類似於 RMSProp 算法，對梯度平方進行加權均值。默認為 0.999<br>由於 $m_0$ 初始化為 0，會導致 $m_t$ 偏向於 0，尤其在訓練初期階段。所以，此處需要對梯度均值 $m_t$ 進行偏差糾正，降低偏差對訓練初期的影響<br>與 $m_0$ 類似，因為 v0 初始化為 0 導致訓練初始階段 $v_t$ 偏向 0，對其進行糾正</p>
+<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294285/1593493474813' width="400" height="300" align="center">
+
+<p>更新參數，初始的學習率 lr 乘以梯度均值與梯度方差的平方根之比。其中默認學習率lr &#x3D;0.001, eplison (ε&#x3D;10^-8)，避免除數變為 0<br>對更新的步長計算，能夠從梯度均值及梯度平方兩個角度進行自適應地調節，而不是直接由當前梯度決定</p>
+<h3 id="Adam-調用"><a href="#Adam-調用" class="headerlink" title="Adam 調用"></a>Adam 調用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)</span><br></pre></td></tr></table></figure>
+<p>lr：float &gt;&#x3D; 0. 學習率。<br>beta_1：float, 0 &lt; beta &lt; 1. 通常接近於 1。<br>beta_2：float, 0 &lt; beta &lt; 1. 通常接近於 1。<br>epsilon：float &gt;&#x3D; 0. 模糊因數. 若為 None, 默認為 K.epsilon()。<br>amsgrad：boolean. 是否應用此演算法的 AMSGrad 變種，來自論文 「On the Convergence of Adam and Beyond」<br>decay：float &gt;&#x3D; 0. 每次參數更新後學習率衰減值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from keras import optimizers </span><br><span class="line"></span><br><span class="line">model = Sequential() </span><br><span class="line">model.add(Dense(64, kernel_initializer=&#x27;uniform&#x27;, input_shape=(10,)))</span><br><span class="line">model.add(Activation(&#x27;softmax’)) </span><br><span class="line"></span><br><span class="line">#實例化一個優化器對象，然後將它傳入 model.compile() , 可以修改參數</span><br><span class="line">opt = optimizers. Adam(lr=0.001, epsilon=None, decay=0.0) </span><br><span class="line"></span><br><span class="line">model.compile(loss=&#x27;mean_squared_error&#x27;, optimizer=opt)</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何選擇優化器"><a href="#如何選擇優化器" class="headerlink" title="如何選擇優化器"></a>如何選擇優化器</h2><ol>
+<li><p>隨機梯度下降（SGD）：SGD 指的是 mini batch gradient descent<br>優點：針對大數據集，訓練速度很快從訓練集樣本中隨機選取一個 batch 計算一次梯度，更新一次模型參數<br>缺點：<br>對所有參數使用相同的學習率。對於稀疏數據或特徵，希望盡快更新一些不經常出現的特徵，慢一些更新常出現的特徵。所以選擇合適的學習率比較困難</p>
+</li>
+<li><p>容易收斂到局部最優 Adam：利用梯度的一階矩估計和二階矩估計動態調節每個參數的學習率<br>優點：<br>(1) 經過偏置校正後，每一次迭代都有確定的範圍，使得參數比較平穩。善於處理稀疏梯度和非平穩目標<br>(2) 對內存需求小<br>(3) 對不同內存計算不同的學習率</p>
+</li>
+<li><p>RMSProp：自適應調節學習率。對學習率進行了約束，適合處理非平穩目標和 RNN</p>
+</li>
+<li><p>如果輸入數據集比較稀疏，SGD、NAG和動量項等方法可能效果不好。因此對於稀疏數據集，應該使用某種自適應學習率的方法，且另一好處為不需要人為調整學習率，使用默認參數就可能獲得最優值：Adagrad, RMSprop, Adam</p>
+</li>
+<li><p>如果想使訓練深層網絡模型快速收斂或所構建的神經網絡較為複雜，則應該使用Adam或其他自適應學習速率的方法，因為這些方法的實際效果更優<br>(1) Adam 就是在 RMSprop 的基礎上加了 bias-correction 和 momentum<br>(2) 隨著梯度變的稀疏，Adam 比 RMSprop 效果會好</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E9%A6%AC%E6%8B%89%E6%9D%BE%E7%AD%86%E8%A8%98/" rel="tag"># 機器學習馬拉松筆記</a>
+              <a href="/tags/keras/" rel="tag"># keras</a>
+              <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/03/%E6%B7%B1%E9%80%A0%E6%BC%94%E8%AC%9B/" rel="prev" title="深造演講">
+      <i class="fa fa-chevron-left"></i> 深造演講
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/04/%E8%A8%93%E7%B7%B4%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%89%8D%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85/" rel="next" title="訓練神經網路前的注意事項">
+      訓練神經網路前的注意事項 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%84%AA%E5%8C%96%E5%99%A8optimizers"><span class="nav-number">1.</span> <span class="nav-text">優化器optimizers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E5%84%AA%E5%8C%96%E7%AE%97%E6%B3%95-Gradient-Descent"><span class="nav-number">1.1.</span> <span class="nav-text">最常用的優化算法-Gradient Descent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8B%95%E9%87%8FMomentum-GD%E7%AF%87%E4%B8%AD%E6%9C%89%E6%8F%90%E5%88%B0"><span class="nav-number">1.2.</span> <span class="nav-text">動量Momentum(GD篇中有提到)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SGD-%E9%9A%A8%E6%A9%9F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95-stochastic-gradient-decent"><span class="nav-number">1.3.</span> <span class="nav-text">SGD-隨機梯度下降法(stochastic gradient decent)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#keras%E8%AA%BF%E7%94%A8SGD"><span class="nav-number">1.3.1.</span> <span class="nav-text">keras調用SGD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90%EF%BC%9A"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">例子：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SGD-mini-batch-gradient-descent"><span class="nav-number">1.3.2.</span> <span class="nav-text">SGD, mini-batch gradient descent</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%8E%E9%BA%BC%E9%85%8D%E7%BD%AEmini-batch%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%9F"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">怎麼配置mini-batch梯度下降？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adagrad"><span class="nav-number">1.4.</span> <span class="nav-text">Adagrad</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Adagrad-%E8%AA%BF%E7%94%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">Adagrad 調用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RMSprop"><span class="nav-number">1.5.</span> <span class="nav-text">RMSprop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RMSprop-%E8%AA%BF%E7%94%A8"><span class="nav-number">1.5.1.</span> <span class="nav-text">RMSprop 調用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adam-%E8%AA%AA%E6%98%8E"><span class="nav-number">1.6.</span> <span class="nav-text">Adam 說明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Adam-%E8%AA%BF%E7%94%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">Adam 調用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%81%B8%E6%93%87%E5%84%AA%E5%8C%96%E5%99%A8"><span class="nav-number">1.7.</span> <span class="nav-text">如何選擇優化器</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shoghi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shoghi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

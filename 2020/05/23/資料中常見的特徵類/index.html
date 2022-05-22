@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="常見兩大類型(數值型 numerical data、類別型 categorical data )數值型特徵 : 有不同轉換方式，函數 &#x2F; 條件式都可以最容易轉成特徵，但需要注意很多細節  e.g.(函數)數值： 20坪函數： 一坪20萬 e.g.(條件式)年齡： 30條件： 若 50以上：0點，30～50：1點，30以下：2點  類別型特徵 : 通常一種類別對應一種分數通常一種類別對應一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資料中常見的特徵類型">
+<meta property="og:url" content="http://example.com/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/index.html">
+<meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="常見兩大類型(數值型 numerical data、類別型 categorical data )數值型特徵 : 有不同轉換方式，函數 &#x2F; 條件式都可以最容易轉成特徵，但需要注意很多細節  e.g.(函數)數值： 20坪函數： 一坪20萬 e.g.(條件式)年齡： 30條件： 若 50以上：0點，30～50：1點，30以下：2點  類別型特徵 : 通常一種類別對應一種分數通常一種類別對應一">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-05-23T12:22:18.000Z">
+<meta property="article:modified_time" content="2020-05-23T16:24:22.000Z">
+<meta property="article:author" content="Shoghi">
+<meta property="article:tag" content="機器學習馬拉松筆記">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>資料中常見的特徵類型 | Shoghi的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Shoghi的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/23/%E8%B3%87%E6%96%99%E4%B8%AD%E5%B8%B8%E8%A6%8B%E7%9A%84%E7%89%B9%E5%BE%B5%E9%A1%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          資料中常見的特徵類型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-05-23 20:22:18" itemprop="dateCreated datePublished" datetime="2020-05-23T20:22:18+08:00">2020-05-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-05-24 00:24:22" itemprop="dateModified" datetime="2020-05-24T00:24:22+08:00">2020-05-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="常見兩大類型-數值型-numerical-data、類別型-categorical-data"><a href="#常見兩大類型-數值型-numerical-data、類別型-categorical-data" class="headerlink" title="常見兩大類型(數值型 numerical data、類別型 categorical data )"></a>常見兩大類型(數值型 numerical data、類別型 categorical data )</h2><h3 id="數值型特徵-有不同轉換方式，函數-x2F-條件式都可以"><a href="#數值型特徵-有不同轉換方式，函數-x2F-條件式都可以" class="headerlink" title="數值型特徵 : 有不同轉換方式，函數 &#x2F; 條件式都可以"></a>數值型特徵 : 有不同轉換方式，函數 &#x2F; 條件式都可以</h3><p>最容易轉成特徵，但需要注意很多細節</p>
+<ul>
+<li>e.g.(函數)<br>數值： 20坪<br>函數： 一坪20萬</li>
+<li>e.g.(條件式)<br>年齡： 30<br>條件： 若 50以上：0點，30～50：1點，30以下：2點</li>
+</ul>
+<h3 id="類別型特徵-通常一種類別對應一種分數"><a href="#類別型特徵-通常一種類別對應一種分數" class="headerlink" title="類別型特徵 : 通常一種類別對應一種分數"></a>類別型特徵 : 通常一種類別對應一種分數</h3><p>通常一種類別對應一種分數，問題在如何對應</p>
+<h2 id="其他類型"><a href="#其他類型" class="headerlink" title="其他類型"></a>其他類型</h2><h3 id="二元特徵"><a href="#二元特徵" class="headerlink" title="二元特徵"></a>二元特徵</h3><p>僅有True(1)跟False(0)兩特徵<br>可作為數值、亦可作為類別</p>
+<h3 id="排序型特徵"><a href="#排序型特徵" class="headerlink" title="排序型特徵"></a>排序型特徵</h3><p>如名次&#x2F;百分等級，有大小關係，但並非連續數字<br>通常做為數值型，因做為類別型會失去排序資料</p>
+<h3 id="時間型特徵"><a href="#時間型特徵" class="headerlink" title="時間型特徵"></a>時間型特徵</h3><p>e.g. 2020&#x2F;05&#x2F;23 20:49:00<br>有週期性<br>雖然時間型特徵可當作數值型特徵或類別型特徵，但都不適合</p>
+<h2 id="其他資料類別可參考"><a href="#其他資料類別可參考" class="headerlink" title="其他資料類別可參考:"></a>其他資料類別可參考:</h2><p>Built-in Types<br><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/stdtypes.html">https://docs.python.org/3/library/stdtypes.html</a><br>Python 3 Tutorial 第二堂（2）數值與字串型態<br><a target="_blank" rel="noopener" href="https://openhome.cc/Gossip/CodeData/PythonTutorial/NumericStringPy3.html">https://openhome.cc/Gossip/CodeData/PythonTutorial/NumericStringPy3.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E9%A6%AC%E6%8B%89%E6%9D%BE%E7%AD%86%E8%A8%98/" rel="tag"># 機器學習馬拉松筆記</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/22/%E8%B3%87%E6%96%99%E9%A1%9E%E5%9E%8B%E5%8F%8A%E9%A1%9E%E5%88%A5%E8%BD%89%E6%95%B8%E5%80%BC%E6%96%B9%E5%BC%8F/" rel="prev" title="資料類型及類別轉數值方式">
+      <i class="fa fa-chevron-left"></i> 資料類型及類別轉數值方式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/23/numpy/" rel="next" title="numpy">
+      numpy <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B%E5%85%A9%E5%A4%A7%E9%A1%9E%E5%9E%8B-%E6%95%B8%E5%80%BC%E5%9E%8B-numerical-data%E3%80%81%E9%A1%9E%E5%88%A5%E5%9E%8B-categorical-data"><span class="nav-number">1.</span> <span class="nav-text">常見兩大類型(數值型 numerical data、類別型 categorical data )</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B8%E5%80%BC%E5%9E%8B%E7%89%B9%E5%BE%B5-%E6%9C%89%E4%B8%8D%E5%90%8C%E8%BD%89%E6%8F%9B%E6%96%B9%E5%BC%8F%EF%BC%8C%E5%87%BD%E6%95%B8-x2F-%E6%A2%9D%E4%BB%B6%E5%BC%8F%E9%83%BD%E5%8F%AF%E4%BB%A5"><span class="nav-number">1.1.</span> <span class="nav-text">數值型特徵 : 有不同轉換方式，函數 &#x2F; 條件式都可以</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%9E%E5%88%A5%E5%9E%8B%E7%89%B9%E5%BE%B5-%E9%80%9A%E5%B8%B8%E4%B8%80%E7%A8%AE%E9%A1%9E%E5%88%A5%E5%B0%8D%E6%87%89%E4%B8%80%E7%A8%AE%E5%88%86%E6%95%B8"><span class="nav-number">1.2.</span> <span class="nav-text">類別型特徵 : 通常一種類別對應一種分數</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E9%A1%9E%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">其他類型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E5%85%83%E7%89%B9%E5%BE%B5"><span class="nav-number">2.1.</span> <span class="nav-text">二元特徵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%92%E5%BA%8F%E5%9E%8B%E7%89%B9%E5%BE%B5"><span class="nav-number">2.2.</span> <span class="nav-text">排序型特徵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%99%82%E9%96%93%E5%9E%8B%E7%89%B9%E5%BE%B5"><span class="nav-number">2.3.</span> <span class="nav-text">時間型特徵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%B3%87%E6%96%99%E9%A1%9E%E5%88%A5%E5%8F%AF%E5%8F%83%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">其他資料類別可參考:</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shoghi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shoghi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

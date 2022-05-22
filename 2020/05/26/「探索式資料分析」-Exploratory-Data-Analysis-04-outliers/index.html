@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="離群值(Outlier)及其處理何謂離群值(Outlier)離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 &#x2F; 最小最大化)就會出現很大的問題 檢查異異常值的⽅方法 統計值：如平均數、標準差、中位數、分位數 (dataframe.describe) 畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(ECDF)  延伸資料：Ways to Detect">
+<meta property="og:type" content="article">
+<meta property="og:title" content="離群值outliers">
+<meta property="og:url" content="http://example.com/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/index.html">
+<meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="離群值(Outlier)及其處理何謂離群值(Outlier)離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 &#x2F; 最小最大化)就會出現很大的問題 檢查異異常值的⽅方法 統計值：如平均數、標準差、中位數、分位數 (dataframe.describe) 畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(ECDF)  延伸資料：Ways to Detect">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-275cf87efb56d50fe65a6850c0c8828b_720w.jpg">
+<meta property="article:published_time" content="2020-05-26T09:24:13.000Z">
+<meta property="article:modified_time" content="2020-06-10T02:57:33.000Z">
+<meta property="article:author" content="Shoghi">
+<meta property="article:tag" content="機器學習馬拉松筆記">
+<meta property="article:tag" content="EDA">
+<meta property="article:tag" content="數值型特徵處理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic4.zhimg.com/80/v2-275cf87efb56d50fe65a6850c0c8828b_720w.jpg">
+
+<link rel="canonical" href="http://example.com/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>離群值outliers | Shoghi的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Shoghi的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          離群值outliers
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-05-26 17:24:13" itemprop="dateCreated datePublished" datetime="2020-05-26T17:24:13+08:00">2020-05-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-06-10 10:57:33" itemprop="dateModified" datetime="2020-06-10T10:57:33+08:00">2020-06-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="離群值-Outlier-及其處理"><a href="#離群值-Outlier-及其處理" class="headerlink" title="離群值(Outlier)及其處理"></a>離群值(Outlier)及其處理</h1><h2 id="何謂離群值-Outlier"><a href="#何謂離群值-Outlier" class="headerlink" title="何謂離群值(Outlier)"></a>何謂離群值(Outlier)</h2><p>離群值是與正常數值偏離較遠的數值群，如果不處理則特徵縮放(標準化 &#x2F; 最小最大化)就會出現很大的問題</p>
+<h2 id="檢查異異常值的⽅方法"><a href="#檢查異異常值的⽅方法" class="headerlink" title="檢查異異常值的⽅方法"></a>檢查異異常值的⽅方法</h2><ul>
+<li>統計值：如平均數、標準差、中位數、分位數 (dataframe.describe)</li>
+<li>畫圖：如直方圖(hist)、盒圖(boxplot)、次數累積分布等(<a href="/2020/05/26/ECDF">ECDF</a>)</li>
+</ul>
+<h3 id="延伸資料："><a href="#延伸資料：" class="headerlink" title="延伸資料："></a>延伸資料：</h3><p>Ways to Detect and Remove the Outliers<br><a target="_blank" rel="noopener" href="https://towardsdatascience.com/ways-to-detect-and-remove-the-outliers-404d16608dba">https://towardsdatascience.com/ways-to-detect-and-remove-the-outliers-404d16608dba</a></p>
+<h2 id="處理理異異常值"><a href="#處理理異異常值" class="headerlink" title="處理理異異常值"></a>處理理異異常值</h2><ul>
+<li>取代補值：中位數、平均數等</li>
+<li>另建欄位</li>
+<li>整欄不用</li>
+<li>對數轉換<br>對存在離群值的變量作對數轉換可以克服其離群值問題，且對數轉換並不影響各觀察值之間在此變量上的相對大小<br><img src="https://pic4.zhimg.com/80/v2-275cf87efb56d50fe65a6850c0c8828b_720w.jpg" alt="對數轉換"><br>10 與 1000 相差百倍，但二者的對數值卻僅相差 3 倍，由此可知資料在經過對數轉換後變得更加集中</li>
+<li>縮尾<br>將超出變量特定百分位範圍的數值替換為其特定百分位數值的方法。</li>
+<li>截尾<br>將超出變量特定百分位範圍的數值予以刪除的方法。</li>
+<li>插值</li>
+</ul>
+<h3 id="處理完後的好處-x2F-壞處"><a href="#處理完後的好處-x2F-壞處" class="headerlink" title="處理完後的好處&#x2F;壞處"></a>處理完後的好處&#x2F;壞處</h3><p>好處是剩餘資料中模型較為單純且準確，壞處是有可能刪除掉重要資訊</p>
+<h3 id="相關貼文"><a href="#相關貼文" class="headerlink" title="相關貼文"></a>相關貼文</h3><p><a href="/2020/05/27/%E6%95%B8%E5%80%BC%E5%A1%AB%E8%A3%9C%E8%88%87%E9%80%A3%E7%BA%8C%E6%95%B8%E5%80%BC%E6%A8%99%E6%BA%96%E5%8C%96">數值填補與連續數值標準化</a></p>
+<h3 id="延伸資料：-1"><a href="#延伸資料：-1" class="headerlink" title="延伸資料："></a>延伸資料：</h3><p>How to Remove Outliers for Machine Learning<br><a target="_blank" rel="noopener" href="https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/">https://machinelearningmastery.com/how-to-use-statistics-to-identify-outliers-in-data/</a><br>离群值！离群值？离群值！<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/33468998">https://zhuanlan.zhihu.com/p/33468998</a></p>
+<p></br></br></p>
+<h1 id="「探索式資料分析」-EDA-相關："><a href="#「探索式資料分析」-EDA-相關：" class="headerlink" title="「探索式資料分析」(EDA)相關："></a>「探索式資料分析」(EDA)相關：</h1><p><a href="/2020/05/21/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-01">「探索式資料分析」(EDA) 01</a><br><a href="/2020/05/22/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-02">「探索式資料分析」(EDA) 02</a><br><a href="/2020/05/24/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-03">「探索式資料分析」(EDA) 03</a><br><a href="/2020/05/26/%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-Exploratory-Data-Analysis-04-outliers">「探索式資料分析」(EDA) 04: outlier</a></p>
+<h1 id="library介紹"><a href="#library介紹" class="headerlink" title="library介紹"></a>library介紹</h1><p><a href="/2020/05/21/Pandas">pandas</a><br><a href="/2020/05/23/numpy">numpy</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E9%A6%AC%E6%8B%89%E6%9D%BE%E7%AD%86%E8%A8%98/" rel="tag"># 機器學習馬拉松筆記</a>
+              <a href="/tags/EDA/" rel="tag"># EDA</a>
+              <a href="/tags/%E6%95%B8%E5%80%BC%E5%9E%8B%E7%89%B9%E5%BE%B5%E8%99%95%E7%90%86/" rel="tag"># 數值型特徵處理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/24/%E9%AB%98%E6%96%AF%E5%88%86%E4%BD%88/" rel="prev" title="高斯分佈">
+      <i class="fa fa-chevron-left"></i> 高斯分佈
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/26/ECDF/" rel="next" title="ECDF">
+      ECDF <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%A2%E7%BE%A4%E5%80%BC-Outlier-%E5%8F%8A%E5%85%B6%E8%99%95%EF%A7%A4"><span class="nav-number">1.</span> <span class="nav-text">離群值(Outlier)及其處理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%95%E8%AC%82%E9%9B%A2%E7%BE%A4%E5%80%BC-Outlier"><span class="nav-number">1.1.</span> <span class="nav-text">何謂離群值(Outlier)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AA%A2%E6%9F%A5%E7%95%B0%EF%A5%A2%E5%B8%B8%E5%80%BC%E7%9A%84%E2%BD%85%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">檢查異異常值的⽅方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%B6%E4%BC%B8%E8%B3%87%E6%96%99%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">延伸資料：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%95%E7%90%86%EF%A7%A4%E7%95%B0%EF%A5%A2%E5%B8%B8%E5%80%BC"><span class="nav-number">1.3.</span> <span class="nav-text">處理理異異常值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%95%E7%90%86%E5%AE%8C%E5%BE%8C%E7%9A%84%E5%A5%BD%E8%99%95-x2F-%E5%A3%9E%E8%99%95"><span class="nav-number">1.3.1.</span> <span class="nav-text">處理完後的好處&#x2F;壞處</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E9%97%9C%E8%B2%BC%E6%96%87"><span class="nav-number">1.3.2.</span> <span class="nav-text">相關貼文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%B6%E4%BC%B8%E8%B3%87%E6%96%99%EF%BC%9A-1"><span class="nav-number">1.3.3.</span> <span class="nav-text">延伸資料：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%8C%E6%8E%A2%E7%B4%A2%E5%BC%8F%E8%B3%87%E6%96%99%E5%88%86%E6%9E%90%E3%80%8D-EDA-%E7%9B%B8%E9%97%9C%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">「探索式資料分析」(EDA)相關：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#library%E4%BB%8B%E7%B4%B9"><span class="nav-number">3.</span> <span class="nav-text">library介紹</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shoghi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shoghi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

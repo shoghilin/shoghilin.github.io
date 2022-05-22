@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Callbacks function：在訓練過程中，我們可以透過一些函式來監控&#x2F;介入訓練 Earlystopping：如果一個模型會 overfitting，那 training 與 validation 的表現只會越差越遠，不如在開始變糟之前就先停下注意：Earlystop 不會使模型得到更好的結果，僅是避免更糟 keras 實作1234567891011121314from kera">
+<meta property="og:type" content="article">
+<meta property="og:title" content="callbacks">
+<meta property="og:url" content="http://example.com/2020/08/11/callbacks/index.html">
+<meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="Callbacks function：在訓練過程中，我們可以透過一些函式來監控&#x2F;介入訓練 Earlystopping：如果一個模型會 overfitting，那 training 與 validation 的表現只會越差越遠，不如在開始變糟之前就先停下注意：Earlystop 不會使模型得到更好的結果，僅是避免更糟 keras 實作1234567891011121314from kera">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294303/1592909020061">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294307/1592909403189">
+<meta property="article:published_time" content="2020-08-11T04:55:38.000Z">
+<meta property="article:modified_time" content="2020-08-13T01:42:36.000Z">
+<meta property="article:author" content="Shoghi">
+<meta property="article:tag" content="機器學習馬拉松筆記">
+<meta property="article:tag" content="keras">
+<meta property="article:tag" content="deep learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294303/1592909020061">
+
+<link rel="canonical" href="http://example.com/2020/08/11/callbacks/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>callbacks | Shoghi的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Shoghi的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/11/callbacks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          callbacks
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-08-11 12:55:38" itemprop="dateCreated datePublished" datetime="2020-08-11T12:55:38+08:00">2020-08-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-08-13 09:42:36" itemprop="dateModified" datetime="2020-08-13T09:42:36+08:00">2020-08-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Callbacks-function："><a href="#Callbacks-function：" class="headerlink" title="Callbacks function："></a>Callbacks function：</h1><p>在訓練過程中，我們可以透過一些函式來監控&#x2F;介入訓練</p>
+<h2 id="Earlystopping："><a href="#Earlystopping：" class="headerlink" title="Earlystopping："></a>Earlystopping：</h2><p>如果一個模型會 overfitting，那 training 與 validation 的表現只會越差越遠，不如在開始變糟之前就先停下<br>注意：Earlystop 不會使模型得到更好的結果，僅是避免更糟<br><img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294303/1592909020061' width="400" height="300" align="center"></p>
+<h3 id="keras-實作"><a href="#keras-實作" class="headerlink" title="keras 實作"></a>keras 實作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from keras.callbacks import EarlyStopping</span><br><span class="line"></span><br><span class="line">earlystop = EarlyStopping(monitor=&quot;val_loss&quot;, </span><br><span class="line">                          patience=5, </span><br><span class="line">                          verbose=1</span><br><span class="line">                          )</span><br><span class="line"></span><br><span class="line">model.fit(x_train, y_train, </span><br><span class="line">          epochs=EPOCHS, </span><br><span class="line">          batch_size=BATCH_SIZE, </span><br><span class="line">          validation_data=(x_test, y_test), </span><br><span class="line">          shuffle=True,</span><br><span class="line">          callbacks=[earlystop]</span><br><span class="line">         )</span><br></pre></td></tr></table></figure>
+
+<h2 id="Model-checkpoint"><a href="#Model-checkpoint" class="headerlink" title="Model checkpoint"></a>Model checkpoint</h2><p>根據狀況隨時將模型存下來，如此可以保證：</p>
+<ul>
+<li>假如不幸訓練意外中斷，前面的功夫不會白費。我們可以從最近的一次的權重繼續重新開始。</li>
+<li>我們可以透過監控 validation loss 來保證所存下來的模型是在 validation set 表現最好的一個。</li>
+<li>假如要做 Inference :可以保證使用的是對 monitor metric 最佳的權重</li>
+</ul>
+<h3 id="keras-實作-1"><a href="#keras-實作-1" class="headerlink" title="keras 實作"></a>keras 實作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from keras.callbacks import ModelCheckpoint</span><br><span class="line"></span><br><span class="line">model_ckpt = ModelCheckpoint(filepath=&quot;./tmp.h5&quot;, </span><br><span class="line">                             monitor=&quot;val_loss&quot;, </span><br><span class="line">                             save_best_only=True)</span><br><span class="line"></span><br><span class="line"># 若save_best_only=True則會儲存最好的那組權重，若為False則為最新的那組權重。</span><br><span class="line"></span><br><span class="line">model.fit(x_train, y_train, </span><br><span class="line">          epochs=EPOCHS, </span><br><span class="line">          batch_size=BATCH_SIZE, </span><br><span class="line">          validation_data=(x_test, y_test), </span><br><span class="line">          shuffle=True,</span><br><span class="line">          callbacks=[model_ckpt]</span><br><span class="line">         )</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reduce-Learning-Rate"><a href="#Reduce-Learning-Rate" class="headerlink" title="Reduce Learning Rate"></a>Reduce Learning Rate</h2><p>隨訓練更新次數，將 Learning rate 逐步減小</p>
+<ul>
+<li>因為通常損失函數越接近谷底的位置，開口越小 – 需要較小的 Learning rate 才可以再次下降</li>
+</ul>
+<p>可行的調降方式</p>
+<ul>
+<li>每更新 n 次後，將 Learning rate 做一次調降 – schedule decay</li>
+<li>當經過幾個 epoch 後，發現 performance 沒有進步 – Reduce on plateau<img src='https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294307/1592909403189' width="400" height="300" align="center"></li>
+</ul>
+<h3 id="keras實作"><a href="#keras實作" class="headerlink" title="keras實作"></a>keras實作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from keras.callbacks import ReduceLROnPlateau</span><br><span class="line">reduce_lr = ReduceLROnPlateau(factor=reduce_factor, </span><br><span class="line">                              min_lr = 1e-12,</span><br><span class="line">                              monitor=&#x27;val_loss&#x27;,</span><br><span class="line">                              patient=reduce_patient,</span><br><span class="line">                              verbose=1)</span><br><span class="line"></span><br><span class="line">model.fit(x_train, y_train, </span><br><span class="line">          epochs=EPOCHS, </span><br><span class="line">          batch_size=BATCH_SIZE, </span><br><span class="line">          validation_data=(x_test, y_test), </span><br><span class="line">          shuffle=True,</span><br><span class="line">          callbacks=[reduce_lr]</span><br><span class="line">         )</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="客製化callback"><a href="#客製化callback" class="headerlink" title="客製化callback"></a>客製化callback</h2><p>Callbacks 可以在模型訓練的過程中，進行監控或介入。Callbacks 的時機包含：</p>
+<ul>
+<li>on_training_begin</li>
+<li>on_epoch_begin</li>
+<li>on_batch_begin</li>
+<li>on_batch_end</li>
+<li>on_epoch_end</li>
+<li>on_training_end</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E9%A6%AC%E6%8B%89%E6%9D%BE%E7%AD%86%E8%A8%98/" rel="tag"># 機器學習馬拉松筆記</a>
+              <a href="/tags/keras/" rel="tag"># keras</a>
+              <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/04/%E8%A8%93%E7%B7%B4%E7%A5%9E%E7%B6%93%E7%B6%B2%E8%B7%AF%E5%89%8D%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85/" rel="prev" title="訓練神經網路前的注意事項">
+      <i class="fa fa-chevron-left"></i> 訓練神經網路前的注意事項
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/16/%E5%82%B3%E7%B5%B1%E9%9B%BB%E8%85%A6%E8%A6%96%E8%A6%BA/" rel="next" title="傳統電腦視覺">
+      傳統電腦視覺 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Callbacks-function%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">Callbacks function：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Earlystopping%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">Earlystopping：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#keras-%E5%AF%A6%E4%BD%9C"><span class="nav-number">1.1.1.</span> <span class="nav-text">keras 實作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-checkpoint"><span class="nav-number">1.2.</span> <span class="nav-text">Model checkpoint</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#keras-%E5%AF%A6%E4%BD%9C-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">keras 實作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reduce-Learning-Rate"><span class="nav-number">1.3.</span> <span class="nav-text">Reduce Learning Rate</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#keras%E5%AF%A6%E4%BD%9C"><span class="nav-number">1.3.1.</span> <span class="nav-text">keras實作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E8%A3%BD%E5%8C%96callback"><span class="nav-number">1.4.</span> <span class="nav-text">客製化callback</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shoghi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shoghi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

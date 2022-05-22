@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="啟動函數 activation function啟動函數定義了每個節點（神經元）的輸出和輸入關係的函數為神經元提供規模化非線性化能力，讓神經網路具備強大的擬合能力 啟動函數的作用 深度學習的基本原理是基於人工神經網路，信號從一個神經元進入，經過非線性的 activation function如此循環往復，直到輸出層。正是由於這些非線性函數的反覆疊加，才使得神經網路有足夠的 capacity 來抓取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="activation function">
+<meta property="og:url" content="http://example.com/2020/07/27/activation-function/index.html">
+<meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="啟動函數 activation function啟動函數定義了每個節點（神經元）的輸出和輸入關係的函數為神經元提供規模化非線性化能力，讓神經網路具備強大的擬合能力 啟動函數的作用 深度學習的基本原理是基於人工神經網路，信號從一個神經元進入，經過非線性的 activation function如此循環往復，直到輸出層。正是由於這些非線性函數的反覆疊加，才使得神經網路有足夠的 capacity 來抓取">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899630177">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899676578">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899693493">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899747636">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899800436">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899836437">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899845136">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1593000067651">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592900004136">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592900066747">
+<meta property="og:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1593491298051">
+<meta property="article:published_time" content="2020-07-27T09:23:09.000Z">
+<meta property="article:modified_time" content="2020-07-29T04:24:21.000Z">
+<meta property="article:author" content="Shoghi">
+<meta property="article:tag" content="機器學習馬拉松筆記">
+<meta property="article:tag" content="keras">
+<meta property="article:tag" content="deep learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899630177">
+
+<link rel="canonical" href="http://example.com/2020/07/27/activation-function/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>activation function | Shoghi的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Shoghi的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/27/activation-function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          activation function
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-07-27 17:23:09" itemprop="dateCreated datePublished" datetime="2020-07-27T17:23:09+08:00">2020-07-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-07-29 12:24:21" itemprop="dateModified" datetime="2020-07-29T12:24:21+08:00">2020-07-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="啟動函數-activation-function"><a href="#啟動函數-activation-function" class="headerlink" title="啟動函數 activation function"></a>啟動函數 activation function</h1><p>啟動函數定義了<br>每個節點（神經元）的輸出和輸入關係的函數為神經元提供規模化非線性化能力，讓神經網路具備強大的擬合能力</p>
+<h2 id="啟動函數的作用"><a href="#啟動函數的作用" class="headerlink" title="啟動函數的作用"></a>啟動函數的作用</h2><ul>
+<li><p>深度學習的基本原理是基於人工神經網路，信號從一個神經元進入，經過非線性的 activation function<br>如此循環往復，直到輸出層。正是由於這些非線性函數的反覆疊加，才使得神經網路有足夠的 capacity 來抓取複雜的 pattern</p>
+</li>
+<li><p>啟動函數的最大作用就是非線性化<br>如果不用啟動函數的話，無論神經網路有多少層，輸出都是輸入的線性組合</p>
+</li>
+<li><p>啟動函數的另一個重要特徵<br>它應該是可以區分forward-propagation與back-propagation的網路參數更新，然後相應地使用梯度下降或任何其他優化技術優化權重以減少誤差</p>
+</li>
+</ul>
+<h2 id="常見啟動函數介紹"><a href="#常見啟動函數介紹" class="headerlink" title="常見啟動函數介紹"></a>常見啟動函數介紹</h2><h3 id="sigmoid"><a href="#sigmoid" class="headerlink" title="sigmoid"></a>sigmoid</h3><p>特點是會把輸出限定在 0~1 之間，在 x&lt;0 ，輸出就是 0，在 x&gt;0，輸出就是 1，這樣使得數據在傳遞過程中不容易發散</p>
+<h4 id="主要缺點"><a href="#主要缺點" class="headerlink" title="主要缺點"></a>主要缺點</h4><ul>
+<li>Sigmoid 容易過飽和，丟失梯度。這樣在反向傳播時，很容易出現梯度消失的情況，導致訓練無法完整</li>
+<li>Sigmoid 的輸出均值不是 0</li>
+</ul>
+<p>函式：<br>$$\sigma(x) &#x3D; \frac{1}{1+e^{-x}}$$<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899630177" width = "400" height = "300" alt="sigmoid" align=center /></p>
+<h3 id="softmax"><a href="#softmax" class="headerlink" title="softmax"></a>softmax</h3><p>Softmax 把一個 k 維的 real value 向量（a1,a2,a3,a4….）映射成一個（b1,b2,b3,b4….）其中 bi 是一個 0~1 的常數，輸出神經元之和為 1.0，所以也可以拿來做多分類的機率預測</p>
+<h4 id="為什麼要取指數？"><a href="#為什麼要取指數？" class="headerlink" title="為什麼要取指數？"></a>為什麼要取指數？</h4><ul>
+<li>要模擬 max 的行為，所以要讓大的更大</li>
+<li>需要一個可導的函數</li>
+</ul>
+<p>函式：<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899676578" width = "300" height = "200" alt="softmax fomula" align=center /><br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899693493" width = "400" height = "300" alt="softmax" align=center /></p>
+<h3 id="Tanh"><a href="#Tanh" class="headerlink" title="Tanh"></a>Tanh</h3><p>tanh 讀作 Hyperbolic Tangent<br>tanh 也稱為雙切正切函數，取值範圍為 [-1,1]</p>
+<p>tanh 在特徵相差明顯時的效果會很好，在循環過程中會不斷擴大特徵效果</p>
+<p>函式：<br>$$tanh(x)&#x3D;2\sigma(2x) - 1$$<br>$$tanh(x) &#x3D; \frac{e^x - e^{-x}}{e^x+e^{-x}}$$</p>
+<img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899747636" width = "400" height = "300" alt="tanh" align=center />
+
+
+<h3 id="ReLU"><a href="#ReLU" class="headerlink" title="ReLU"></a>ReLU</h3><p>修正線性單元（Rectified linear unit，ReLU）</p>
+<ul>
+<li>在 x &gt; 0 時導數恆為 1</li>
+<li>對於 x &lt; 0，其梯度恆為 0，這時候它也會出現飽和的現象，甚至使神經元直接無效，從而其權重無法得到更新（在這種情況下通常稱為 dying ReLU）</li>
+<li>Leaky ReLU 和 PReLU 的提出正是為了解決這一問題</li>
+</ul>
+<p>函式：<br>$$f(x)&#x3D;max(0, x)$$<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899800436" width = "400" height = "300" alt="ReLU" align=center /></p>
+<p>p.s.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ReLU = lambda x: abs(x) * (x&gt;0)</span><br><span class="line">dReLU = lambda x: 1 * (x&gt;0)</span><br></pre></td></tr></table></figure>
+
+<h4 id="ReLU-II"><a href="#ReLU-II" class="headerlink" title="ReLU (II)"></a>ReLU (II)</h4><p>ELU 函數是針對 ReLU 函數的一個改進型，相比於 ReLU 函數，在輸入為負數的情況下，是有一定的輸出的</p>
+<ul>
+<li>這樣可以消除 ReLU 死掉的問題</li>
+<li>但還是有 <strong>梯度飽和</strong> 和 <strong>指數運算</strong> 的問題</li>
+</ul>
+<p>函式：<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899836437" width = "300" height = "200" alt="ELU fomula" align=center /><br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592899845136" width = "400" height = "300" alt="ELU" align=center /></p>
+<h4 id="ReLU-III"><a href="#ReLU-III" class="headerlink" title="ReLU (III)"></a>ReLU (III)</h4><ol>
+<li>PReLU<br>參數化修正線性單元（Parameteric Rectified Linear Unit，PReLU）屬於 ReLU 修正類啟動函數的一員</li>
+<li>Leaky ReLU<br>當 α&#x3D;0.1 時，我們叫 PReLU 為Leaky ReLU，算是 PReLU 的一種特殊情況</li>
+<li>RReLU 以及 Leaky ReLU 有一些共同點，即爲負值輸入添加了一個線性項</li>
+</ol>
+<p>函式：<br>$$f(x)&#x3D;max(ax, x)$$<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1593000067651" width = "400" height = "300" alt="" align=center /></p>
+<h3 id="Maxout"><a href="#Maxout" class="headerlink" title="Maxout"></a>Maxout</h3><p>Maxout 是深度學習網路中的一層網路，就像池化層、卷積層一樣，可以看成是網路的啟動函數層<br>Maxout 神經元的啟動函數是取得所有這些「函數層」中的最大值<br>Maxout 的擬合能力是非​​常強的，<strong>優點</strong> 是計算簡單，不會過飽和，同時又沒有 ReLU 的缺點<br>Maxout 的 <strong>缺點</strong> 是過程參數相當於多了一倍</p>
+<p>函式：<br>$$f(x)&#x3D;max(wT1x+b1, wT2x+b2)$$<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592900004136" width = "400" height = "300" alt="" align=center /></p>
+<h2 id="Sigmoid-vs-Tanh"><a href="#Sigmoid-vs-Tanh" class="headerlink" title="Sigmoid vs Tanh"></a>Sigmoid vs Tanh</h2><p>tanh 函數將輸入值壓縮到 -1~1 的範圍，因此它是 0 均值的，<br>這解決了Sigmoid 函數的非 zero-centered 問題，但是它也存在 <strong>梯度消失</strong> 和 <strong>冪運算</strong> 的問題。<br>其實 tanh(x)&#x3D;2sigmoid(2x)-1<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1592900066747" width = "400" height = "300" alt="Sigmoid vs Tanh" align=center /><br>左邊是 Sigmoid 非線性函數，將實數壓縮到［0,1］之間。右邊是 Tanh 函數，將實數壓縮到［-1,1］。</p>
+<h2 id="Sigmoid-vs-Softmax"><a href="#Sigmoid-vs-Softmax" class="headerlink" title="Sigmoid vs Softmax"></a>Sigmoid vs Softmax</h2><ul>
+<li>Sigmoid 將一個 real value 映射到（0,1）的區間，用來做二分類</li>
+<li>Softmax 把一個 k 維的 real value 向量（a1,a2,a3,a4….）映射成一個（b1,b2,b3,b4….）其中 bi 是一個 0～1 的常數，輸出神經元之和為 1.0，所以可以拿來做多分類的機率預測</li>
+<li>二分類問題時 sigmoid 和 softmax 是一樣的，求的都是 cross entropy loss</li>
+</ul>
+<h2 id="梯度消失-Vanishing-gradient-problem"><a href="#梯度消失-Vanishing-gradient-problem" class="headerlink" title="梯度消失 Vanishing gradient problem"></a>梯度消失 Vanishing gradient problem</h2><p>原因：前面的層比後面的層梯度變化更小，故變化更慢</p>
+<p>結果：Output 變化慢 &#x3D;&gt; Gradient小 &#x3D;&gt; 學得慢  </p>
+<p>Sigmoid，Tanh 都有這樣特性不適合用在 Layers 多的DNN 架構<br><img src="https://ai100-fileentity.cupoy.com/ml100/dailytask/1586225294277/1593491298051" width = "400" height = "300" alt="梯度消失" align=center /></p>
+<h2 id="如何選擇正確的啟動函數"><a href="#如何選擇正確的啟動函數" class="headerlink" title="如何選擇正確的啟動函數"></a>如何選擇正確的啟動函數</h2><h3 id="根據各個函數的優缺點來配置"><a href="#根據各個函數的優缺點來配置" class="headerlink" title="根據各個函數的優缺點來配置"></a>根據各個函數的優缺點來配置</h3><p>如果使用 ReLU，要小心設置 learning rate，注意不要讓網路出現很多「dead」 神經元，如果不好解決，可以試試 Leaky ReLU、PReLU 或者Maxout</p>
+<p>p.s.<br>dead neurons的主因為神經元陷入永遠只能產生特定值，且有0個梯度(經常發生在ReLU)<br><a target="_blank" rel="noopener" href="https://medium.com/joelthchao/how-dead-neurons-hurt-training-5fc127d8db6a">更多</a></p>
+<h3 id="根據問題的性質"><a href="#根據問題的性質" class="headerlink" title="根據問題的性質"></a>根據問題的性質</h3><ul>
+<li>用於分類器時，Sigmoid 函數及其組合通常效果更好</li>
+<li>由於梯度消失問題，有時要避免使用 sigmoid 和 tanh 函數。ReLU 函數是一個通用的啟動函數，目前在大多數情況下使用</li>
+<li>如果神經網路中出現死神經元，那麼 PReLU 函數就是最好的選擇</li>
+<li>ReLU 函數建議只能在隱藏層中使用</li>
+</ul>
+<h3 id="考慮-DNN-損失函數和啟動函數"><a href="#考慮-DNN-損失函數和啟動函數" class="headerlink" title="考慮 DNN 損失函數和啟動函數"></a>考慮 DNN 損失函數和啟動函數</h3><ul>
+<li>如果使用 sigmoid 啟動函數，則交叉熵損失函數一般肯定比均方差損失函數好</li>
+<li>如果是 DNN 用於分類，則一般在輸出層使用 softmax 啟動函數</li>
+<li>ReLU 啟動函數對梯度消失問題有一定程度的解決，尤其是在 CNN模型中</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E9%A6%AC%E6%8B%89%E6%9D%BE%E7%AD%86%E8%A8%98/" rel="tag"># 機器學習馬拉松筆記</a>
+              <a href="/tags/keras/" rel="tag"># keras</a>
+              <a href="/tags/deep-learning/" rel="tag"># deep learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/27/%E6%90%8D%E5%A4%B1%E5%87%BD%E6%95%B8/" rel="prev" title="損失函數">
+      <i class="fa fa-chevron-left"></i> 損失函數
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/29/Gradient-Descent/" rel="next" title="Gradient-Descent">
+      Gradient-Descent <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%95%9F%E5%8B%95%E5%87%BD%E6%95%B8-activation-function"><span class="nav-number">1.</span> <span class="nav-text">啟動函數 activation function</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%9F%E5%8B%95%E5%87%BD%E6%95%B8%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">啟動函數的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A6%8B%E5%95%9F%E5%8B%95%E5%87%BD%E6%95%B8%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.2.</span> <span class="nav-text">常見啟動函數介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sigmoid"><span class="nav-number">1.2.1.</span> <span class="nav-text">sigmoid</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%BC%BA%E9%BB%9E"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">主要缺點</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#softmax"><span class="nav-number">1.2.2.</span> <span class="nav-text">softmax</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E8%A6%81%E5%8F%96%E6%8C%87%E6%95%B8%EF%BC%9F"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">為什麼要取指數？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tanh"><span class="nav-number">1.2.3.</span> <span class="nav-text">Tanh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReLU"><span class="nav-number">1.2.4.</span> <span class="nav-text">ReLU</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ReLU-II"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">ReLU (II)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ReLU-III"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">ReLU (III)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maxout"><span class="nav-number">1.2.5.</span> <span class="nav-text">Maxout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sigmoid-vs-Tanh"><span class="nav-number">1.3.</span> <span class="nav-text">Sigmoid vs Tanh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sigmoid-vs-Softmax"><span class="nav-number">1.4.</span> <span class="nav-text">Sigmoid vs Softmax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1-Vanishing-gradient-problem"><span class="nav-number">1.5.</span> <span class="nav-text">梯度消失 Vanishing gradient problem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%81%B8%E6%93%87%E6%AD%A3%E7%A2%BA%E7%9A%84%E5%95%9F%E5%8B%95%E5%87%BD%E6%95%B8"><span class="nav-number">1.6.</span> <span class="nav-text">如何選擇正確的啟動函數</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%93%9A%E5%90%84%E5%80%8B%E5%87%BD%E6%95%B8%E7%9A%84%E5%84%AA%E7%BC%BA%E9%BB%9E%E4%BE%86%E9%85%8D%E7%BD%AE"><span class="nav-number">1.6.1.</span> <span class="nav-text">根據各個函數的優缺點來配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%93%9A%E5%95%8F%E9%A1%8C%E7%9A%84%E6%80%A7%E8%B3%AA"><span class="nav-number">1.6.2.</span> <span class="nav-text">根據問題的性質</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E6%85%AE-DNN-%E6%90%8D%E5%A4%B1%E5%87%BD%E6%95%B8%E5%92%8C%E5%95%9F%E5%8B%95%E5%87%BD%E6%95%B8"><span class="nav-number">1.6.3.</span> <span class="nav-text">考慮 DNN 損失函數和啟動函數</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shoghi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shoghi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
