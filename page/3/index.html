@@ -149,6 +149,95 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/22/Regression-vs-Classification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/22/Regression-vs-Classification/" class="post-title-link" itemprop="url">Regression vs. Classification</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-06-22 13:39:45" itemprop="dateCreated datePublished" datetime="2020-06-22T13:39:45+08:00">2020-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-06-23 21:48:26" itemprop="dateModified" datetime="2020-06-23T21:48:26+08:00">2020-06-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="機器學習的監督式學習中主要分為"><a href="#機器學習的監督式學習中主要分為" class="headerlink" title="機器學習的監督式學習中主要分為"></a>機器學習的監督式學習中主要分為</h1><ul>
+<li><p>回歸問題<br>回歸代表預測的⽬標值為實數 (-∞ ⾄ ∞)</p>
+</li>
+<li><p>分類問題。<br>分類代表預測的⽬標值為類別 (0 或 1)</p>
+</li>
+</ul>
+<h2 id="目的差異"><a href="#目的差異" class="headerlink" title="目的差異"></a>目的差異</h2><p><strong>Supervised classification</strong> 的目的是要找出decision boundary, 也就是新得到的一筆 <strong>資料</strong> 是在decision boundary(邊界)的哪一邊來決定賦予哪一種class label.<br>而 <strong>Regression</strong> 的目的, 則是找出那條最能夠區分所有資料的那條 <strong>“線”</strong> ，再找所求的點對應的線上位置<br>(一個找點的分類，一個找分類線本身)</p>
+<p><a target="_blank" rel="noopener" href="http://zylix666.blogspot.com/2016/06/supervised-classificationregression.html">更多</a></p>
+<h1 id="⼆元分類-binary-class-vs-多元分類-Multi-class"><a href="#⼆元分類-binary-class-vs-多元分類-Multi-class" class="headerlink" title="⼆元分類 (binary-class) vs. 多元分類 (Multi-class)"></a>⼆元分類 (binary-class) vs. 多元分類 (Multi-class)</h1><ul>
+<li><p><strong>二元分類</strong> ，顧名思義就是目標的類別僅有兩個(0 或 1)。<br>如垃圾郵件(垃圾郵件 vs. 非垃圾郵件)、瑕疵偵測 (瑕疵 vs. 正常)</p>
+</li>
+<li><p><strong>多元分類</strong> ，則是目標類別有兩種以上。<br>如手寫數字辨識有 10 個類別(0 ~ 9)</p>
+</li>
+</ul>
+<h1 id="Multi-class-vs-Multi-label"><a href="#Multi-class-vs-Multi-label" class="headerlink" title="Multi-class vs. Multi-label"></a>Multi-class vs. Multi-label</h1><p>當每個樣本都只能歸在⼀個類別，我們稱之為 <strong>多分類 (Multi-class)</strong> 問題</p>
+<p>而一個樣本如果可以同時有多個類別，則稱為 <strong>多標籤 (Multi-label)</strong> 問題</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/20/%E8%A8%93%E7%B7%B4-%E6%B8%AC%E8%A9%A6%E9%9B%86%E5%88%87%E5%88%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -895,85 +984,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/06/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Shoghi">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Shoghi的隨手筆記">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/06/%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/" class="post-title-link" itemprop="url">特徵工程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">發表於</span>
-
-              <time title="創建時間：2020-06-06 15:49:39" itemprop="dateCreated datePublished" datetime="2020-06-06T15:49:39+08:00">2020-06-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2020-06-12 10:57:59" itemprop="dateModified" datetime="2020-06-12T10:57:59+08:00">2020-06-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分類於</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="特徵工程"><a href="#特徵工程" class="headerlink" title="特徵工程"></a>特徵工程</h1><h2 id="特徵工程是事實對應到後續評估分數的轉換"><a href="#特徵工程是事實對應到後續評估分數的轉換" class="headerlink" title="特徵工程是事實對應到後續評估分數的轉換"></a>特徵工程是事實對應到後續評估分數的轉換</h2><p>特徵工程的 <strong>目的</strong> 就是最大限度地從原始數據中提取特徵以供算法和模型使用。<br>以鐵達尼號中的生存為例，若從性別提取特徵，為男性評估點數為-2，女性評估為1<br>假設有一資料組性別為男則給予他-2的點數，當然此點數本身未必會直接對應到機率，但會是後續評估的依據</p>
-<p>通常來說特徵工程會在資料彙整後，擬和模型前。</p>
-<p>由於資料包含類別型(文字型)特徵以及數值型特徵，<br>所以通常特徵工程⾄少要包含一種類別編碼(LabelEncoder&#x2F;OneHotEncoder)，以及一種特徵縮放方法(標準化或歸一化)</p>
-<h3 id="延伸："><a href="#延伸：" class="headerlink" title="延伸："></a>延伸：</h3><p>特征工程到底是什么？<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/29316149">https://www.zhihu.com/question/29316149</a><br>為什麼特徵工程很重要<br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10200041?sc=iThelpR">https://ithelp.ithome.com.tw/articles/10200041?sc=iThelpR</a></p>
-<h2 id="特徵工程的核心概念-領域知識"><a href="#特徵工程的核心概念-領域知識" class="headerlink" title="特徵工程的核心概念 : 領域知識"></a>特徵工程的核心概念 : 領域知識</h2><p><strong>機器學習</strong> 的關鍵在特徵工程<br><strong>特徵工程</strong> 的關鍵在領域知識，<br>機器學習有效提升模型預測力的部分就是特徵工程</p>
-<h3 id="延伸：-1"><a href="#延伸：-1" class="headerlink" title="延伸："></a>延伸：</h3><p>特征组合&amp;特征交叉 (Feature Crosses)<br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000014799038">https://segmentfault.com/a/1190000014799038</a><br>簡單高效的組合特徵自動挖掘框架<br><a target="_blank" rel="noopener" href="https://read01.com/zh-tw/jj8em6E.html#.XuGfMUUzZPZ">https://read01.com/zh-tw/jj8em6E.html#.XuGfMUUzZPZ</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1043,7 +1053,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -1054,7 +1064,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

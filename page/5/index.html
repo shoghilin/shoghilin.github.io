@@ -149,6 +149,90 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/24/%E8%B3%87%E6%96%99%E5%B9%B3%E6%BB%91%E8%99%95%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/24/%E8%B3%87%E6%96%99%E5%B9%B3%E6%BB%91%E8%99%95%E7%90%86/" class="post-title-link" itemprop="url">資料平滑處理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2020-05-24 10:11:34" itemprop="dateCreated datePublished" datetime="2020-05-24T10:11:34+08:00">2020-05-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2020-06-11 11:02:06" itemprop="dateModified" datetime="2020-06-11T11:02:06+08:00">2020-06-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A8%8B%E5%BC%8F%E7%AD%86%E8%A8%98/" itemprop="url" rel="index"><span itemprop="name">程式筆記</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="資料平滑處理-—-log1p-和exmp1"><a href="#資料平滑處理-—-log1p-和exmp1" class="headerlink" title="資料平滑處理 —- log1p()和exmp1()"></a>資料平滑處理 —- log1p()和exmp1()</h1><p><a target="_blank" rel="noopener" href="https://numpy.org/doc/1.18/reference/generated/numpy.log1p.html">log1p() document</a><br><a target="_blank" rel="noopener" href="https://numpy.org/doc/1.18/reference/generated/numpy.expm1.html#numpy.expm1">exmp1() document</a></p>
+<ol>
+<li>資料預處理時首先可以對偏度比較大的資料用log1p函式進行轉化，使其更加服從高斯分佈，此步處理可能會使我們後續的分類結果得到一個好的結果。</li>
+<li>平滑問題很容易處理掉，導致模型的結果達不到一定的標準，log1p( )能夠避免復值得問題 — 復值指一個自變數對應多個因變數</li>
+</ol>
+<p>log1p( ) 的使用就像是一個數據壓縮到了一個區間，與資料的標準類似。其逆運算就是expm1的函式</p>
+<p>由於使用的log1p（）對資料進行了壓縮，最後需要將預測出的平滑資料進行一個還原，而還原過程就是log1p的逆運算expm1.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">log1p := log(x+1)      即ln(x+1)</span><br><span class="line">expm1 := exp(x)-1</span><br></pre></td></tr></table></figure>
+
+<p>當x較大時直接計算，當x較小時用泰勒展開式計算</p>
+<h2 id="補充："><a href="#補充：" class="headerlink" title="補充："></a>補充：</h2><p>偏度：<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%81%8F%E5%BA%A6">https://zh.wikipedia.org/wiki/%E5%81%8F%E5%BA%A6</a><br>高斯分布：<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83">https://zh.wikipedia.org/wiki/%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83</a><br>平滑問題：<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%B9%B3%E6%BB%91">https://zh.wikipedia.org/wiki/%E5%B9%B3%E6%BB%91</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/23/Markdown%E7%9B%B8%E9%97%9C%E6%96%87%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -968,7 +1052,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -979,7 +1063,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
