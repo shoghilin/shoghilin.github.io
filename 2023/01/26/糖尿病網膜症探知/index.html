@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="こんにちは、林です。 これから早稲田大学IPSに入学する時、研究テーマとしては糖尿病網膜症探知にする予定なので、少し自分なりに研究しました、その結果はこちらです。 背景と目的糖尿病網膜症（とうにょうびょうもうまくしょう、英: Diabetic Retinopathy）とは、糖尿病が原因で目の中の網膜という組織が障害を受け、視力が低下する病気です。その発症率は糖尿病患者の約40％を占める。 糖尿病網">
+<meta property="og:type" content="article">
+<meta property="og:title" content="糖尿病網膜症探知">
+<meta property="og:url" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/index.html">
+<meta property="og:site_name" content="Shoghi的隨手筆記">
+<meta property="og:description" content="こんにちは、林です。 これから早稲田大学IPSに入学する時、研究テーマとしては糖尿病網膜症探知にする予定なので、少し自分なりに研究しました、その結果はこちらです。 背景と目的糖尿病網膜症（とうにょうびょうもうまくしょう、英: Diabetic Retinopathy）とは、糖尿病が原因で目の中の網膜という組織が障害を受け、視力が低下する病気です。その発症率は糖尿病患者の約40％を占める。 糖尿病網">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/DR_sample.png">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/arch.png">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Inceptionv3.png">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Confusion_matrix.png">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Loss.jpg">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Accuracy.jpg">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Confusion_matrix_1.png">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Loss_1.jpg">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Accuracy_1.jpg">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Confusion_matrix_2.png">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Loss_2.jpg">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Accuracy_2.jpg">
+<meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Confusion_matrix_3.png">
+<meta property="article:published_time" content="2023-01-25T17:34:21.000Z">
+<meta property="article:modified_time" content="2023-01-25T18:16:06.010Z">
+<meta property="article:author" content="Shoghi">
+<meta property="article:tag" content="テックブログ">
+<meta property="article:tag" content="Diabetic Retinopathy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/DR_sample.png">
+
+<link rel="canonical" href="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'ja-jp'
+  };
+</script>
+
+  <title>糖尿病網膜症探知 | Shoghi的隨手筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Shoghi的隨手筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="ja-jp">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Shoghi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shoghi的隨手筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          糖尿病網膜症探知
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
+
+              <time title="創建時間：2023-01-26 01:34:21 / 修改時間：02:16:06" itemprop="dateCreated datePublished" datetime="2023-01-26T01:34:21+08:00">2023-01-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>こんにちは、林です。</p>
+<p>これから早稲田大学IPSに入学する時、研究テーマとしては糖尿病網膜症探知にする予定なので、少し自分なりに研究しました、その結果はこちらです。</p>
+<h2 id="背景と目的"><a href="#背景と目的" class="headerlink" title="背景と目的"></a>背景と目的</h2><p>糖尿病網膜症（とうにょうびょうもうまくしょう、英: Diabetic Retinopathy）とは、糖尿病が原因で目の中の網膜という組織が障害を受け、視力が低下する病気です。その発症率は糖尿病患者の約40％を占める。</p>
+<p>糖尿病網膜症は進行性の疾患で、病変部位の有無で5段階に分けられ、血管新生の有無で増殖性DR（PDR）か非増殖性DR（NPDR）かが決まります。もし病気の後期段階で発見したら、部分的な視力を回復するために手術が必要になります。早期発見と早期治療により、手術を回避することできます。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/DR_sample.png" class="" title="這是一張圖片">
+
+<p><strong>糖尿病網膜症5段階</strong></p>
+<p>この研究では糖尿病網膜症の有無や、病気の段階を自動的に判断するシステムを作ります。</p>
+<h2 id="分類問題としてのアプローチ"><a href="#分類問題としてのアプローチ" class="headerlink" title="分類問題としてのアプローチ"></a><strong><strong>分類問題としてのアプローチ</strong></strong></h2><p>本タスクへの分類問題に対して私のアプローチについて概要を記録します。</p>
+<p>網膜画像が入力として与えられた際に、その画像が糖尿病網膜症のどの段階にいるのかを深層学習モデルに分類させたいと考えています。</p>
+<p>具体的に言うと、網膜画像が深層学習モデルに入力した後、糖尿病網膜症の全段階それぞれの確率を予測して、最終的に確率が一番高いのが分類する結果となります。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/arch.png" class="" title="這是一張圖片">
+
+
+<p>本編で使われている深層学習モデルはInceptionv3[1]と言うCNNに基づくモデルで、その後で全結合層を利用して確率表示に変わります。このモデルは計算効率性がいいや、multi-scaleの構造で表現力がありなどのメリットあります。その構造は以下となります。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Inceptionv3.png" class="" title="這是一張圖片 350">
+
+
+<h3 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h3><ul>
+<li>分類タスクは特に前処理しなくてもある程度の性能は発揮できるが、不均衡データ問題が存在する場合、効果は酷く影響されます。</li>
+<li>糖尿病網膜症の第一段階は他の段階と間違えやすい。</li>
+<li>不均衡データ問題に対し、本編ではweighted CrossEntropyや、focal lossを利用すると、効果は大幅上げれますが、まだまだ改善が必要です。</li>
+</ul>
+<h2 id="実験"><a href="#実験" class="headerlink" title="実験"></a>実験</h2><p>本実験で使われた評価関数は正解率（Accuracy）、カッパ係数（Cohen’s Kappa）、F値（F-Score）、再現率（Recall）、適合率（Precision）。以下は各評価関数の式です。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Confusion_matrix.png" class="" title="這是一張圖片">
+
+<p>$$<br>Accuracy&#x3D;\frac{TP+TN}{TP+TN+FP+FN}<br>$$</p>
+<p>$$<br>Recall&#x3D;\frac{TP}{TP+FN}<br>$$</p>
+<p>$$<br>Precision&#x3D;\frac{TP}{TP+FP}<br>$$</p>
+<p>$$<br>\text{F-score}&#x3D;\frac{2*Precision*Recall}{Precision+Recall}<br>$$</p>
+<p>その中一番特別なのはカッパ係数です。カッパ係数とは、カテゴリカルデータに対して2つの検査結果の一致度合いを評価する指標のことです。数値が高いほど、我々のモデル判断と医者の判断が一致すると意味します。式は以下となります。</p>
+<p>$$<br>K&#x3D;\frac{p_o-p_e}{1-p_e}<br>$$</p>
+<p>その中</p>
+<ul>
+<li>$p_o$は観察によって得られた結果確率で、ここでは医師の分類結果を意味します。</li>
+<li>$p_e$はモデルからの分類結果確率。</li>
+</ul>
+<p>実験では、APTOS資料集[2]とEyePACS資料集[3]、二つの資料集が使われております。</p>
+<h3 id="APTOS資料集での実験結果"><a href="#APTOS資料集での実験結果" class="headerlink" title="APTOS資料集での実験結果"></a>APTOS資料集での実験結果</h3><p>訓練する損失関数とValidの評価関数は、ともにCrossEntropyを利用しています。</p>
+<p>注意すべき事は、資料を分析する時各類別の資料量はすごく不均衡なので、私は各類別のCrossEntropyそれぞれウェイトを掛けました。類別 i のウェイトの計算方法は以下となります。</p>
+<p>$$<br>w_{i}&#x3D;1-\frac{|X_i|}{|X|}<br>$$</p>
+<p>その中、</p>
+<ul>
+<li>$|\cdot|$は資料の数。</li>
+<li>$X$は入力の資料で、$X_i$は入力資料の中、類別 iの資料です。</li>
+</ul>
+<p>各EpochでのTrainの損失とvalidの評価関数は以下のようになった。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Loss.jpg" class="" title="這是一張圖片">
+
+<p>trainingの損失は全般的に下がってはいるが、validの評価関数は第5のEpochで一番低くなって、それ以降は下がることない、これが所謂過剰適合（overfitting）の問題です。</p>
+<p>trainとvalidの正解率は以下のようになった。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Accuracy.jpg" class="" title="這是一張圖片">
+
+<p>損失と同じく、trainingの正解率はずっと上がっているとは言え、validの正解率は第5のEpochで最高点に達て、それ以降は上がることできなかった。</p>
+<p>この過剰適合問題を解決するため、私は各epochで一番優れているモデルを保存し、もしそれ以降の10 epochでそれより優れる成績がないと、強制的に訓練を止めて、その一番優れているモデルを最終のモデルとします。</p>
+<p>その最終のモデルを利用してテスト集で評価する結果がこちら</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Acc : <span class="number">85.13</span>%, Cohen : <span class="number">0.9056</span>, F-Score : <span class="number">0.8278</span>, Recall : <span class="number">0.8513</span>, Precision : <span class="number">0.8493</span></span><br></pre></td></tr></table></figure>
+
+<p>全般的には悪くない成績観察できます。</p>
+<p>そして、Testのconfusion matrix以下となります。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Confusion_matrix_1.png" class="" title="這是一張圖片">
+
+<p>縦は分類の結果で、横は実際のラベルです。このconfusion matrixを観察すると、糖尿病網膜症第二段階の画像はよくほかの段階と間違えするが、全般的にはいい効果が表せている。</p>
+<h3 id="EyePACS資料集での実験結果"><a href="#EyePACS資料集での実験結果" class="headerlink" title="EyePACS資料集での実験結果"></a>EyePACS資料集での実験結果</h3><p>同じ設定で第二の資料集EyePACS[3]で実験した結果がこちら。</p>
+<p>以下は訓練のloss変化です。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Loss_1.jpg" class="" title="這是一張圖片">
+
+<p>Validation lossでは、第1のepochはすごく高いloss出ましたが、それ以降のloss一般範囲に入り、最終的にepoch 10で一番低いvalidation lossを取りました。</p>
+<p>trainとvalidの正解率は以下のようになった。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Accuracy_1.jpg" class="" title="這是一張圖片">
+
+<p>Validation確率の部分は変化が激しいですが、全体的にいい感じです。しかし、実際にテスト集で評価したら、とんでもない事を気がつきました。</p>
+<p>最終のモデルを利用してテスト集で評価する結果がこちら</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Acc : <span class="number">71.22</span>%, Cohen : <span class="number">0.0167</span>, F-Score : <span class="number">0.6273</span>, Recall : <span class="number">0.7122</span>, Precision : <span class="number">0.5711</span></span><br></pre></td></tr></table></figure>
+
+<p>Testのconfusion matrix以下となります。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Confusion_matrix_2.png" class="" title="這是一張圖片">
+
+<p>同じく、縦は分類の結果で、横は実際のラベルです。</p>
+<p>上の評価結果を観察すると、正解率は悪くないと見えますが、カッパ係数(Cohen’s Kappa)は明らかに異常です。そしてconfusion matrixを見ると、殆どの試験サンプルは段階0と段階2に分類されてしまい、他の結果一つもありませんでした。これはおそらく、前述の不均衡なデータ学習の問題によって引き起こされます。 訓練資料では段階0や、段階2のサンプル圧倒的に多いので、モデルはこの二種類を分類することで良い結果が得られると勘違いしていました。</p>
+<h3 id="不均衡データ学習問題-Focal-Loss"><a href="#不均衡データ学習問題-Focal-Loss" class="headerlink" title="不均衡データ学習問題 - Focal Loss"></a>不均衡データ学習問題 - Focal Loss</h3><p>この不均衡データ学習問題に対して、ここではweighted CrossEntropyだけではなく、Focal loss[4]も利用してみました。</p>
+<p>Focal lossとは、不均衡データ学習問題に対しての損失関数で、この中心理論は簡単なものに対して小さな損失与え、難しいものに対し大きな損失与えることです。その式はこちら。</p>
+<p>$$<br>L(y,\mathbf{\hat{p}})&#x3D;-(1-\hat{p}_y)^\gamma \log{(\hat{p}_y)}<br>$$</p>
+<p>その中で</p>
+<ul>
+<li>$y\in {0,\dots,K-1}$は整数のクラスラベル (K はクラスの数を表す)、</li>
+<li>$\mathbf{\hat{p}}&#x3D;(\hat{p}_0,\dots,\hat{p}_{K-1})\in [0,1]^K$はK クラスの推定確率分布を表すベクトルです。</li>
+<li>$\gamma$は信頼性の高い正しい予測が全体の損失にどの程度寄与するかを指定するフォーカス パラメータです。</li>
+</ul>
+<p>各EpochでのTrainの損失とvalidの評価関数は以下のようになった。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Loss_2.jpg" class="" title="這是一張圖片">
+
+<p>trainとvalidの正解率は以下のようになった。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Accuracy_2.jpg" class="" title="這是一張圖片">
+
+<p>訓練の過程は、全体的に安定となり、確率も上がりました。</p>
+<p>そして、最終のモデルを利用してテスト集で評価する結果がこちら</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Acc : <span class="number">75.74</span>%, Cohen : <span class="number">0.6183</span>, F-Score : <span class="number">0.7358</span>, Recall : <span class="number">0.7574</span>, Precision : <span class="number">0.7286</span></span><br></pre></td></tr></table></figure>
+
+<p>Testのconfusion matrix以下となります。</p>
+<img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Confusion_matrix_3.png" class="" title="這是一張圖片">
+
+<p>同じく、縦は分類の結果で、横は実際のラベルです。</p>
+<p>まず観察出来るのは、カッパ係数は明らかに前より大分良くなりました。そして、他の評価関数も悪くない成績を得られました。Confusion matrixを観察すると、分類効果の改善は鮮明です。しかし、段階1は相変わらずに間違えやすいし、段階0と段階2も判断ミスが多いです。</p>
+<h2 id="これまでのまとめ-総評"><a href="#これまでのまとめ-総評" class="headerlink" title="これまでのまとめ[総評]"></a><strong><strong>これまでのまとめ[総評]</strong></strong></h2><ul>
+<li>網膜画像に対し何が特別な前処理しなくてもある程度の分類性能は発揮できる。</li>
+<li>不均衡データ学習問題を解決しないと理想な効果たどり着けない。</li>
+<li>正確率高いでも効果いいと言う保証はない、多方面で考える必要がある。</li>
+<li>Focal lossとweighted CrossEntropyは確かに効果的ですが、まだ改善が必要です。</li>
+</ul>
+<h3 id="これからの課題"><a href="#これからの課題" class="headerlink" title="これからの課題"></a>これからの課題</h3><ul>
+<li>一般的な分類問題と処理すると、不均衡データ学習問題が存在するため、今度は距離問題として処理したら、不均衡データを心配することないはず。</li>
+<li>前研究したテーマ、person re-identificationでは、Domain shiftと言う問題が存在しています。即ちA domainで訓練したモデルがB domainで利用し、評価されたら、結果はすごく下がる。この問題は糖尿病網膜症探知の中でも存在するかどうか試したいです。</li>
+<li>不均衡データ学習問題に対して、本編ではFocal lossとweighted CrossEntropyを利用しましたが、それ以外の解決方法（例えばover-samplingや、under-samplingとか）も試したいです。</li>
+<li>網膜画像はある程度の前処理でもっと区別性を強化できると思います。</li>
+</ul>
+<h2 id="参考資料"><a href="#参考資料" class="headerlink" title="参考資料"></a>参考資料</h2><p>[1] C. Szegedy, V. Vanhoucke, S. Ioffe, J. Shlens, and Z. Wojna, ‘Rethinking the Inception Architecture for Computer Vision’. arXiv, Dec. 11, 2015. doi: <a target="_blank" rel="noopener" href="https://doi.org/10.48550/arXiv.1512.00567">10.48550&#x2F;arXiv.1512.00567</a>.</p>
+<p>[2] APTOS 2019 Blindness Detection  <a target="_blank" rel="noopener" href="https://www.kaggle.com/competitions/aptos2019-blindness-detection">https://www.kaggle.com/competitions/aptos2019-blindness-detection</a></p>
+<p>[3] EyePACS dataset  <a target="_blank" rel="noopener" href="https://www.kaggle.com/competitions/diabetic-retinopathy-detection/overview">https://www.kaggle.com/competitions/diabetic-retinopathy-detection/overview</a></p>
+<p>[4] T.-Y. Lin, P. Goyal, R. Girshick, K. He, and P. Dollár, ‘Focal Loss for Dense Object Detection’. arXiv, Feb. 07, 2018. doi: <a target="_blank" rel="noopener" href="https://doi.org/10.48550/arXiv.1708.02002">10.48550&#x2F;arXiv.1708.02002</a>.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E3%83%86%E3%83%83%E3%82%AF%E3%83%96%E3%83%AD%E3%82%B0/" rel="tag"># テックブログ</a>
+              <a href="/tags/Diabetic-Retinopathy/" rel="tag"># Diabetic Retinopathy</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/05/23/Seasonal-Trend-decomposition-using-LOESS-STL/" rel="prev" title="Seasonal-Trend decomposition using LOESS (STL)">
+      <i class="fa fa-chevron-left"></i> Seasonal-Trend decomposition using LOESS (STL)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E3%81%A8%E7%9B%AE%E7%9A%84"><span class="nav-number">1.</span> <span class="nav-text">背景と目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E9%A1%9E%E5%95%8F%E9%A1%8C%E3%81%A8%E3%81%97%E3%81%A6%E3%81%AE%E3%82%A2%E3%83%97%E3%83%AD%E3%83%BC%E3%83%81"><span class="nav-number">2.</span> <span class="nav-text">分類問題としてのアプローチ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E6%9E%9C"><span class="nav-number">2.1.</span> <span class="nav-text">結果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9F%E9%A8%93"><span class="nav-number">3.</span> <span class="nav-text">実験</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#APTOS%E8%B3%87%E6%96%99%E9%9B%86%E3%81%A7%E3%81%AE%E5%AE%9F%E9%A8%93%E7%B5%90%E6%9E%9C"><span class="nav-number">3.1.</span> <span class="nav-text">APTOS資料集での実験結果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EyePACS%E8%B3%87%E6%96%99%E9%9B%86%E3%81%A7%E3%81%AE%E5%AE%9F%E9%A8%93%E7%B5%90%E6%9E%9C"><span class="nav-number">3.2.</span> <span class="nav-text">EyePACS資料集での実験結果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%9D%87%E8%A1%A1%E3%83%87%E3%83%BC%E3%82%BF%E5%AD%A6%E7%BF%92%E5%95%8F%E9%A1%8C-Focal-Loss"><span class="nav-number">3.3.</span> <span class="nav-text">不均衡データ学習問題 - Focal Loss</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%81%93%E3%82%8C%E3%81%BE%E3%81%A7%E3%81%AE%E3%81%BE%E3%81%A8%E3%82%81-%E7%B7%8F%E8%A9%95"><span class="nav-number">4.</span> <span class="nav-text">これまでのまとめ[総評]</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%81%93%E3%82%8C%E3%81%8B%E3%82%89%E3%81%AE%E8%AA%B2%E9%A1%8C"><span class="nav-number">4.1.</span> <span class="nav-text">これからの課題</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考資料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Shoghi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/shoghilin" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;shoghilin" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:shoghiLin22@gmail.com" title="E-Mail → mailto:shoghiLin22@gmail.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/%E6%9F%8F%E5%AE%87-%E6%9E%97-03995a1a0" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;柏宇-林-03995a1a0" rel="noopener" target="_blank"><i class="linkedin-square fa-fw"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shoghi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
