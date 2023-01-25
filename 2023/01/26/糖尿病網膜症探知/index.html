@@ -41,7 +41,7 @@
 <meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Accuracy_2.jpg">
 <meta property="og:image" content="http://example.com/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/Confusion_matrix_3.png">
 <meta property="article:published_time" content="2023-01-25T17:34:21.000Z">
-<meta property="article:modified_time" content="2023-01-25T18:16:06.010Z">
+<meta property="article:modified_time" content="2023-01-25T18:20:55.626Z">
 <meta property="article:author" content="Shoghi">
 <meta property="article:tag" content="テックブログ">
 <meta property="article:tag" content="Diabetic Retinopathy">
@@ -194,7 +194,7 @@
               <span class="post-meta-item-text">發表於</span>
               
 
-              <time title="創建時間：2023-01-26 01:34:21 / 修改時間：02:16:06" itemprop="dateCreated datePublished" datetime="2023-01-26T01:34:21+08:00">2023-01-26</time>
+              <time title="創建時間：2023-01-26 01:34:21 / 修改時間：02:20:55" itemprop="dateCreated datePublished" datetime="2023-01-26T01:34:21+08:00">2023-01-26</time>
             </span>
 
           
@@ -212,9 +212,10 @@
 <p>これから早稲田大学IPSに入学する時、研究テーマとしては糖尿病網膜症探知にする予定なので、少し自分なりに研究しました、その結果はこちらです。</p>
 <h2 id="背景と目的"><a href="#背景と目的" class="headerlink" title="背景と目的"></a>背景と目的</h2><p>糖尿病網膜症（とうにょうびょうもうまくしょう、英: Diabetic Retinopathy）とは、糖尿病が原因で目の中の網膜という組織が障害を受け、視力が低下する病気です。その発症率は糖尿病患者の約40％を占める。</p>
 <p>糖尿病網膜症は進行性の疾患で、病変部位の有無で5段階に分けられ、血管新生の有無で増殖性DR（PDR）か非増殖性DR（NPDR）かが決まります。もし病気の後期段階で発見したら、部分的な視力を回復するために手術が必要になります。早期発見と早期治療により、手術を回避することできます。</p>
+<span id="more"></span>
+
 <img src="/2023/01/26/%E7%B3%96%E5%B0%BF%E7%97%85%E7%B6%B2%E8%86%9C%E7%97%87%E6%8E%A2%E7%9F%A5/DR_sample.png" class="" title="這是一張圖片">
 
-<p><strong>糖尿病網膜症5段階</strong></p>
 <p>この研究では糖尿病網膜症の有無や、病気の段階を自動的に判断するシステムを作ります。</p>
 <h2 id="分類問題としてのアプローチ"><a href="#分類問題としてのアプローチ" class="headerlink" title="分類問題としてのアプローチ"></a><strong><strong>分類問題としてのアプローチ</strong></strong></h2><p>本タスクへの分類問題に対して私のアプローチについて概要を記録します。</p>
 <p>網膜画像が入力として与えられた際に、その画像が糖尿病網膜症のどの段階にいるのかを深層学習モデルに分類させたいと考えています。</p>
